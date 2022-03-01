@@ -1,8 +1,5 @@
 package Content;
 
-import Annotation.NotNull;
-import Annotation.UserAccess;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,34 +9,21 @@ public class Product implements Comparable<Product>{
 
     private final long id; // >0 , unique and automatic generated
 
-    @NotNull
-    @UserAccess(describe = "Input product's name")
     private final String name ; // not null and not empty
 
-    @NotNull
-    @UserAccess(describe = "Location Information")
+
     private final Coordinates coordinates ; // not null
 
-    @NotNull
     private final Date creationDate ; // not null and automatic generation
 
-    @NotNull
-    @UserAccess(describe = "Input price")
     private final Double price ; // not null and >0
 
-    @NotNull
-    @UserAccess(describe = "Input part number")
     private final String partNumber ; // >=22 and not null
 
-    @UserAccess(describe = "Input manufacture cost this product")
     private final double manufactureCost ; //
 
-    @NotNull
-    @UserAccess(describe = "Information about unit of measurement")
     private final UnitOfMeasure unitOfMeasure ; // not null
 
-    @NotNull
-    @UserAccess(describe = "Information about owner")
     private final Person owner ; // not null
 
     public Product(long id, String name, int x, int y, Date creationDate, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
