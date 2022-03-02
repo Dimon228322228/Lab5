@@ -2,7 +2,6 @@ package Manager;
 
 import Content.Product;
 import Exception.EmptyFileException;
-import sourse.Collect;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -53,29 +52,27 @@ public class FileManager {
     }
 
     public void SaveCollectionInXML(PriorityQueue<Product> collection) throws IOException, JAXBException {
-        try (BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
-            PriorityQueue<Product> queueproduct = Collect.getCollection();
-            jaxbMarshaller.marshal(queueproduct, writer);
+        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
+            CollectionQueuer queueproduct = new CollectionQueuer();
+            queueproduct.setCollection(collection);
+            jaxbMarshaller.marshal(queueproduct, os);
         }
     }
 
     public void SaveCollectionInXML(PriorityQueue<Product> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
-        try (BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
-            PriorityQueue<Product> queueproduct = Collect.getCollection();
-            jaxbMarshaller.marshal(queueproduct, writer);
+        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
+            CollectionQueuer queueproduct = new CollectionQueuer();
+            queueproduct.setCollection(collection);
+            jaxbMarshaller.marshal(queueproduct, os);
         }
     }
 
     public PriorityQueue<Product> getCollectionFromFile() throws IOException, JAXBException, EmptyFileException {
         PriorityQueue<Product> collection = new PriorityQueue<>();
         String dataStr = this.getStrFromFile("");
-        try {
-            if (!dataStr.equals("")) {
-                StringReader reader = new StringReader(dataStr);
-                collection = ((PriorityQueue<Product>) jaxbUnmarshaller.unmarshal(reader));
-            }
-        } catch (ClassCastException ex){
-            System.out.print("Can not cast Priority Queue");
+        if (!dataStr.equals("")) {
+            StringReader reader = new StringReader(dataStr);
+            collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getCollection();
         }
         return collection;
     }
@@ -88,14 +85,26 @@ public class FileManager {
         StringBuilder dataStr = new StringBuilder();
         try (FileReader fileReader = new FileReader(fileToRetrieve)){
             int result;
-            ArrayList<Integer> integers = new ArrayList<>();
+            ArrayList<String> strings = new ArrayList<>();
             while((result = fileReader.read()) != -1)
-                integers.add(result);
-            for (Integer integer : integers) {
-                dataStr.append(integer);
+                strings.add(String.valueOf(result));
+            for (String str : strings) {
+                dataStr.append(str);
             }
         }
         return dataStr.toString();
+    }
+
+    private static class CollectionQueuer {
+        private PriorityQueue<Product> products = new PriorityQueue<>();
+
+        public PriorityQueue<Product> getCollection() {
+            return products;
+        }
+
+        public void setCollection(PriorityQueue<Product> collection) {
+            this.products = collection;
+        }
     }
 
 }
