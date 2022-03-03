@@ -2,6 +2,7 @@ package Manager;
 
 import Content.Product;
 
+import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -26,5 +27,11 @@ public abstract class AbstractQueueManager implements CollectionManager{
 
     public static void removeID(long id) {
         idSet.remove(id);
+    }
+
+    public abstract boolean elementExist(long id);
+
+    public static void createSet(){
+        idSet = new HashSet<Long>();
     }
 }

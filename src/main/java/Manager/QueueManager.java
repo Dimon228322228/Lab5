@@ -78,4 +78,10 @@ public class QueueManager extends AbstractQueueManager{
     public void PrintAscending() {
 
     }
+
+    @Override
+    public boolean elementExist(long id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
