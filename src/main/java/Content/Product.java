@@ -11,7 +11,6 @@ public class Product implements Comparable<Product>{
 
     private final String name ; // not null and not empty
 
-
     private final Coordinates coordinates ; // not null
 
     private final Date creationDate ; // not null and automatic generation
@@ -26,11 +25,11 @@ public class Product implements Comparable<Product>{
 
     private final Person owner ; // not null
 
-    public Product(long id, String name, int x, int y, Date creationDate, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
+    public Product(long id, String name, int x, int y, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
         this.id = id;
         this.name = name;
         coordinates = new Coordinates(x, y);
-        this.creationDate = creationDate;
+        this.creationDate = new Date();
         this.price = price;
         this.partNumber = partNumber;
         this.manufactureCost = manufactureCost;
@@ -38,6 +37,17 @@ public class Product implements Comparable<Product>{
         owner = new Person(name1, birthday, height, weight, passportID);
     }
 
+    public Product(long id, String name, int x, int y, Date date, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
+        this.id = id;
+        this.name = name;
+        coordinates = new Coordinates(x, y);
+        this.creationDate = date;
+        this.price = price;
+        this.partNumber = partNumber;
+        this.manufactureCost = manufactureCost;
+        this.unitOfMeasure = unitOfMeasure;
+        owner = new Person(name1, birthday, height, weight, passportID);
+    }
 
     @Override
     public int compareTo(Product o) {

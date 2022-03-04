@@ -10,7 +10,6 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.PriorityQueue;
 
@@ -81,18 +80,19 @@ public class FileManager {
         File fileToRetrieve = assertFileIsUsable(filePath);
         if (filePath.equals(""))
             fileToRetrieve = this.getXmlProduct();
-
-        StringBuilder dataStr = new StringBuilder();
-        try (FileReader fileReader = new FileReader(fileToRetrieve)){
-            int result;
-            ArrayList<String> strings = new ArrayList<>();
-            while((result = fileReader.read()) != -1)
-                strings.add(String.valueOf(result));
-            for (String str : strings) {
-                dataStr.append(str);
-            }
+        int len = 0;
+        try {
+            len = (int) fileToRetrieve.length();
+        } catch (ClassCastException ex) {
+            System.err.println("Error cast len file in integer");
         }
-        return dataStr.toString();
+        String dataStr;
+        char[] cbuf = new char[len];
+        try (FileReader fileReader = new FileReader(fileToRetrieve)) {
+            fileReader.read(cbuf);
+            dataStr = new String(cbuf);
+        }
+        return dataStr;
     }
 
     private static class CollectionQueuer {

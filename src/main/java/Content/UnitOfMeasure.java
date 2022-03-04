@@ -15,10 +15,10 @@ public enum UnitOfMeasure {
     }
 
     public static String getTitleinString(){
-        return  KILOGRAMS.title +
-                GRAMS.title +
-                CENTIMETERS.title +
-                PCS.title +
+        return  KILOGRAMS.title + " " +
+                GRAMS.title + " " +
+                CENTIMETERS.title + " " +
+                PCS.title + " " +
                 MILLILITERS.title;
     }
 
@@ -28,5 +28,9 @@ public enum UnitOfMeasure {
                 CENTIMETERS.title + System.lineSeparator() +
                 PCS.title + System.lineSeparator() +
                 MILLILITERS.title;
+    }
+
+    public String getTitle(){
+        return title;
     }
 }

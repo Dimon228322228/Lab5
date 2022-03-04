@@ -13,7 +13,7 @@ public abstract class AbstractQueueManager implements CollectionManager{
 
 
     public static long getID() {
-        long id = -1;
+        long id = 0;
         do{
             id ++;
         } while (idExists(id));

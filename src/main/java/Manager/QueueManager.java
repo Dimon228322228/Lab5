@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class QueueManager extends AbstractQueueManager{
-    private LocalDateTime localDateTime;
-    private  FileManager fileManager;
-    private ObjectFactory ProductFactory;
+    private final LocalDateTime localDateTime;
+    private final FileManager fileManager;
+    private final ObjectFactory ProductFactory;
 
     public QueueManager(FileManager fileManager, ObjectFactory productfactory){
         this.fileManager = fileManager;
         ProductFactory = productfactory;
         collection = new PriorityQueue<>();
+        this.localDateTime = LocalDateTime.now();
     }
 
     @Override

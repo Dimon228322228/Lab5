@@ -3,7 +3,7 @@ package Command;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public abstract class AbstractCommadReader implements CommandReader {
+public abstract class AbstractCommandReader implements CommandReader {
     protected BufferedReader reader;
     private boolean isRunning;
 

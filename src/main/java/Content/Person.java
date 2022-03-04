@@ -1,6 +1,5 @@
 package Content;
 
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
