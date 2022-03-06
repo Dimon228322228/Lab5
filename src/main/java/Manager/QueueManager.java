@@ -9,8 +9,14 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class QueueManager extends AbstractQueueManager{
+
+    /**
+     * When collection created
+     * */
     private final LocalDateTime localDateTime;
+    /** Read file from xml*/
     private final FileManager fileManager;
+    /** Create object*/
     private final ObjectFactory ProductFactory;
 
     public QueueManager(FileManager fileManager, ObjectFactory productfactory){

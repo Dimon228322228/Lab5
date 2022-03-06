@@ -9,13 +9,13 @@ import Exception.InvalidUnitOfMeasureExseption;
 public interface CasterFieldProductFromString {
      ValidatorProduct valProd = new ValidatorProduct() {};
      default String castName(String name){
-          if (valProd.NameProductValid(name)) {
-               return name;
+          if (valProd.NameProductValid(name.trim())) {
+               return name.trim();
           } else throw new InvalidNameProductException();
      }
 
      default Double castPrice(String str){
-          Double price = Double.parseDouble(str);
+          Double price = Double.parseDouble(str.trim());
           if(valProd.PriceValid(price)){
                return price;
           } else {
@@ -24,15 +24,15 @@ public interface CasterFieldProductFromString {
      }
 
      default String castPartNumber(String str){
-          if (valProd.partNumberValid(str)){
-               return str;
+          if (valProd.partNumberValid(str.trim())){
+               return str.trim();
           } else {
                throw new InvalidPartNumberException();
           }
      }
 
      default double castManufactureCost(String str){
-          double manufactureCost = Double.parseDouble(str);
+          double manufactureCost = Double.parseDouble(str.trim());
           if(valProd.manufactureCostValid(manufactureCost)){
                return manufactureCost;
           } else {
@@ -42,7 +42,7 @@ public interface CasterFieldProductFromString {
 
      default UnitOfMeasure castUnitOfMeasure(String str){
           if (valProd.UnitOfMeasureValid(str)){
-               return UnitOfMeasure.valueOf(str);
+               return UnitOfMeasure.valueOf(str.trim());
           } else {
                throw new InvalidUnitOfMeasureExseption();
           }

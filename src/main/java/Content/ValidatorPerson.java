@@ -12,6 +12,10 @@ public interface ValidatorPerson {
         return (time != null);
     }
 
+    default boolean BirthdayValid(String time){
+        return (time != null);
+    }
+
     default boolean WeightValid(int weight){
         return weight > 0;
     }

@@ -1,115 +1,37 @@
 package Content;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
-public class Product implements Comparable<Product>{
+public interface Product {
+    long getId();
 
-    private final long id; // >0 , unique and automatic generated
+    String getName();
 
-    private final String name ; // not null and not empty
+    Coordinates getCoordinates();
 
-    private final Coordinates coordinates ; // not null
+    Date getCreationDate();
 
-    private final Date creationDate ; // not null and automatic generation
+    Double getPrice();
 
-    private final Double price ; // not null and >0
+    String getPartNumber();
 
-    private final String partNumber ; // >=22 and not null
+    double getManufactureCost();
 
-    private final double manufactureCost ; //
+    UnitOfMeasure getUnitOfMeasure();
 
-    private final UnitOfMeasure unitOfMeasure ; // not null
+    Person getOwner();
 
-    private final Person owner ; // not null
+    void setName(String name);
 
-    public Product(long id, String name, int x, int y, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
-        this.id = id;
-        this.name = name;
-        coordinates = new Coordinates(x, y);
-        this.creationDate = new Date();
-        this.price = price;
-        this.partNumber = partNumber;
-        this.manufactureCost = manufactureCost;
-        this.unitOfMeasure = unitOfMeasure;
-        owner = new Person(name1, birthday, height, weight, passportID);
-    }
+    void setCoordinates(Coordinates coordinates);
 
-    public Product(long id, String name, int x, int y, Date date, double price, String partNumber, double manufactureCost, UnitOfMeasure unitOfMeasure, String name1, LocalDateTime birthday, long height, int weight, String passportID){
-        this.id = id;
-        this.name = name;
-        coordinates = new Coordinates(x, y);
-        this.creationDate = date;
-        this.price = price;
-        this.partNumber = partNumber;
-        this.manufactureCost = manufactureCost;
-        this.unitOfMeasure = unitOfMeasure;
-        owner = new Person(name1, birthday, height, weight, passportID);
-    }
+    void setPrice(Double price);
 
-    @Override
-    public int compareTo(Product o) {
-        return this.getName().compareTo(o.getName());
-    }
+    void setPartNumber(String partnumber);
 
-    @Override
-    public boolean equals(Object o){
-        if (!(o instanceof Product product)) return false;
-        if (this == o) return true;
-        return product.getId() == this.getId();
-    }
+    void setManufactureCost(double cost);
 
-    @Override
-    public int hashCode(){
-        return (int) this.getId();
-    }
+    void setUnitOfMeasure(UnitOfMeasure unitOfMeasure);
 
-    @Override
-    public String toString(){
-        return String.format("ID = %d, Name = %s, %s, Creation Date = %s, Price = %f, PartNumber = %s, Manufacture cost = %f, Unit of Measurement = %s, %s",
-                id, name, coordinates, creationDate, price, partNumber, manufactureCost, unitOfMeasure, owner);
-    }
-
-    public List<Object> getAllField(){
-        return Arrays.asList(id, name, coordinates.getX(), coordinates.getY(), creationDate, price, partNumber, manufactureCost,
-                unitOfMeasure, owner.getName(), owner.getBirthday(), owner.getHeight(), owner.getWeight(), owner.getPassportID());
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public String getPartNumber() {
-        return partNumber;
-    }
-
-    public double getManufactureCost() {
-        return manufactureCost;
-    }
-
-    public UnitOfMeasure getUnitOfMeasure() {
-        return unitOfMeasure;
-    }
-
-    public Person getOwner() {
-        return owner;
-    }
+    void setOwner(Person person);
 }
