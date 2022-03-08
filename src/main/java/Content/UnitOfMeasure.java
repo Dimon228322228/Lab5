@@ -1,7 +1,9 @@
 package Content;
 
+import java.util.Comparator;
+
 @SuppressWarnings("unused")
-public enum UnitOfMeasure {
+public enum UnitOfMeasure implements Comparator<UnitOfMeasure> {
     KILOGRAMS("kilograms"),
     CENTIMETERS("centimeters"),
     PCS("amount"),
@@ -32,5 +34,10 @@ public enum UnitOfMeasure {
 
     public String getTitle(){
         return title;
+    }
+
+    @Override
+    public int compare(UnitOfMeasure o1, UnitOfMeasure o2) {
+        return o1.getTitle().compareTo(o2.getTitle());
     }
 }

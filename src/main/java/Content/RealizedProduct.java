@@ -2,7 +2,7 @@ package Content;
 
 import java.util.Date;
 
-public abstract class RealizedProduct implements Comparable<Product>, Product, CasterFieldProductFromString{
+public abstract class RealizedProduct implements Product, CasterFieldProductFromString{
 
     private long id; // >0 , unique and automatic generated
 
@@ -21,11 +21,6 @@ public abstract class RealizedProduct implements Comparable<Product>, Product, C
     private UnitOfMeasure unitOfMeasure ; // not null
 
     private Person owner ; // not null
-
-    @Override
-    public int compareTo(Product o) {
-        return this.getName().compareTo(o.getName());
-    }
 
     @Override
     public boolean equals(Object o){

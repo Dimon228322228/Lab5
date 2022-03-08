@@ -14,5 +14,7 @@ public interface ObjectFactory {
     RealizedPerson getPerson();
     RealizedPerson getPerson(String name, LocalDateTime birthday, long height, int weight, String passportId);
     RealizedProduct getProduct();
+    RealizedProduct getProduct(long id, Product product);
+    RealizedProduct getProduct(Product product);
     CommandReader getFileReader(CommandFactory commandFactory, CollectionManager collectionManager, File file) throws FileNotFoundException;
 }

@@ -66,9 +66,9 @@ public class FileManager {
         }
     }
 
-    public PriorityQueue<Product> getCollectionFromFile() throws IOException, JAXBException, EmptyFileException {
+    public PriorityQueue<Product> getCollectionFromFile(String filepath) throws IOException, JAXBException, EmptyFileException {
         PriorityQueue<Product> collection = new PriorityQueue<>();
-        String dataStr = this.getStrFromFile("");
+        String dataStr = this.getStrFromFile(filepath);
         if (!dataStr.equals("")) {
             StringReader reader = new StringReader(dataStr);
             collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getCollection();

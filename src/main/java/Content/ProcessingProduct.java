@@ -26,4 +26,29 @@ public class ProcessingProduct extends RealizedProduct{
         setUnitOfMeasure(unitOfMeasure);
         setOwner(person);
     }
+
+    public ProcessingProduct(long id, Product product){
+        setId(id);
+        setCreationDate(new Date());
+        setName(product.getName());
+        setCoordinates(product.getCoordinates());
+        setPrice(product.getPrice());
+        setPartNumber(product.getPartNumber());
+        setManufactureCost(product.getManufactureCost());
+        setUnitOfMeasure(product.getUnitOfMeasure());
+        setOwner(product.getOwner());
+    }
+
+    public ProcessingProduct(Product product){
+        setId(AbstractQueueManager.getID());
+        setCreationDate(new Date());
+        setName(product.getName());
+        setCoordinates(product.getCoordinates());
+        setPrice(product.getPrice());
+        setPartNumber(product.getPartNumber());
+        setManufactureCost(product.getManufactureCost());
+        setUnitOfMeasure(product.getUnitOfMeasure());
+        setOwner(product.getOwner());
+    }
+
 }

@@ -1,27 +1,30 @@
 package Command;
 
+import Content.RealizedObjectFactory;
 import Manager.CollectionManager;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import Exception.UnknownCommandException;
+import Message.Messanger;
 
 public class RealizedCommandFactory implements CommandFactory{
     private static RealizedCommandFactory instance = null;
 
     private final Map<String, Command> commands;
-    private final RealizedCommandFactory productFactory;
-    private final Messenger messenger;
-    private static Set<File> files = new HashSet<File>;
+    private final RealizedObjectFactory productFactory;
+    private final Messanger messanger;
+    private static Set<File> files = new HashSet<>();
 
-    private RealizedCommandFactory(Map<String, Command> commands, RealizedCommandFactory productFactory, Messenger messenger) {
+    private RealizedCommandFactory(Map<String, Command> commands, RealizedObjectFactory productFactory, Messanger messanger) {
         this.commands = commands;
         this.productFactory = productFactory;
-        this.messenger = messenger;
+        this.messanger = messanger;
     }
 
-    public static CommandFactory getInstance(Map<String, Command> commands, RealizedCommandFactory productFactory, Messenger messenger){
+    public static CommandFactory getInstance(Map<String, Command> commands, RealizedObjectFactory productFactory, Messanger messenger){
         if (instance == null) instance = new RealizedCommandFactory(commands, productFactory,messenger);
         return instance;
     }
@@ -40,7 +43,7 @@ public class RealizedCommandFactory implements CommandFactory{
         }
         if (command instanceof SimpleCommand){
             executeSimpleCommand((SimpleCommand) command, commandReader, arg, collectionManager);
-        } else if (command instanceof  Messagingommand){
+        } else if (command instanceof  MessagingCommand){
             executeMessagingCommand((MessagingCommand) command, commandReader, arg, collectionManager);
         } else if (command instanceof ScriptCommand){
             executeScriptCommand((ScriptCommand) command, commandReader, arg, collectionManager);
@@ -52,7 +55,7 @@ public class RealizedCommandFactory implements CommandFactory{
     }
 
     private void executeMessagingCommand(MessagingCommand command, CommandReader commandReader, String arg, CollectionManager collectionManager) {
-        command.execute(collectionManager, commandReader, arg, messenger);
+        command.execute(collectionManager, commandReader, arg, messanger);
     }
 
     private void executeScriptCommand(ScriptCommand command, CommandReader commandReader, String arg, CollectionManager collectionManager) {
@@ -62,7 +65,7 @@ public class RealizedCommandFactory implements CommandFactory{
             return;
         }
         files.add(file);
-        command.execute(collectionManager, commandReader, arg, this, productFactory);
         files.remove(file);
+        command.execute(collectionManager, commandReader, arg, this, productFactory);
     }
 }

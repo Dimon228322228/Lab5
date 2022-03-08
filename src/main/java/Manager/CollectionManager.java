@@ -3,6 +3,8 @@ package Manager;
 import Content.Product;
 import Content.UnitOfMeasure;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.List;
 
 public interface CollectionManager {
@@ -10,16 +12,16 @@ public interface CollectionManager {
     List<String> displayInfo();
 
     /** Show all element of collection in string **/
-    void ShowElement();
+    List<Product> ShowElements();
 
     /** Add new element in collection **/
     void add(Product product);
 
     /** Replace element on id **/
-    void updateId(Integer id, Product product);
+    void updateId(long id, Product product);
 
     /** Remove element with this id**/
-    void RemoveById(Integer id);
+    void RemoveById(long id);
 
     /** Remove all element in collection **/
     void clear();
@@ -34,11 +36,11 @@ public interface CollectionManager {
     void RemoveLower(Product product);
 
     /** Count all element then manufactureCost equals given*/
-    void CounByManufactureCost(Double manufactureCost);
+    long CountByManufactureCost(Double manufactureCost);
 
     /** Count amount element then greater given*/
-    void CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
+    long CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
 
     /** Print element of collection in ascending order*/
-    void PrintAscending();
+    List<Product> PrintAscending();
 }

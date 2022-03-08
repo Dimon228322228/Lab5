@@ -35,6 +35,13 @@ public class RealizedObjectFactory implements ObjectFactory{
         return new ProcessingProduct();
     }
 
+    public RealizedProduct getProduct(long id, Product product){
+        return new ProcessingProduct(id, product);
+    }
+    public RealizedProduct getProduct(Product product) {
+        return new ProcessingProduct(product);
+    }
+
     @Override
     public CommandReader getFileReader(CommandFactory commandFactory, CollectionManager collectionManager, File file) throws FileNotFoundException {
         return new FileCommandReader(commandFactory, collectionManager, file, this);

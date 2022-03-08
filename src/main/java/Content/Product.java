@@ -2,7 +2,7 @@ package Content;
 
 import java.util.Date;
 
-public interface Product {
+public interface Product extends Comparable<Product>{
     long getId();
 
     String getName();
@@ -21,6 +21,8 @@ public interface Product {
 
     Person getOwner();
 
+    void setId(long id);
+
     void setName(String name);
 
     void setCoordinates(Coordinates coordinates);
@@ -34,4 +36,8 @@ public interface Product {
     void setUnitOfMeasure(UnitOfMeasure unitOfMeasure);
 
     void setOwner(Person person);
+
+    default int compareTo(Product o) {
+        return this.getName().compareTo(o.getName());
+    }
 }
