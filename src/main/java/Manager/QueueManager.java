@@ -1,6 +1,10 @@
 package Manager;
 
-import Content.*;
+import Content.ObjectFactory.ObjectFactory;
+import Content.Product.Product;
+import Content.Product.RealizedProduct;
+import Content.Product.UnitOfMeasure;
+import Content.Validator.RealizedValidatorProduct;
 import Exception.EmptyFileException;
 
 import javax.xml.bind.JAXBException;
@@ -68,7 +72,11 @@ public class QueueManager extends AbstractQueueManager{
         } catch (NoSuchElementException | IllegalStateException e){
             System.err.println(e.getMessage());
         }
-        filepath = System.getenv(nameVariable);
+        try{
+            filepath = System.getenv(nameVariable);
+        } catch (SecurityException | NullPointerException e){
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
@@ -184,7 +192,7 @@ public class QueueManager extends AbstractQueueManager{
     public long CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
         long count = 0;
         for (Product product: collection){
-            if (product.getUnitOfMeasure().compare(product.getUnitOfMeasure(), unitOfMeasure) > 0) count += 1;
+            if (product.getUnitOfMeasure().compareTo(unitOfMeasure) > 0) count += 1;
         }
         return count;
     }

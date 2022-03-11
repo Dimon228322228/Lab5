@@ -1,6 +1,6 @@
 package Manager;
 
-import Content.Product;
+import Content.Product.Product;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;

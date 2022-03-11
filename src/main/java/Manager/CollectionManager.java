@@ -1,10 +1,8 @@
 package Manager;
 
-import Content.Product;
-import Content.UnitOfMeasure;
+import Content.Product.Product;
+import Content.Product.UnitOfMeasure;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.util.List;
 
 public interface CollectionManager {

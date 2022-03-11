@@ -1,6 +1,6 @@
 package Manager;
 
-import Content.Product;
+import Content.Product.Product;
 import Exception.EmptyFileException;
 
 import javax.xml.bind.JAXBContext;

@@ -1,8 +1,10 @@
 package Command;
 
+import Command.CommandFactory.CommandFactory;
+import Command.Reader.Reader;
 import Manager.CollectionManager;
-import Message.Messanger;
+import Messager.Messanger;
 
 public interface MessagingCommand extends Command{
-    void execute(CollectionManager manager, CommandReader reader, String arg, Messanger messanger);
+    void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory);
 }
