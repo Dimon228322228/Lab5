@@ -2,6 +2,7 @@ package Manager;
 
 import Content.Product.Product;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;

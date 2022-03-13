@@ -2,18 +2,24 @@ package Content.Product;
 
 import Content.Caster.CasterFieldProductFromString;
 import Content.Coordinate.Coordinates;
+import Content.Person.LocalDateTimeSerializer;
 import Content.Person.Person;
 
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.util.Date;
-
-public abstract class RealizedProduct implements Product, CasterFieldProductFromString {
+@XmlType(name = "Product")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public abstract class RealizedProduct implements Product, CasterFieldProductFromString, Serializable {
 
     private long id; // >0 , unique and automatic generated
 
     private String name ; // not null and not empty
 
     private Coordinates coordinates ; // not null
-
+    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
     private Date creationDate ; // not null and automatic generation
 
     private Double price ; // not null and >0

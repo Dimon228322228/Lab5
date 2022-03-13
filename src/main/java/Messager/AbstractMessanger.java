@@ -46,8 +46,11 @@ public abstract class AbstractMessanger implements Messanger{
         return Message + getCommandMassageEnding();
     }
 
-
     protected abstract String getCommandMassageEnding();
     protected abstract void setCommandsExplanation();
     protected abstract void setProductFieldExplanation();
+
+    public String getCountElementWithCondition(Long value){
+        return "Found " + value + " elements of the collection." ;
+    }
 }

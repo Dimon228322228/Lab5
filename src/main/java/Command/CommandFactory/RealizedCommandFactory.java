@@ -70,8 +70,8 @@ public class RealizedCommandFactory implements CommandFactory {
             return;
         }
         files.add(file);
-        files.remove(file);
         command.execute(collectionManager, reader, arg, this, productFactory);
+        files.remove(file);
     }
 
     private void addCommandInHistory(String command){

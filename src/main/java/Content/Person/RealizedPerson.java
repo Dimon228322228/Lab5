@@ -1,16 +1,21 @@
 package Content.Person;
 
 import Content.Caster.CasterPersonFromString;
-import Content.Person.Person;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @XmlRootElement
-public abstract class RealizedPerson implements Person, CasterPersonFromString {
+@XmlAccessorType(XmlAccessType.FIELD)
+public abstract class RealizedPerson implements Person, CasterPersonFromString, Serializable {
 
     private String name; // not null and not empty
-
+    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
     private LocalDateTime birthday; // not null
 
     private long height; // > 0

@@ -8,6 +8,7 @@ import Content.Coordinate.ProcessingCoordinate;
 import Content.Coordinate.RealizedCoordinates;
 import Content.Person.ProcessingPerson;
 import Content.Person.RealizedPerson;
+import Content.Product.ProcessingProduct;
 import Content.Product.Product;
 import Content.Product.RealizedProduct;
 import Manager.CollectionManager;

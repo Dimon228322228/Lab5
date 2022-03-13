@@ -4,9 +4,18 @@ package Content.Coordinate;
 import Content.Caster.CasterCoordinatesFromString;
 import Content.Coordinate.Coordinates;
 
-public abstract class RealizedCoordinates implements Coordinates, CasterCoordinatesFromString {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public abstract class RealizedCoordinates implements Coordinates, CasterCoordinatesFromString, Serializable {
 
     private Integer x; // field not null and <= 938
+
 
     private Integer y; // field not null
 

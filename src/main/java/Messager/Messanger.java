@@ -18,5 +18,5 @@ public interface Messanger {
     String getPersonHeightInputInvitationMessage();
     String getPersonWeightInputInvitationMessage();
     String getPersonPassportIdInputInvitationMessage();
-
+    String getCountElementWithCondition(Long value);
 }

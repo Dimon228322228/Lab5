@@ -7,6 +7,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
@@ -95,6 +98,8 @@ public class FileManager {
         return dataStr;
     }
 
+    @XmlRootElement
+    @XmlAccessorType(XmlAccessType.FIELD)
     private static class CollectionQueuer {
         private PriorityQueue<Product> products = new PriorityQueue<>();
 

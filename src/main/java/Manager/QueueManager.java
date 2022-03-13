@@ -175,8 +175,14 @@ public class QueueManager extends AbstractQueueManager{
     public void RemoveLower(Product product) {
         List<Product> productList = getListProduct();
         Collections.sort(productList);
-        if (productList.size() != 0) collection.remove(productList.get(0));
-        else System.err.println("Nothing to remove! Collection is empty!");
+        if (productList.size() != 0) {
+            for (Product product1: collection){
+                if (product1.compareTo(product) < 0){
+                    collection.remove(product1);
+                    removeID(product1.getId());
+                }
+            }
+        } else System.err.println("Nothing to remove! Collection is empty!");
     }
 
     @Override
@@ -216,11 +222,4 @@ public class QueueManager extends AbstractQueueManager{
         return flag;
     }
 
-    public void sort(){
-        SortedSet<Product> productSet = new TreeSet<>();
-        while (!collection.isEmpty()){
-            productSet.add(collection.poll());
-        }
-        collection = new PriorityQueue<>(productSet);
-    }
 }
