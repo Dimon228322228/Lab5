@@ -2,7 +2,6 @@ package Content.Product;
 
 import Content.Caster.CasterFieldProductFromString;
 import Content.Coordinate.Coordinates;
-import Content.Person.LocalDateTimeSerializer;
 import Content.Person.Person;
 
 import javax.xml.bind.annotation.*;
@@ -19,7 +18,7 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
     private String name ; // not null and not empty
 
     private Coordinates coordinates ; // not null
-    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
+    @XmlJavaTypeAdapter(value = DateSerializer.class)
     private Date creationDate ; // not null and automatic generation
 
     private Double price ; // not null and >0
