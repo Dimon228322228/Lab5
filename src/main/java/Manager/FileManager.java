@@ -1,19 +1,16 @@
 package Manager;
 
-import Content.Product.Product;
+import Content.Product.RealizedProduct;
 import Exception.EmptyFileException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.PriorityQueue;
 
 public class FileManager {
@@ -23,7 +20,7 @@ public class FileManager {
     private File xmlProduct;
 
     public FileManager() throws JAXBException {
-        xmlContext = JAXBContext.newInstance(Collection.class);
+        xmlContext = JAXBContext.newInstance(RealizedProduct.class);
         jaxbMarshaller = xmlContext.createMarshaller();
         jaxbUnmarshaller = xmlContext.createUnmarshaller();
         xmlProduct = null;
@@ -31,6 +28,13 @@ public class FileManager {
 
     public File getXmlProduct(){
         return xmlProduct;
+    }
+
+    public void setXmlProduct(String filepath) throws FileNotFoundException {
+        if (filepath == null || !(new File(filepath).exists()))
+            throw new FileNotFoundException("There is not such file!");
+        else
+            xmlProduct = new File(filepath);
     }
 
     public FileManager(String dataFilePath) throws FileNotFoundException, JAXBException {
@@ -46,31 +50,33 @@ public class FileManager {
         File fileToRetrieve = new File(filePath);
         if (!fileToRetrieve.exists())
             throw new FileNotFoundException("There is not such file!");
-        else if (fileToRetrieve.length() == 0)
-            throw new EmptyFileException("File is empty!");
+//        else if (fileToRetrieve.length() == 0)
+//            throw new EmptyFileException("File is empty!");
         if (!fileToRetrieve.canRead() || !fileToRetrieve.canWrite())
             throw new SecurityException();
         return fileToRetrieve;
     }
 
-    public void SaveCollectionInXML(PriorityQueue<Product> collection) throws IOException, JAXBException {
+    public void SaveCollectionInXML(PriorityQueue<RealizedProduct> collection) throws IOException, JAXBException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
             CollectionQueuer queueproduct = new CollectionQueuer();
             queueproduct.setCollection(collection);
             jaxbMarshaller.marshal(queueproduct, os);
         }
+        System.out.println("Collection has been save successful");
     }
 
-    public void SaveCollectionInXML(PriorityQueue<Product> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
+    public void SaveCollectionInXML(PriorityQueue<RealizedProduct> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
             CollectionQueuer queueproduct = new CollectionQueuer();
             queueproduct.setCollection(collection);
             jaxbMarshaller.marshal(queueproduct, os);
         }
+        System.out.println("Collection has been save successful");
     }
 
-    public PriorityQueue<Product> getCollectionFromFile(String filepath) throws IOException, JAXBException, EmptyFileException {
-        PriorityQueue<Product> collection = new PriorityQueue<>();
+    public PriorityQueue<RealizedProduct> getCollectionFromFile(String filepath) throws IOException, JAXBException, EmptyFileException {
+        PriorityQueue<RealizedProduct> collection = new PriorityQueue<>();
         String dataStr = this.getStrFromFile(filepath);
         if (!dataStr.equals("")) {
             StringReader reader = new StringReader(dataStr);
@@ -98,16 +104,16 @@ public class FileManager {
         return dataStr;
     }
 
-    @XmlRootElement
+    @XmlRootElement(name = "Queue")
     @XmlAccessorType(XmlAccessType.FIELD)
-    private static class CollectionQueuer {
-        private PriorityQueue<Product> products = new PriorityQueue<>();
+    private static class CollectionQueuer implements Serializable {
+        private PriorityQueue<RealizedProduct> products = new PriorityQueue<>();
 
-        public PriorityQueue<Product> getCollection() {
+        public PriorityQueue<RealizedProduct> getCollection() {
             return products;
         }
 
-        public void setCollection(PriorityQueue<Product> collection) {
+        public void setCollection(PriorityQueue<RealizedProduct> collection) {
             this.products = collection;
         }
     }

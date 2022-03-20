@@ -1,7 +1,7 @@
 package Command;
 
 import Command.Reader.Reader;
-import Content.Product.Product;
+import Content.Product.RealizedProduct;
 import Manager.CollectionManager;
 
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Add implements SimpleCommand{
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
-        Product product = null;
+        RealizedProduct product = null;
         try{
             product = reader.readProduct();
         } catch (IOException e) {
@@ -17,5 +17,6 @@ public class Add implements SimpleCommand{
         }
         if (product == null) return;
         manager.add(product);
+        System.out.println("Product has been added successful.");
     }
 }

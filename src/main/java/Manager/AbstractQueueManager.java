@@ -1,8 +1,7 @@
 package Manager;
 
-import Content.Product.Product;
+import Content.Product.RealizedProduct;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 public abstract class AbstractQueueManager implements CollectionManager{
     protected static Set<Long> idSet;
 
-    protected PriorityQueue<Product> collection;
+    protected PriorityQueue<RealizedProduct> collection;
 
 
     public static long getID() {

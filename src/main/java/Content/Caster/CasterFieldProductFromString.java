@@ -44,7 +44,7 @@ public interface CasterFieldProductFromString {
 
      default UnitOfMeasure castUnitOfMeasure(String str){
           if (valProd.UnitOfMeasureValid(str)){
-               return UnitOfMeasure.valueOf(str.trim());
+               return UnitOfMeasure.fromString(str.trim());
           } else {
                throw new InvalidUnitOfMeasureExseption();
           }

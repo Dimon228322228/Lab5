@@ -23,9 +23,18 @@ public interface CasterPersonFromString {
 
     default LocalDateTime castBirthday(String inputStr){
         if (valPer.BirthdayValid(inputStr)){
-            DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            LocalDateTime date = LocalDateTime.parse(inputStr, formater);
-            return date;
+            String [] data = inputStr.split("-");
+            LocalDateTime date;
+            if (data.length == 5) {
+                date = LocalDateTime.of(Integer.parseInt(data[0]),
+                                        Integer.parseInt(data[1]),
+                                        Integer.parseInt(data[2]),
+                                        Integer.parseInt(data[3]),
+                                        Integer.parseInt(data[4]));
+                return date;
+            } else {
+                throw new InvalidBirthdayPersonException();
+            }
         } else {
             throw new InvalidBirthdayPersonException();
         }

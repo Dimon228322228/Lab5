@@ -4,7 +4,6 @@ import Command.CommandFactory.CommandFactory;
 import Content.Coordinate.RealizedCoordinates;
 import Content.ObjectFactory.ObjectFactory;
 import Content.Person.RealizedPerson;
-import Content.Product.Product;
 import Content.Product.RealizedProduct;
 import Manager.CollectionManager;
 import Messager.Messanger;
@@ -29,7 +28,7 @@ public class ConsoleReader extends AbstractReader {
     }
 
     @Override
-    public Product readProduct() throws IOException {
+    public RealizedProduct readProduct() throws IOException {
         RealizedProduct product = productFactory.getProduct();
         RealizedCoordinates coordinates = productFactory.getCoordinates();
         RealizedPerson owner = productFactory.getPerson();
@@ -179,7 +178,7 @@ public class ConsoleReader extends AbstractReader {
         } else {
             System.err.println("Error.");
         }
-        System.out.println("Got error(check std err). Please, entered the field again: ");
+        System.out.println("Has got error. Please, entered the field again: ");
     }
 
 }

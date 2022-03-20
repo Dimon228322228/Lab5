@@ -9,7 +9,7 @@ import Exception.EmptyFileException;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.time.ZoneId;
+import java.nio.file.InvalidPathException;
 import java.time.ZonedDateTime;
 import java.util.*;
 import Exception.ProductNotFoundException;
@@ -25,13 +25,13 @@ public class QueueManager extends AbstractQueueManager{
     /** Create object*/
     private final ObjectFactory ProductFactory;
     private final RealizedValidatorProduct validatorProduct = new RealizedValidatorProduct();
-    private String filepath;
+    private String filepath = "C:\\Users\\Гостевой\\Desktop\\Laba5\\Test.xml";
 
     public QueueManager(FileManager fileManager, ObjectFactory productfactory){
         this.fileManager = fileManager;
         ProductFactory = productfactory;
         collection = new PriorityQueue<>();
-        this.date = ZonedDateTime.now(ZoneId.of("Moscow"));
+        this.date = ZonedDateTime.now();
         createSet();
     }
 
@@ -47,8 +47,8 @@ public class QueueManager extends AbstractQueueManager{
     public void parseDateFromFile(){
         try{
             setFilepath();
-            Collection<Product> products = fileManager.getCollectionFromFile(filepath);
-            for (Product product : products){
+            Collection<RealizedProduct> products = fileManager.getCollectionFromFile(filepath);
+            for (RealizedProduct product : products){
                 if(validatorProduct.validProduct(product)){
                     collection.add(product);
                     idSet.add(product.getId());
@@ -62,20 +62,29 @@ public class QueueManager extends AbstractQueueManager{
         } catch (EmptyFileException e) {
             System.err.println((new EmptyFileException("File is empty!")).getMessage());
         }
+        System.out.println("Download complete");
     }
 
     private void setFilepath(){
         System.out.println("Enter name environment variable that contains the path of the file: ");
         String nameVariable = "";
-        try(Scanner scr = new Scanner(System.in)){
-            nameVariable = scr.nextLine();
-        } catch (NoSuchElementException | IllegalStateException e){
-            System.err.println(e.getMessage());
-        }
-        try{
-            filepath = System.getenv(nameVariable);
-        } catch (SecurityException | NullPointerException e){
-            System.err.println(e.getMessage());
+        boolean isNull = true;
+        while(isNull) {
+            System.getenv().forEach((k, v) ->
+                    System.out.println(k + " : " + v)
+            );
+            try (Scanner scr = new Scanner(System.in)) {
+                nameVariable = scr.nextLine();
+            } catch (NoSuchElementException | IllegalStateException e) {
+                System.err.println(e.getMessage());
+            }
+            try {
+                filepath = System.getenv(nameVariable);
+            } catch (SecurityException | NullPointerException e) {
+                System.err.println(e.getMessage());
+            }
+            if (filepath != null) isNull = false;
+            else System.out.println("This environment variable not exist. Try input one more times: ");
         }
     }
 
@@ -86,10 +95,10 @@ public class QueueManager extends AbstractQueueManager{
 
     private List<Product> getListProduct(){
         List<Product> productList = new ArrayList<>();
-        PriorityQueue<Product> instance = new PriorityQueue<>();
+        PriorityQueue<RealizedProduct> instance = new PriorityQueue<>();
         int size = collection.size();
         for (int i = 0; i < size; i++ ){
-            Product product = collection.poll();
+            RealizedProduct product = collection.poll();
             productList.add(product);
             instance.add(product);
         }
@@ -98,7 +107,7 @@ public class QueueManager extends AbstractQueueManager{
     }
 
     @Override
-    public void add(Product product) {
+    public void add(RealizedProduct product) {
         collection.add(product);
     }
 
@@ -135,7 +144,7 @@ public class QueueManager extends AbstractQueueManager{
 
     @Override
     public void clear() {
-        collection = new PriorityQueue<>();
+        collection = new PriorityQueue<RealizedProduct>();
     }
 
     @Override
@@ -143,14 +152,14 @@ public class QueueManager extends AbstractQueueManager{
         if (filepath == null || filepath.equals("")) {
             setFilepath();
             try {
-                fileManager.SaveCollectionInXML(collection);
-            } catch (JAXBException | IOException e){
+                fileManager.SaveCollectionInXML(collection, filepath);
+            } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
                 System.err.println(e.getMessage());
             }
         }else {
             try {
-                fileManager.SaveCollectionInXML(collection);
-            } catch (JAXBException | IOException e){
+                fileManager.SaveCollectionInXML(collection, filepath);
+            } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
                 System.err.println(e.getMessage());
             }
         }
@@ -167,7 +176,7 @@ public class QueueManager extends AbstractQueueManager{
 
     @Override
     public void AddIfMax(Product product) {
-        Product product1 = ProductFactory.getProduct(product);
+        RealizedProduct product1 = ProductFactory.getProduct(product);
         if (!collection.isEmpty() && product1.compareTo(maxProduct()) > 0) collection.add(product1);
     }
 

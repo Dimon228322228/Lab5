@@ -2,13 +2,15 @@ package Content.Product;
 
 import Content.Caster.CasterFieldProductFromString;
 import Content.Coordinate.Coordinates;
+import Content.Coordinate.RealizedCoordinates;
 import Content.Person.Person;
+import Content.Person.RealizedPerson;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
-@XmlType(name = "Product")
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class RealizedProduct implements Product, CasterFieldProductFromString, Serializable {
@@ -17,7 +19,7 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
 
     private String name ; // not null and not empty
 
-    private Coordinates coordinates ; // not null
+    private RealizedCoordinates coordinates ; // not null
     @XmlJavaTypeAdapter(value = DateSerializer.class)
     private Date creationDate ; // not null and automatic generation
 
@@ -29,7 +31,7 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
 
     private UnitOfMeasure unitOfMeasure ; // not null
 
-    private Person owner ; // not null
+    private RealizedPerson owner ; // not null
 
     @Override
     public boolean equals(Object o){
@@ -93,7 +95,11 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
 
     @Override
     public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+        try {
+            this.coordinates = (RealizedCoordinates) coordinates;
+        } catch (ClassCastException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
@@ -118,7 +124,11 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
 
     @Override
     public void setOwner(Person person) {
-        this.owner = person;
+        try {
+            this.owner = (RealizedPerson) person;
+        } catch (ClassCastException e){
+            System.err.println(e.getMessage());
+        }
     }
 
     public void setId(long id){
@@ -148,5 +158,4 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
     public void setCreationDate(Date creationDate){
         this.creationDate = creationDate;
     }
-
 }

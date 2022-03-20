@@ -1,7 +1,9 @@
 package Content.Product;
 
+import java.io.Serializable;
+
 @SuppressWarnings("unused")
-public enum UnitOfMeasure {
+public enum UnitOfMeasure  implements Serializable {
     KILOGRAMS("kilograms"),
     CENTIMETERS("centimeters"),
     PCS("amount"),
@@ -15,23 +17,32 @@ public enum UnitOfMeasure {
     }
 
     public static String getTitleinString(){
-        return  KILOGRAMS.title + " " +
+        return System.lineSeparator() + KILOGRAMS.title + " " +
                 GRAMS.title + " " +
                 CENTIMETERS.title + " " +
                 PCS.title + " " +
-                MILLILITERS.title;
+                MILLILITERS.title + System.lineSeparator();
     }
 
     public static String getTitleinColumn(){
-        return  KILOGRAMS.title + System.lineSeparator() +
-                GRAMS.title + System.lineSeparator() +
-                CENTIMETERS.title + System.lineSeparator() +
-                PCS.title + System.lineSeparator() +
-                MILLILITERS.title;
+        return System.lineSeparator() + KILOGRAMS.title + System.lineSeparator() +
+                                        GRAMS.title + System.lineSeparator() +
+                                        CENTIMETERS.title + System.lineSeparator() +
+                                        PCS.title + System.lineSeparator() +
+                                        MILLILITERS.title + System.lineSeparator();
     }
 
     public String getTitle(){
         return title;
+    }
+
+    public static UnitOfMeasure fromString(String text) {
+        for (UnitOfMeasure b : UnitOfMeasure.values()) {
+            if (b.title.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
     }
 
 }

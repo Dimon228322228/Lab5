@@ -4,7 +4,6 @@ import Command.CommandFactory.CommandFactory;
 import Content.Coordinate.RealizedCoordinates;
 import Content.ObjectFactory.RealizedObjectFactory;
 import Content.Person.RealizedPerson;
-import Content.Product.Product;
 import Content.Product.RealizedProduct;
 import Manager.CollectionManager;
 
@@ -24,7 +23,7 @@ public class FileReader extends AbstractReader {
     }
 
     @Override
-    public Product readProduct() throws IOException {
+    public RealizedProduct readProduct() throws IOException {
         RealizedCoordinates coordinates =  productFactory.getCoordinates();
         RealizedProduct product = productFactory.getProduct();
         RealizedPerson person = productFactory.getPerson();

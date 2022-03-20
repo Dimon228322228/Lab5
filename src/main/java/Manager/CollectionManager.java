@@ -1,6 +1,7 @@
 package Manager;
 
 import Content.Product.Product;
+import Content.Product.RealizedProduct;
 import Content.Product.UnitOfMeasure;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface CollectionManager {
     List<Product> ShowElements();
 
     /** Add new element in collection **/
-    void add(Product product);
+    void add(RealizedProduct product);
 
     /** Replace element on id **/
     void updateId(long id, Product product);

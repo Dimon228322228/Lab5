@@ -4,6 +4,11 @@ import Content.Product.UnitOfMeasure;
 
 public class EnglishMessager extends AbstractMessanger{
 
+    public EnglishMessager(){
+        setCommandsExplanation();
+        setProductFieldExplanation();
+    }
+
     @Override
     protected String getCommandMassageEnding() {
         return "NB! \"(argument)\" must be entered in in the same line as the command";
@@ -94,7 +99,7 @@ public class EnglishMessager extends AbstractMessanger{
 
     @Override
     public String getPersonBirthdayInputInvitationMessage() {
-        return "Enter owner birthday: ";
+        return "Enter owner birthday with separated - \'-\' (Year-Month-Day-Hour-Minute): ";
     }
 
     @Override

@@ -8,6 +8,7 @@ import Manager.FileManager;
 import Manager.QueueManager;
 import Messager.EnglishMessager;
 import Messager.Messanger;
+import com.sun.xml.bind.v2.runtime.IllegalAnnotationException;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashMap;
@@ -19,7 +20,8 @@ public class App {
         try {
             fileManager = new FileManager();
         } catch (JAXBException e){
-            System.out.println(e.getMessage() + " Sorry, programme cannot be started");
+            e.printStackTrace();
+            System.out.println(e.getMessage() + " Sorry, programme cannot be started " + e.toString());
             System.err.println(e.getMessage());
             return;
         }

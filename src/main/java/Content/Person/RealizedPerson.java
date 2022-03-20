@@ -10,12 +10,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class RealizedPerson implements Person, CasterPersonFromString, Serializable {
 
     private String name; // not null and not empty
-    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
     private LocalDateTime birthday; // not null
 
     private long height; // > 0
