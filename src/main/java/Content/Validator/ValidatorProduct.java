@@ -6,46 +6,46 @@ import Content.Product.UnitOfMeasure;
 
 import java.util.Date;
 
-public interface ValidatorProduct {
+public class ValidatorProduct {
 
-    ValidatorCoordinates validcoordinates = new ValidatorCoordinates() {};
-    ValidatorUnitOfMeasure validunitofmeasure = new ValidatorUnitOfMeasure() {};
-    ValidatorPerson validperson = new ValidatorPerson() {};
+    ValidatorCoordinates validcoordinates = new ValidatorCoordinates();
+    ValidatorUnitOfMeasure validunitofmeasure = new ValidatorUnitOfMeasure();
+    ValidatorPerson validperson = new ValidatorPerson();
 
-    default boolean NameProductValid(String name){
+    public boolean NameProductValid(String name){
         return(name != null && !name.trim().equals(""));
     }
 
-    default boolean CoordinateValid(Coordinates coordinates){
+    public boolean CoordinateValid(Coordinates coordinates){
         return (coordinates != null &&  validcoordinates.xCoordinateValid(coordinates.getX()) &&
                                         validcoordinates.yCoordinateValid(coordinates.getY()));
     }
 
-    default boolean DateValid(Date date){
+    public boolean DateValid(Date date){
         return date != null;
     }
 
-    default boolean PriceValid(Double price){
+    public boolean PriceValid(Double price){
         return (price != null && price > 0);
     }
 
-    default boolean partNumberValid(String partnumber){
+    public boolean partNumberValid(String partnumber){
         return (partnumber != null && partnumber.length() >= 22);
     }
 
-    default boolean manufactureCostValid(double cost){
+    public boolean manufactureCostValid(double cost){
         return true;
     }
 
-    default boolean UnitOfMeasureValid(UnitOfMeasure unitOfMeasure){
+    public boolean UnitOfMeasureValid(UnitOfMeasure unitOfMeasure){
         return validunitofmeasure.ValidUnitOfMeasure(unitOfMeasure);
     }
 
-    default boolean UnitOfMeasureValid(String unitOfMeasure){
+    public boolean UnitOfMeasureValid(String unitOfMeasure){
         return validunitofmeasure.ValidUnitOfMeasure(unitOfMeasure);
     }
 
-    default boolean PersonValid(Person person){
+    public boolean PersonValid(Person person){
         return (  person != null && validperson.BirthdayValid(person.getBirthday()) &&
                                     validperson.HeightValid(person.getHeight()) &&
                                     validperson.NamePersonValid(person.getName()) &&

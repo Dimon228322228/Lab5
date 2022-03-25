@@ -12,15 +12,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public abstract class RealizedProduct implements Product, CasterFieldProductFromString, Serializable {
+public abstract class RealizedProduct implements Product, Serializable {
 
     private long id; // >0 , unique and automatic generated
 
     private String name ; // not null and not empty
 
     private RealizedCoordinates coordinates ; // not null
-    @XmlJavaTypeAdapter(value = DateSerializer.class)
+
     private Date creationDate ; // not null and automatic generation
 
     private Double price ; // not null and >0
@@ -32,6 +31,8 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
     private UnitOfMeasure unitOfMeasure ; // not null
 
     private RealizedPerson owner ; // not null
+
+    CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
 
     @Override
     public boolean equals(Object o){
@@ -52,39 +53,49 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
                 id, name, coordinates, creationDate, price, partNumber, manufactureCost, unitOfMeasure, owner);
     }
 
+    @XmlElement(name = "Id")
     public long getId() {
         return id;
     }
 
+    @XmlElement(name = "Name")
     public String getName() {
         return name;
     }
 
-    public Coordinates getCoordinates() {
+    @XmlElement(name = "Coordinates")
+    public RealizedCoordinates getCoordinates() {
         return coordinates;
     }
 
+    @XmlElement(name = "Creation_date")
+    @XmlJavaTypeAdapter(value = DateSerializer.class)
     public Date getCreationDate() {
         return creationDate;
     }
 
+    @XmlElement(name = "Price")
     public Double getPrice() {
         return price;
     }
 
+    @XmlElement(name = "Part_number")
     public String getPartNumber() {
         return partNumber;
     }
 
+    @XmlElement(name = "Manufacture_cost")
     public double getManufactureCost() {
         return manufactureCost;
     }
 
+    @XmlElement(name = "Unit_of_measurement")
     public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    public Person getOwner() {
+    @XmlElement(name = "Owner")
+    public RealizedPerson getOwner() {
         return owner;
     }
 
@@ -136,23 +147,23 @@ public abstract class RealizedProduct implements Product, CasterFieldProductFrom
     }
 
     public void setNameStr(String inputStr){
-        setName(castName(inputStr));
+        setName(casterFieldProductFromString.castName(inputStr));
     }
 
     public void setPriceStr(String inputStr){
-        setPrice(castPrice(inputStr));
+        setPrice(casterFieldProductFromString.castPrice(inputStr));
     }
 
     public void setPartNumberStr(String inputStr){
-        setPartNumber(castPartNumber(inputStr));
+        setPartNumber(casterFieldProductFromString.castPartNumber(inputStr));
     }
 
     public void setManufactureCostStr(String inputStr){
-        setManufactureCost(castManufactureCost(inputStr));
+        setManufactureCost(casterFieldProductFromString.castManufactureCost(inputStr));
     }
 
     public void setUnitOfMeasureStr(String inputStr){
-        setUnitOfMeasure(castUnitOfMeasure(inputStr));
+        setUnitOfMeasure(casterFieldProductFromString.castUnitOfMeasure(inputStr));
     }
 
     public void setCreationDate(Date creationDate){

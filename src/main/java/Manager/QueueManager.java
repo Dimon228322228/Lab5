@@ -25,7 +25,7 @@ public class QueueManager extends AbstractQueueManager{
     /** Create object*/
     private final ObjectFactory ProductFactory;
     private final RealizedValidatorProduct validatorProduct = new RealizedValidatorProduct();
-    private String filepath = "C:\\Users\\Гостевой\\Desktop\\Laba5\\Test.xml";
+    private String filepath = "/Users/itmo.share/Desktop/Lab5/Test.xml";
 
     public QueueManager(FileManager fileManager, ObjectFactory productfactory){
         this.fileManager = fileManager;
@@ -46,7 +46,7 @@ public class QueueManager extends AbstractQueueManager{
 
     public void parseDateFromFile(){
         try{
-            setFilepath();
+            //setFilepath();
             Collection<RealizedProduct> products = fileManager.getCollectionFromFile(filepath);
             for (RealizedProduct product : products){
                 if(validatorProduct.validProduct(product)){
@@ -58,7 +58,7 @@ public class QueueManager extends AbstractQueueManager{
             }
 
         } catch (JAXBException | IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         } catch (EmptyFileException e) {
             System.err.println((new EmptyFileException("File is empty!")).getMessage());
         }
@@ -144,24 +144,23 @@ public class QueueManager extends AbstractQueueManager{
 
     @Override
     public void clear() {
-        collection = new PriorityQueue<RealizedProduct>();
+        collection = new PriorityQueue<>();
     }
 
     @Override
     public void save() {
         if (filepath == null || filepath.equals("")) {
-            setFilepath();
+            //setFilepath();
             try {
                 fileManager.SaveCollectionInXML(collection, filepath);
             } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }else {
             try {
                 fileManager.SaveCollectionInXML(collection, filepath);
             } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
-                System.err.println(e.getMessage());
-            }
+                e.printStackTrace();            }
         }
     }
 

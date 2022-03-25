@@ -1,12 +1,12 @@
 package Content.Validator;
 
-public interface ValidatorCoordinates {
+public class ValidatorCoordinates {
 
-    default boolean xCoordinateValid(Integer x){
+    public boolean xCoordinateValid(Integer x){
         return x != null && x <= 938;
     }
 
-    default boolean yCoordinateValid(Integer y){
+    public boolean yCoordinateValid(Integer y){
         return y != null;
     }
 

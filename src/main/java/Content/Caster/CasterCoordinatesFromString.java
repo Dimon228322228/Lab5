@@ -4,10 +4,10 @@ import Content.Validator.ValidatorCoordinates;
 import Exception.InvalidXcoordinateException;
 import Exception.InvalidYcoordinateException;
 
-public interface CasterCoordinatesFromString {
-    ValidatorCoordinates valCoord = new ValidatorCoordinates() {};
+public class CasterCoordinatesFromString {
+    ValidatorCoordinates valCoord = new ValidatorCoordinates();
 
-    default Integer castX(String str){
+    public Integer castX(String str){
         Integer x = Integer.parseInt(str);
         if (valCoord.xCoordinateValid(x)){
             return x;
@@ -16,7 +16,7 @@ public interface CasterCoordinatesFromString {
         }
     }
 
-    default Integer castY(String str){
+    public Integer castY(String str){
         Integer y = Integer.parseInt(str);
         if (valCoord.yCoordinateValid(y)){
             return y;

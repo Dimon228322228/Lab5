@@ -27,19 +27,25 @@ public class FileReader extends AbstractReader {
         RealizedCoordinates coordinates =  productFactory.getCoordinates();
         RealizedProduct product = productFactory.getProduct();
         RealizedPerson person = productFactory.getPerson();
+
         product.setNameStr(reader.readLine());
+
         coordinates.setXStr(reader.readLine());
         coordinates.setYStr(reader.readLine());
+
         product.setCoordinates(coordinates);
+
         product.setPriceStr(reader.readLine());
         product.setPartNumberStr(reader.readLine());
         product.setManufactureCostStr(reader.readLine());
         product.setUnitOfMeasureStr(reader.readLine());
+
         person.setNameStr(reader.readLine());
         person.setBirthdayStr(reader.readLine());
         person.setHeightStr(reader.readLine());
         person.setWeightStr(reader.readLine());
         person.setPassportIDStr(reader.readLine());
+
         product.setOwner(person);
         return product;
     }

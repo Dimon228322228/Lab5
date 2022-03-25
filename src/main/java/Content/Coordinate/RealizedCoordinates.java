@@ -5,20 +5,25 @@ import Content.Caster.CasterCoordinatesFromString;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-
-public abstract class RealizedCoordinates implements Coordinates, CasterCoordinatesFromString, Serializable {
+@XmlRootElement
+public abstract class RealizedCoordinates implements Coordinates, Serializable {
 
     private Integer x; // field not null and <= 938
 
     private Integer y; // field not null
 
+    CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
+
+    @XmlElement(name = "X")
     public Integer getX(){
         return x;
     }
 
+    @XmlElement(name = "Y")
     public Integer getY(){
         return y;
     }
@@ -34,11 +39,11 @@ public abstract class RealizedCoordinates implements Coordinates, CasterCoordina
     }
 
     public void setXStr(String inputStr){
-        setX(castX(inputStr));
+        setX(casterCoordinatesFromString.castX(inputStr));
     }
 
     public void setYStr(String inputStr){
-        setY(castY(inputStr));
+        setY(casterCoordinatesFromString.castY(inputStr));
     }
 
     @Override

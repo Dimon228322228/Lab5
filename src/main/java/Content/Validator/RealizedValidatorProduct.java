@@ -2,7 +2,7 @@ package Content.Validator;
 
 import Content.Product.Product;
 
-public class RealizedValidatorProduct implements ValidatorProduct {
+public class RealizedValidatorProduct extends ValidatorProduct {
     public boolean validProduct(Product product){
         return (NameProductValid(product.getName()) &&
                 CoordinateValid(product.getCoordinates()) &&

@@ -12,6 +12,7 @@ import Exception.InvalidProductFieldException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.function.Consumer;
 
 public class ConsoleReader extends AbstractReader {
     public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, ObjectFactory objectFactory, Messanger messanger){
@@ -32,141 +33,55 @@ public class ConsoleReader extends AbstractReader {
         RealizedProduct product = productFactory.getProduct();
         RealizedCoordinates coordinates = productFactory.getCoordinates();
         RealizedPerson owner = productFactory.getPerson();
+
         System.out.println(messanger.getNameInputInvitationMessage());
-        consoleSetName(reader.readLine(), product);
+        setField(reader.readLine(), product::setNameStr);
+
         System.out.println(messanger.getXInputInvitationMessage());
-        consoleSetX(reader.readLine(), coordinates);
+        setField(reader.readLine(), coordinates::setXStr);
+
         System.out.println(messanger.getYInputInvitationMessage());
-        consoleSetY(reader.readLine(), coordinates);
+        setField(reader.readLine(), coordinates::setYStr);
+
         product.setCoordinates(coordinates);
+
         System.out.println(messanger.getPriceInputInvitationMessage());
-        consoleSetPrice(reader.readLine(), product);
+        setField(reader.readLine(), product::setPriceStr);
+
         System.out.println(messanger.getPartNumberInputInvitationMessage());
-        consoleSetPartNumber(reader.readLine(), product);
+        setField(reader.readLine(), product::setPartNumberStr);
+
         System.out.println(messanger.getManufactureCostInputInvitationMessage());
-        consoleSetManufactureCost(reader.readLine(), product);
+        setField(reader.readLine(), product::setManufactureCostStr);
+
         System.out.println(messanger.getUnitOfMeasureInputInvitationMessage());
-        consoleSetUnitOfMeasure(reader.readLine(), product);
+        setField(reader.readLine(), product::setUnitOfMeasureStr);
+
         System.out.println(messanger.getPersonNameInputInvitationMessage());
-        consoleSetNamePerson(reader.readLine(), owner);
+        setField(reader.readLine(), owner::setNameStr);
+
         System.out.println(messanger.getPersonBirthdayInputInvitationMessage());
-        consoleSetBirthdayPerson(reader.readLine(), owner);
+        setField(reader.readLine(), owner::setBirthdayStr);
+
         System.out.println(messanger.getPersonHeightInputInvitationMessage());
-        consoleSetHeightPerson(reader.readLine(), owner);
+        setField(reader.readLine(), owner::setHeightStr);
+
         System.out.println(messanger.getPersonWeightInputInvitationMessage());
-        consoleSetWeightPerson(reader.readLine(), owner);
+        setField(reader.readLine(), owner::setWeightStr);
+
         System.out.println(messanger.getPersonPassportIdInputInvitationMessage());
-        consoleSetPassportIdPerson(reader.readLine(), owner);
+        setField(reader.readLine(), owner::setPassportIDStr);
+
         product.setOwner(owner);
         return product;
     }
 
-    private void consoleSetName(String str, RealizedProduct product) throws IOException {
+    private void setField(String input, Consumer<String> setter) throws IOException{
         try{
-            product.setNameStr(str);
-        } catch (Exception e) {
-            repeatInput(e);
-            consoleSetName(reader.readLine(), product);
-        }
-    }
-
-    private void consoleSetX(String str, RealizedCoordinates coordinates) throws IOException{
-        try{
-            coordinates.setXStr(str);
-        } catch (Exception e) {
-            repeatInput(e);
-            consoleSetX(reader.readLine(), coordinates);
-        }
-    }
-
-    private void consoleSetY(String str, RealizedCoordinates coordinates) throws IOException{
-        try{
-            coordinates.setYStr(str);
-        } catch (Exception e) {
-            repeatInput(e);
-            consoleSetY(reader.readLine(), coordinates);
-        }
-    }
-
-    private void consoleSetPrice(String str, RealizedProduct product) throws IOException{
-        try{
-            product.setPriceStr(str);
+            setter.accept(input);
         } catch (Exception e){
             repeatInput(e);
-            consoleSetPrice(reader.readLine(), product);
-        }
-    }
-
-    private void consoleSetPartNumber(String str, RealizedProduct product) throws IOException{
-        try{
-            product.setPartNumberStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetPartNumber(reader.readLine(), product);
-        }
-    }
-
-    private void consoleSetManufactureCost(String str, RealizedProduct product) throws IOException{
-        try{
-            product.setManufactureCostStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetManufactureCost(reader.readLine(), product);
-        }
-    }
-
-    private void consoleSetUnitOfMeasure(String str, RealizedProduct product) throws IOException{
-        try{
-            product.setUnitOfMeasureStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetUnitOfMeasure(reader.readLine(), product);
-        }
-    }
-
-
-    private void consoleSetNamePerson(String str, RealizedPerson person) throws IOException{
-        try{
-            person.setNameStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetNamePerson(reader.readLine(), person);
-        }
-    }
-
-    private void consoleSetBirthdayPerson(String str, RealizedPerson person) throws IOException{
-        try{
-            person.setBirthdayStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetBirthdayPerson(reader.readLine(), person);
-        }
-    }
-
-    private void consoleSetHeightPerson(String str, RealizedPerson person) throws IOException{
-        try{
-            person.setHeightStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetHeightPerson(reader.readLine(), person);
-        }
-    }
-
-    private void consoleSetWeightPerson(String str, RealizedPerson person) throws IOException{
-        try{
-            person.setWeightStr(str);
-        } catch (Exception e){
-            repeatInput(e);
-            consoleSetWeightPerson(reader.readLine(), person);
-        }
-    }
-
-    private void consoleSetPassportIdPerson(String str, RealizedPerson person) throws IOException{
-        try {
-            person.setPassportIDStr(str);
-        } catch(Exception e){
-            repeatInput(e);
-            consoleSetPassportIdPerson(reader.readLine(), person);
+            setField(reader.readLine(), setter);
         }
     }
 
@@ -180,5 +95,4 @@ public class ConsoleReader extends AbstractReader {
         }
         System.out.println("Has got error. Please, entered the field again: ");
     }
-
 }

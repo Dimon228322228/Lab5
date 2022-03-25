@@ -8,15 +8,15 @@ import Exception.InvalidPartNumberException;
 import Exception.InvalidManufactureCostException;
 import Exception.InvalidUnitOfMeasureExseption;
 
-public interface CasterFieldProductFromString {
-     ValidatorProduct valProd = new ValidatorProduct() {};
-     default String castName(String name){
+public class CasterFieldProductFromString {
+     ValidatorProduct valProd = new ValidatorProduct();
+     public String castName(String name){
           if (valProd.NameProductValid(name.trim())) {
                return name.trim();
           } else throw new InvalidNameProductException();
      }
 
-     default Double castPrice(String str){
+     public Double castPrice(String str){
           Double price = Double.parseDouble(str.trim());
           if(valProd.PriceValid(price)){
                return price;
@@ -25,7 +25,7 @@ public interface CasterFieldProductFromString {
           }
      }
 
-     default String castPartNumber(String str){
+     public String castPartNumber(String str){
           if (valProd.partNumberValid(str.trim())){
                return str.trim();
           } else {
@@ -33,7 +33,7 @@ public interface CasterFieldProductFromString {
           }
      }
 
-     default double castManufactureCost(String str){
+     public double castManufactureCost(String str){
           double manufactureCost = Double.parseDouble(str.trim());
           if(valProd.manufactureCostValid(manufactureCost)){
                return manufactureCost;
@@ -42,7 +42,7 @@ public interface CasterFieldProductFromString {
           }
      }
 
-     default UnitOfMeasure castUnitOfMeasure(String str){
+     public UnitOfMeasure castUnitOfMeasure(String str){
           if (valProd.UnitOfMeasureValid(str)){
                return UnitOfMeasure.fromString(str.trim());
           } else {

@@ -10,10 +10,10 @@ import Exception.InvalidPassportIDPersonException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public interface CasterPersonFromString {
-    ValidatorPerson valPer = new ValidatorPerson() {};
+public class CasterPersonFromString {
+    ValidatorPerson valPer = new ValidatorPerson();
 
-    default String castName(String inputStr){
+    public String castName(String inputStr){
         if (valPer.NamePersonValid(inputStr)){
             return inputStr.trim();
         } else {
@@ -21,16 +21,16 @@ public interface CasterPersonFromString {
         }
     }
 
-    default LocalDateTime castBirthday(String inputStr){
+    public LocalDateTime castBirthday(String inputStr){
         if (valPer.BirthdayValid(inputStr)){
             String [] data = inputStr.split("-");
             LocalDateTime date;
-            if (data.length == 5) {
+            if (data.length == 3) {
                 date = LocalDateTime.of(Integer.parseInt(data[0]),
                                         Integer.parseInt(data[1]),
                                         Integer.parseInt(data[2]),
-                                        Integer.parseInt(data[3]),
-                                        Integer.parseInt(data[4]));
+                                        00,
+                                        00);
                 return date;
             } else {
                 throw new InvalidBirthdayPersonException();
@@ -40,7 +40,7 @@ public interface CasterPersonFromString {
         }
     }
 
-    default long castHeight(String inputStr){
+    public long castHeight(String inputStr){
         long height = Long.parseLong(inputStr);
         if (valPer.HeightValid(height)){
             return height;
@@ -49,7 +49,7 @@ public interface CasterPersonFromString {
         }
     }
 
-    default int castWeight(String inputStr){
+    public int castWeight(String inputStr){
         int weight = Integer.parseInt(inputStr);
         if (valPer.WeightValid(weight)){
             return weight;
@@ -58,7 +58,7 @@ public interface CasterPersonFromString {
         }
     }
 
-    default String castPassportID(String inputStr){
+    public String castPassportID(String inputStr){
         if (valPer.PassportidValid(inputStr)){
             return inputStr;
         } else {

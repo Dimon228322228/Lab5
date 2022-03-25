@@ -1,5 +1,7 @@
 package Manager;
 
+import Content.Coordinate.RealizedCoordinates;
+import Content.Person.RealizedPerson;
 import Content.Product.RealizedProduct;
 import Exception.EmptyFileException;
 
@@ -20,8 +22,9 @@ public class FileManager {
     private File xmlProduct;
 
     public FileManager() throws JAXBException {
-        xmlContext = JAXBContext.newInstance(RealizedProduct.class);
+        xmlContext = JAXBContext.newInstance(RealizedProduct.class, RealizedCoordinates.class, RealizedPerson.class, CollectionQueuer.class);
         jaxbMarshaller = xmlContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         jaxbUnmarshaller = xmlContext.createUnmarshaller();
         xmlProduct = null;
     }
@@ -50,8 +53,8 @@ public class FileManager {
         File fileToRetrieve = new File(filePath);
         if (!fileToRetrieve.exists())
             throw new FileNotFoundException("There is not such file!");
-//        else if (fileToRetrieve.length() == 0)
-//            throw new EmptyFileException("File is empty!");
+        else if (fileToRetrieve.length() == 0)
+            throw new EmptyFileException("File is empty!");
         if (!fileToRetrieve.canRead() || !fileToRetrieve.canWrite())
             throw new SecurityException();
         return fileToRetrieve;
@@ -104,11 +107,12 @@ public class FileManager {
         return dataStr;
     }
 
-    @XmlRootElement(name = "Queue")
-    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlRootElement(name = "Products")
     private static class CollectionQueuer implements Serializable {
+
         private PriorityQueue<RealizedProduct> products = new PriorityQueue<>();
 
+        @XmlElement(name = "Product")
         public PriorityQueue<RealizedProduct> getCollection() {
             return products;
         }

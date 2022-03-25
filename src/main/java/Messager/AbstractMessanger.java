@@ -4,13 +4,14 @@ import Content.Product.Product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public abstract class AbstractMessanger implements Messanger{
-    protected Map<String, String> Explanations = new HashMap<>();
-    protected Map<String, String> Commands = new HashMap<>();
+    protected Map<String, String> explanations = new HashMap<>();
+    protected Map<String, String> commands = new HashMap<>();
 
     protected String getFieldMassage(String field, Object value){
-        return Explanations.get(field) + ": " + value + "\n";
+        return explanations.get(field) + ": " + value + "\n";
     }
 
     @Override
@@ -26,7 +27,7 @@ public abstract class AbstractMessanger implements Messanger{
         message += getFieldMassage("manufacture_cost", product.getManufactureCost());
         message += getFieldMassage("unit_of_measure", product.getUnitOfMeasure());
         message += getFieldMassage("name_person", product.getOwner().getName());
-        message += getFieldMassage("birthday", product.getOwner().getBirthday());
+        message += getFieldMassage("birthday", product.getOwner().getBirthday().toString());
         message += getFieldMassage("height", product.getOwner().getHeight());
         message += getFieldMassage("weight", product.getOwner().getWeight());
         message += getFieldMassage("passport_id", product.getOwner().getPassportID());
@@ -34,16 +35,15 @@ public abstract class AbstractMessanger implements Messanger{
     }
 
     protected String getCommandMessage(String command){
-        return command + ": " + Commands.get(command) + "\n";
+        return command + ": " + commands.get(command) + "\n";
     }
 
     @Override
     public String getCommandsMessage(){
-        String Message = "";
-        for (String command : Commands.keySet()){
-            Message += getCommandMessage(command);
-        }
-        return Message + getCommandMassageEnding();
+        return commands.keySet()
+                .stream()
+                .map(this::getCommandMessage)
+                .collect(Collectors.joining(System.lineSeparator(), "", getCommandMassageEnding()));
     }
 
     protected abstract String getCommandMassageEnding();
