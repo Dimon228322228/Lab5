@@ -11,7 +11,7 @@ public class CountGreaterThenUnitOfMeasure implements MessagingCommand{
     public void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory) {
         UnitOfMeasure unitOfMeasure;
         try{
-            unitOfMeasure = UnitOfMeasure.valueOf(arg);
+            unitOfMeasure = UnitOfMeasure.fromString(arg);
         } catch (IllegalArgumentException e){
             System.err.println("No such this field in enum.");
             return;

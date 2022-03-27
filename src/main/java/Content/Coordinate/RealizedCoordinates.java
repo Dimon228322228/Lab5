@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-
 @XmlRootElement
 public abstract class RealizedCoordinates implements Coordinates, Serializable {
 
@@ -17,6 +16,8 @@ public abstract class RealizedCoordinates implements Coordinates, Serializable {
     private Integer y; // field not null
 
     CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
+
+    public RealizedCoordinates(){}
 
     @XmlElement(name = "X")
     public Integer getX(){

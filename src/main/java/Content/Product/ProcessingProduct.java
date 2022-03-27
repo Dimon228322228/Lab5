@@ -4,6 +4,7 @@ import Content.Coordinate.Coordinates;
 import Content.Person.Person;
 import Manager.AbstractQueueManager;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 public class ProcessingProduct extends RealizedProduct {

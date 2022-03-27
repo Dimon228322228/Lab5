@@ -75,7 +75,7 @@ public class RealizedCommandFactory implements CommandFactory {
     }
 
     private void addCommandInHistory(String command){
-        historyCommand.add(command);
+        if (!command.equals("")) historyCommand.add(command);
         if (historyCommand.size() > 13){
             List<String> newListCommand = new ArrayList<>();
             for (int i = 1; i < historyCommand.size(); i++) newListCommand.add(historyCommand.get(i));

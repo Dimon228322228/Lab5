@@ -2,6 +2,7 @@ package Manager;
 
 import Content.Coordinate.RealizedCoordinates;
 import Content.Person.RealizedPerson;
+import Content.Product.ProcessingProduct;
 import Content.Product.RealizedProduct;
 import Exception.EmptyFileException;
 
@@ -15,6 +16,9 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.PriorityQueue;
 
+/**
+ * Class that handles files for parsing
+ */
 public class FileManager {
     private final JAXBContext xmlContext;
     private final Marshaller jaxbMarshaller;
@@ -29,10 +33,18 @@ public class FileManager {
         xmlProduct = null;
     }
 
+    /**
+     * @return new {@link File} with which work
+     */
     public File getXmlProduct(){
         return xmlProduct;
     }
 
+    /**
+     * check exist file and created new object {@link File}
+     * @param filepath string of path
+     * @throws FileNotFoundException
+     */
     public void setXmlProduct(String filepath) throws FileNotFoundException {
         if (filepath == null || !(new File(filepath).exists()))
             throw new FileNotFoundException("There is not such file!");
@@ -50,6 +62,7 @@ public class FileManager {
 
     public File assertFileIsUsable(String dataFilePath) throws InvalidPathException, IOException, EmptyFileException {
         String filePath = Paths.get(dataFilePath).toAbsolutePath().toString();
+        System.out.println(filePath);
         File fileToRetrieve = new File(filePath);
         if (!fileToRetrieve.exists())
             throw new FileNotFoundException("There is not such file!");

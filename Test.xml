@@ -1,3 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Products>
+    <Product>
+        <Coordinates>
+            <X>12</X>
+            <Y>21</Y>
+        </Coordinates>
+        <Creation_date>2022-2-27-5-15</Creation_date>
+        <Id>2</Id>
+        <Manufacture_cost>70.0</Manufacture_cost>
+        <Name>egg</Name>
+        <Owner>
+            <Birthday>2001-02-28</Birthday>
+            <Height>176</Height>
+            <Name>lila</Name>
+            <Passport_id>9876543</Passport_id>
+            <Weight>76</Weight>
+        </Owner>
+        <Part_number>0000000000000000000002</Part_number>
+        <Price>80.0</Price>
+        <Unit_of_measurement>PCS</Unit_of_measurement>
+    </Product>
+    <Product>
+        <Coordinates>
+            <X>12</X>
+            <Y>21</Y>
+        </Coordinates>
+        <Creation_date>2022-2-27-5-14</Creation_date>
+        <Id>1</Id>
+        <Manufacture_cost>80.0</Manufacture_cost>
+        <Name>milk</Name>
+        <Owner>
+            <Birthday>2000-12-20</Birthday>
+            <Height>180</Height>
+            <Name>mike</Name>
+            <Passport_id>12345567</Passport_id>
+            <Weight>80</Weight>
+        </Owner>
+        <Part_number>00000000000000000000001</Part_number>
+        <Price>70.0</Price>
+        <Unit_of_measurement>MILLILITERS</Unit_of_measurement>
+    </Product>
 </Products>

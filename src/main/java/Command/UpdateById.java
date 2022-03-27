@@ -11,6 +11,12 @@ import java.io.IOException;
 public class UpdateById implements SimpleCommand{
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
+        long id = -2;
+        try{
+            id = Long.parseLong(arg);
+        } catch (NumberFormatException e){
+            System.err.println("Id must be long.");
+        }
         Product product;
         try{
             product = reader.readProduct();
@@ -20,12 +26,6 @@ public class UpdateById implements SimpleCommand{
         } catch (Exception e){
             System.err.println(new InvalidProductFieldException().getMessage());
             return;
-        }
-        long id = -2;
-        try{
-            id = Long.parseLong(arg);
-        } catch (NumberFormatException e){
-            System.err.println("Id must be long.");
         }
         if (product == null){
             return;

@@ -1,5 +1,6 @@
 package Content.Person;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 public class ProcessingPerson extends RealizedPerson {

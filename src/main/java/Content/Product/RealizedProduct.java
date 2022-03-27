@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
-
 @XmlRootElement
 public abstract class RealizedProduct implements Product, Serializable {
 
@@ -33,6 +32,8 @@ public abstract class RealizedProduct implements Product, Serializable {
     private RealizedPerson owner ; // not null
 
     CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
+
+    public RealizedProduct(){}
 
     @Override
     public boolean equals(Object o){

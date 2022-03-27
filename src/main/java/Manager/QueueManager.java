@@ -13,19 +13,17 @@ import java.nio.file.InvalidPathException;
 import java.time.ZonedDateTime;
 import java.util.*;
 import Exception.ProductNotFoundException;
-
+/**
+ * This class stores the collection and works with it
+ * */
 public class QueueManager extends AbstractQueueManager{
 
-    /**
-     * When collection created
-     * */
+
     private final ZonedDateTime date;
-    /** Read file from xml*/
     private final FileManager fileManager;
-    /** Create object*/
     private final ObjectFactory ProductFactory;
     private final RealizedValidatorProduct validatorProduct = new RealizedValidatorProduct();
-    private String filepath = "/Users/itmo.share/Desktop/Lab5/Test.xml";
+    private String filepath = "Test.xml";
 
     public QueueManager(FileManager fileManager, ObjectFactory productfactory){
         this.fileManager = fileManager;
@@ -35,6 +33,9 @@ public class QueueManager extends AbstractQueueManager{
         createSet();
     }
 
+    /**
+     * @return {@link List} with information about collection
+     */
     @Override
     public List<String> displayInfo() {
         List<String> infoCollection = new ArrayList<>();
@@ -44,6 +45,9 @@ public class QueueManager extends AbstractQueueManager{
         return infoCollection;
     }
 
+    /**
+     * Checks objects received from a file and saves them to the collection
+     */
     public void parseDateFromFile(){
         try{
             //setFilepath();
@@ -53,18 +57,20 @@ public class QueueManager extends AbstractQueueManager{
                     collection.add(product);
                     idSet.add(product.getId());
                 } else {
-                    System.err.println("Product with " + product.toString() + "hasn't been add in the collection");
+                    System.err.println("Product with " + product + "hasn't been add in the collection");
                 }
             }
-
+            System.out.println("Download complete");
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
         } catch (EmptyFileException e) {
             System.err.println((new EmptyFileException("File is empty!")).getMessage());
         }
-        System.out.println("Download complete");
     }
 
+    /**
+     * get value environment variable and set it to filepath
+     */
     private void setFilepath(){
         System.out.println("Enter name environment variable that contains the path of the file: ");
         String nameVariable = "";
@@ -88,11 +94,17 @@ public class QueueManager extends AbstractQueueManager{
         }
     }
 
+    /**
+     * @return all elements of the collection as a list in ascending order
+     */
     @Override
     public List<Product> ShowElements(){
         return getListProduct();
     }
 
+    /**
+     * @return all elements of the collection as a list in ascending order
+     */
     private List<Product> getListProduct(){
         List<Product> productList = new ArrayList<>();
         PriorityQueue<RealizedProduct> instance = new PriorityQueue<>();
@@ -106,11 +118,21 @@ public class QueueManager extends AbstractQueueManager{
         return productList;
     }
 
+    /**
+     * add product in the collection
+     * @param product is haired of class {@link Product}
+     */
     @Override
     public void add(RealizedProduct product) {
         collection.add(product);
+        idSet.add(product.getId());
     }
 
+    /**
+     * Updates the value of the collection item by id
+     * @param id elements id
+     * @param product is hair of class {@link Product}
+     */
     @Override
     public void updateId(long id, Product product) {
         boolean flag = false;
@@ -126,6 +148,10 @@ public class QueueManager extends AbstractQueueManager{
         if (!flag) throw new ProductNotFoundException();
     }
 
+    /**
+     * Deletes element of the collection by id
+     * @param id elements id
+     */
     @Override
     public void RemoveById(long id) {
         boolean flag = false;
@@ -142,11 +168,18 @@ public class QueueManager extends AbstractQueueManager{
 
     }
 
+    /**
+     * Clear collection (Delete all element of the collection)
+     */
     @Override
     public void clear() {
         collection = new PriorityQueue<>();
+        idSet = new HashSet<>();
     }
 
+    /**
+     * Saves the collection to a file
+     */
     @Override
     public void save() {
         if (filepath == null || filepath.equals("")) {
@@ -164,6 +197,9 @@ public class QueueManager extends AbstractQueueManager{
         }
     }
 
+    /**
+     * @return max product
+     */
     private Product maxProduct() {
         Product productMax = collection.peek();
         for(Product product: collection) {
@@ -173,12 +209,23 @@ public class QueueManager extends AbstractQueueManager{
         return productMax;
     }
 
+    /**
+     * Adds a element in the collection if it is larger than all the elements in the collection
+     * @param product is hair of class {@link Product}
+     */
     @Override
     public void AddIfMax(Product product) {
         RealizedProduct product1 = ProductFactory.getProduct(product);
-        if (!collection.isEmpty() && product1.compareTo(maxProduct()) > 0) collection.add(product1);
+        if (!collection.isEmpty() && product1.compareTo(maxProduct()) > 0) {
+            collection.add(product1);
+            idSet.add(product1.getId());
+        }
     }
 
+    /**
+     * Deletes the smallest element in the collection
+     * @param product is hair of class {@link Product}
+     */
     @Override
     public void RemoveLower(Product product) {
         List<Product> productList = getListProduct();
@@ -186,13 +233,18 @@ public class QueueManager extends AbstractQueueManager{
         if (productList.size() != 0) {
             for (Product product1: collection){
                 if (product1.compareTo(product) < 0){
-                    collection.remove(product1);
                     removeID(product1.getId());
+                    collection.remove(product1);
                 }
             }
         } else System.err.println("Nothing to remove! Collection is empty!");
     }
 
+    /**
+     * Counts the number of elements with the same manufacture cost
+     * @param manufactureCost
+     * @return amount of elements
+     */
     @Override
     public long CountByManufactureCost(Double manufactureCost) {
         long count = 0;
@@ -202,6 +254,11 @@ public class QueueManager extends AbstractQueueManager{
         return count;
     }
 
+    /**
+     * Counts the number of elements with value unitOfMeasure grated than given
+     * @param unitOfMeasure enum
+     * @return amount of elements
+     */
     @Override
     public long CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
         long count = 0;
@@ -211,23 +268,14 @@ public class QueueManager extends AbstractQueueManager{
         return count;
     }
 
+    /**
+     * @return all elements of the collection as a list in ascending order
+     */
     @Override
     public List<Product> PrintAscending() {
         List<Product> productList = getListProduct();
         Collections.sort(productList);
         return productList;
-    }
-
-    @Override
-    public boolean elementExist(long id) {
-        boolean flag = false;
-        for(Product product: collection) {
-            if(product.getId() == id) {
-                flag = true;
-                break;
-            }
-        }
-        return flag;
     }
 
 }

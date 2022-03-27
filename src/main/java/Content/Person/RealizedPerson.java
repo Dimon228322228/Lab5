@@ -24,6 +24,8 @@ public abstract class RealizedPerson implements Person, Serializable {
 
     CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
 
+    public RealizedPerson(){}
+
     @Override
     public String toString(){
         return String.format("Person(owner) name = %s, birthday = %s," +
