@@ -1,8 +1,7 @@
 package Manager;
 
-import Content.ObjectFactory.ObjectFactory;
 import Content.Product.Product;
-import Content.Product.RealizedProduct;
+import Content.Product.ProductImpl;
 import Content.Product.UnitOfMeasure;
 import Content.Validator.RealizedValidatorProduct;
 import Exception.EmptyFileException;
@@ -16,22 +15,30 @@ import Exception.ProductNotFoundException;
 /**
  * This class stores the collection and works with it
  * */
-public class QueueManager extends AbstractQueueManager{
+public class QueueManager implements CollectionManager{
 
 
     private final ZonedDateTime date;
     private final FileManager fileManager;
-    private final ObjectFactory ProductFactory;
     private final RealizedValidatorProduct validatorProduct = new RealizedValidatorProduct();
     private String filepath = "Test.xml";
+    private PriorityQueue<ProductImpl> collection;
+    private static final GeneratedID generatedID = new GeneratedID();
 
-    public QueueManager(FileManager fileManager, ObjectFactory productfactory){
+    public QueueManager(FileManager fileManager){
         this.fileManager = fileManager;
-        ProductFactory = productfactory;
         collection = new PriorityQueue<>();
         this.date = ZonedDateTime.now();
-        createSet();
     }
+
+    /**
+     * Get id which don't exist in set
+     * @return id
+     */
+    public static long getID() {
+        return generatedID.getID();
+    }
+
 
     /**
      * @return {@link List} with information about collection
@@ -51,11 +58,11 @@ public class QueueManager extends AbstractQueueManager{
     public void parseDateFromFile(){
         try{
             //setFilepath();
-            Collection<RealizedProduct> products = fileManager.getCollectionFromFile(filepath);
-            for (RealizedProduct product : products){
+            Collection<ProductImpl> products = fileManager.getCollectionFromFile(filepath);
+            for (ProductImpl product : products){
                 if(validatorProduct.validProduct(product)){
                     collection.add(product);
-                    idSet.add(product.getId());
+                    generatedID.setID(product.getId());
                 } else {
                     System.err.println("Product with " + product + "hasn't been add in the collection");
                 }
@@ -98,7 +105,7 @@ public class QueueManager extends AbstractQueueManager{
      * @return all elements of the collection as a list in ascending order
      */
     @Override
-    public List<Product> ShowElements(){
+    public List<Product> showElements(){
         return getListProduct();
     }
 
@@ -107,10 +114,10 @@ public class QueueManager extends AbstractQueueManager{
      */
     private List<Product> getListProduct(){
         List<Product> productList = new ArrayList<>();
-        PriorityQueue<RealizedProduct> instance = new PriorityQueue<>();
+        PriorityQueue<ProductImpl> instance = new PriorityQueue<>();
         int size = collection.size();
         for (int i = 0; i < size; i++ ){
-            RealizedProduct product = collection.poll();
+            ProductImpl product = collection.poll();
             productList.add(product);
             instance.add(product);
         }
@@ -123,9 +130,9 @@ public class QueueManager extends AbstractQueueManager{
      * @param product is haired of class {@link Product}
      */
     @Override
-    public void add(RealizedProduct product) {
+    public void add(ProductImpl product) {
         collection.add(product);
-        idSet.add(product.getId());
+        generatedID.setID(product.getId());
     }
 
     /**
@@ -136,11 +143,10 @@ public class QueueManager extends AbstractQueueManager{
     @Override
     public void updateId(long id, Product product) {
         boolean flag = false;
-        RealizedProduct product1 = ProductFactory.getProduct(id, product);
-        for(Product product2: collection){
-            if (product2.getId() == id){
-                collection.remove(product2);
-                collection.add(product1);
+        for(Product product1: collection){
+            if (product1.getId() == id){
+                collection.remove(product1);
+                collection.add((ProductImpl) product);
                 flag = true;
                 break;
             }
@@ -153,12 +159,12 @@ public class QueueManager extends AbstractQueueManager{
      * @param id elements id
      */
     @Override
-    public void RemoveById(long id) {
+    public void removeById(long id) {
         boolean flag = false;
         for(Product product: collection) {
             if(product.getId() == id) {
                 collection.remove(product);
-                removeID(product.getId());
+                generatedID.removeID(product.getId());
                 flag = true;
                 break;
             }
@@ -174,7 +180,7 @@ public class QueueManager extends AbstractQueueManager{
     @Override
     public void clear() {
         collection = new PriorityQueue<>();
-        idSet = new HashSet<>();
+        generatedID.clearIdSet();
     }
 
     /**
@@ -185,13 +191,13 @@ public class QueueManager extends AbstractQueueManager{
         if (filepath == null || filepath.equals("")) {
             //setFilepath();
             try {
-                fileManager.SaveCollectionInXML(collection, filepath);
+                fileManager.saveCollectionInXML(collection, filepath);
             } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
                 e.printStackTrace();
             }
         }else {
             try {
-                fileManager.SaveCollectionInXML(collection, filepath);
+                fileManager.saveCollectionInXML(collection, filepath);
             } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
                 e.printStackTrace();            }
         }
@@ -214,11 +220,10 @@ public class QueueManager extends AbstractQueueManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public void AddIfMax(Product product) {
-        RealizedProduct product1 = ProductFactory.getProduct(product);
-        if (!collection.isEmpty() && product1.compareTo(maxProduct()) > 0) {
-            collection.add(product1);
-            idSet.add(product1.getId());
+    public void addIfMax(Product product) {
+        if (!collection.isEmpty() && product.compareTo(maxProduct()) > 0) {
+            collection.add((ProductImpl) product);
+            generatedID.setID(product.getId());
         }
     }
 
@@ -227,13 +232,13 @@ public class QueueManager extends AbstractQueueManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public void RemoveLower(Product product) {
+    public void removeLower(Product product) {
         List<Product> productList = getListProduct();
         Collections.sort(productList);
         if (productList.size() != 0) {
             for (Product product1: collection){
                 if (product1.compareTo(product) < 0){
-                    removeID(product1.getId());
+                    generatedID.removeID(product1.getId());
                     collection.remove(product1);
                 }
             }
@@ -242,11 +247,10 @@ public class QueueManager extends AbstractQueueManager{
 
     /**
      * Counts the number of elements with the same manufacture cost
-     * @param manufactureCost
      * @return amount of elements
      */
     @Override
-    public long CountByManufactureCost(Double manufactureCost) {
+    public long countByManufactureCost(Double manufactureCost) {
         long count = 0;
         for (Product product: collection){
             if (product.getManufactureCost() == manufactureCost) count += 1;
@@ -260,7 +264,7 @@ public class QueueManager extends AbstractQueueManager{
      * @return amount of elements
      */
     @Override
-    public long CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
+    public long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
         long count = 0;
         for (Product product: collection){
             if (product.getUnitOfMeasure().compareTo(unitOfMeasure) > 0) count += 1;
@@ -272,10 +276,46 @@ public class QueueManager extends AbstractQueueManager{
      * @return all elements of the collection as a list in ascending order
      */
     @Override
-    public List<Product> PrintAscending() {
+    public List<Product> printAscending() {
         List<Product> productList = getListProduct();
         Collections.sort(productList);
         return productList;
+    }
+
+    static class GeneratedID {
+        private Set<Long> idSet = new HashSet<>();
+
+        /**
+         * Get id which don't exist in set
+         * @return id
+         */
+        public long getID() {
+            long id = 0;
+            do{
+                id ++;
+            } while (idExists(id));
+            idSet.add(id);
+            return id;
+        }
+
+        /**
+         * does an id exist in a set
+         * @return boolean
+         */
+        public boolean idExists(Long id){
+            return idSet.contains(id);
+        }
+
+        /**
+         * Remove an id from the set
+         */
+        public void removeID(long id) {
+            idSet.remove(id);
+        }
+
+        public void setID(long id){idSet.add(id);}
+
+        public void clearIdSet(){idSet = new HashSet<>();}
     }
 
 }

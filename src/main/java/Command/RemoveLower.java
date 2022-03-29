@@ -17,6 +17,6 @@ public class RemoveLower implements SimpleCommand{
             return;
         }
         if (product == null) return;
-        manager.RemoveLower(product);
+        manager.removeLower(product);
     }
 }

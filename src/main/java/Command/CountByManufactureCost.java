@@ -14,7 +14,7 @@ public class CountByManufactureCost implements MessagingCommand{
         } catch (NumberFormatException e){
             System.err.println("Manufacture cost must be convert to double.");
         }
-        long count = manager.CountByManufactureCost(manufactureCost);
+        long count = manager.countByManufactureCost(manufactureCost);
         System.out.println(messanger.getCountElementWithCondition(count));
     }
 }

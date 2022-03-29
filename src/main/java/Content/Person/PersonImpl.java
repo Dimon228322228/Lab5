@@ -2,15 +2,13 @@ package Content.Person;
 
 import Content.Caster.CasterPersonFromString;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 @XmlRootElement
-public abstract class RealizedPerson implements Person, Serializable {
+public class PersonImpl implements Person, Serializable {
 
     private String name; // not null and not empty
 
@@ -22,15 +20,9 @@ public abstract class RealizedPerson implements Person, Serializable {
 
     private String passportID; // not null, len(line) >= 6 and len(line) <= 41
 
-    CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
+    private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
 
-    public RealizedPerson(){}
-
-    @Override
-    public String toString(){
-        return String.format("Person(owner) name = %s, birthday = %s," +
-                                " height = %d, weight = %s, passport ID = %s", name, birthday, height, weight, passportID);
-    }
+    public PersonImpl(){}
 
     @Override
     public void setName(String name) {
@@ -101,5 +93,11 @@ public abstract class RealizedPerson implements Person, Serializable {
 
     public void setPassportIDStr(String inputStr){
         setPassportID(casterPersonFromString.castPassportID(inputStr));
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Person(owner) name = %s, birthday = %s," +
+                " height = %d, weight = %s, passport ID = %s", name, birthday, height, weight, passportID);
     }
 }

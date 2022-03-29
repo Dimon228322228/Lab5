@@ -3,11 +3,11 @@ package Content.Validator;
 import Content.Product.UnitOfMeasure;
 
 public class ValidatorUnitOfMeasure {
-    public boolean ValidUnitOfMeasure(UnitOfMeasure unitOfMeasure){
+    public boolean validUnitOfMeasure(UnitOfMeasure unitOfMeasure){
         return unitOfMeasure != null;
     }
 
-    public boolean ValidUnitOfMeasure(String unitOfMeasure){
+    public boolean validUnitOfMeasure(String unitOfMeasure){
         if (unitOfMeasure == null) return false;
         String[] list = UnitOfMeasure.getTitleinString().trim().split(" ");
         for (String string: list){

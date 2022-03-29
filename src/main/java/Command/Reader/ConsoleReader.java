@@ -1,10 +1,9 @@
 package Command.Reader;
 
 import Command.CommandFactory.CommandFactory;
-import Content.Coordinate.RealizedCoordinates;
-import Content.ObjectFactory.ObjectFactory;
-import Content.Person.RealizedPerson;
-import Content.Product.RealizedProduct;
+import Content.Coordinate.CoordinatesImpl;
+import Content.Person.PersonImpl;
+import Content.Product.ProductImpl;
 import Manager.CollectionManager;
 import Messager.Messanger;
 import Exception.InvalidProductFieldException;
@@ -15,12 +14,11 @@ import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
 public class ConsoleReader extends AbstractReader {
-    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, ObjectFactory objectFactory, Messanger messanger){
+    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, Messanger messanger){
         reader = new BufferedReader(new InputStreamReader(System.in));
         super.commandFactory = commandFactory;
         super.messanger = messanger;
         super.manager = manager;
-        super.productFactory = objectFactory;
     }
 
     @Override
@@ -29,47 +27,47 @@ public class ConsoleReader extends AbstractReader {
     }
 
     @Override
-    public RealizedProduct readProduct() throws IOException {
-        RealizedProduct product = productFactory.getProduct();
-        RealizedCoordinates coordinates = productFactory.getCoordinates();
-        RealizedPerson owner = productFactory.getPerson();
+    public ProductImpl readProduct() throws IOException {
+        ProductImpl product = new ProductImpl();
+        CoordinatesImpl coordinates = new CoordinatesImpl();
+        PersonImpl owner = new PersonImpl();
 
-        System.out.println(messanger.getNameInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("name"));
         setField(reader.readLine(), product::setNameStr);
 
-        System.out.println(messanger.getXInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("x"));
         setField(reader.readLine(), coordinates::setXStr);
 
-        System.out.println(messanger.getYInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("y"));
         setField(reader.readLine(), coordinates::setYStr);
 
         product.setCoordinates(coordinates);
 
-        System.out.println(messanger.getPriceInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("price"));
         setField(reader.readLine(), product::setPriceStr);
 
-        System.out.println(messanger.getPartNumberInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("partNumber"));
         setField(reader.readLine(), product::setPartNumberStr);
 
-        System.out.println(messanger.getManufactureCostInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("manufactureCost"));
         setField(reader.readLine(), product::setManufactureCostStr);
 
         System.out.println(messanger.getUnitOfMeasureInputInvitationMessage());
         setField(reader.readLine(), product::setUnitOfMeasureStr);
 
-        System.out.println(messanger.getPersonNameInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("namePerson"));
         setField(reader.readLine(), owner::setNameStr);
 
         System.out.println(messanger.getPersonBirthdayInputInvitationMessage());
         setField(reader.readLine(), owner::setBirthdayStr);
 
-        System.out.println(messanger.getPersonHeightInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("height"));
         setField(reader.readLine(), owner::setHeightStr);
 
-        System.out.println(messanger.getPersonWeightInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("weight"));
         setField(reader.readLine(), owner::setWeightStr);
 
-        System.out.println(messanger.getPersonPassportIdInputInvitationMessage());
+        System.out.println(messanger.getFieldInvitationMessage("passportId"));
         setField(reader.readLine(), owner::setPassportIDStr);
 
         product.setOwner(owner);

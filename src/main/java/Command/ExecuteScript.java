@@ -1,17 +1,17 @@
 package Command;
 
 import Command.CommandFactory.CommandFactory;
+import Command.Reader.FileReader;
 import Command.Reader.Reader;
-import Content.ObjectFactory.ObjectFactory;
 import Manager.CollectionManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class ExecuteScript implements ScriptCommand{
+public class  ExecuteScript implements ScriptCommand{
     @Override
-    public void execute(CollectionManager manager, Reader reader, String fileName, CommandFactory commandFactory, ObjectFactory objectFactory){
-        File file = null;
+    public void execute(CollectionManager manager, Reader reader, String fileName, CommandFactory commandFactory){
+        File file;
         try{
             file = new File(fileName);
         } catch (NullPointerException e){
@@ -19,11 +19,11 @@ public class ExecuteScript implements ScriptCommand{
             return;
         }
         try{
-            Reader fileReader = objectFactory.getFileReader(commandFactory, manager, file);
-            fileReader.ReadCommand();
+            Reader fileReader = new FileReader(commandFactory, manager, file);
+            fileReader.readCommand();
         } catch (FileNotFoundException e){
             System.err.println("File with name " + fileName + " is not found");
         }
-        reader.ReadCommand();
+        reader.readCommand();
     }
 }

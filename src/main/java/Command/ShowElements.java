@@ -11,7 +11,7 @@ import java.util.List;
 public class ShowElements implements MessagingCommand{
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory) {
-        List<Product> productList = manager.ShowElements();
+        List<Product> productList = manager.showElements();
         for (Product product: productList){
             System.out.println(messanger.getProductMessage(product));
         }

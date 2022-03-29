@@ -16,6 +16,6 @@ public class AddIfMax implements SimpleCommand{
             System.err.println(e.getMessage());
         }
         if (product == null) return;
-        manager.AddIfMax(product);
+        manager.addIfMax(product);
     }
 }

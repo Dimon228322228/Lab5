@@ -14,7 +14,7 @@ public class RemoveById implements SimpleCommand{
             System.err.println(e.getMessage() + "Id must be long.");
         }
         try {
-            manager.RemoveById(id);
+            manager.removeById(id);
         } catch (ProductNotFoundException e){
             System.err.println(e.getMessage());
         }

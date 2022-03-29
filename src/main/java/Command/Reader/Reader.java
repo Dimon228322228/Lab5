@@ -1,11 +1,11 @@
 package Command.Reader;
 
-import Content.Product.RealizedProduct;
+import Content.Product.ProductImpl;
 
 import java.io.IOException;
 
 public interface Reader {
-    void ReadCommand();
+    void readCommand();
     void exit();
-    RealizedProduct readProduct() throws IOException;
+    ProductImpl readProduct() throws IOException;
 }

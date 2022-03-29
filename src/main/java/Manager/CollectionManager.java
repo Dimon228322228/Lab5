@@ -1,7 +1,7 @@
 package Manager;
 
 import Content.Product.Product;
-import Content.Product.RealizedProduct;
+import Content.Product.ProductImpl;
 import Content.Product.UnitOfMeasure;
 
 import java.util.List;
@@ -11,16 +11,16 @@ public interface CollectionManager {
     List<String> displayInfo();
 
     /** Show all element of collection in string **/
-    List<Product> ShowElements();
+    List<Product> showElements();
 
     /** Add new element in collection **/
-    void add(RealizedProduct product);
+    void add(ProductImpl product);
 
     /** Replace element on id **/
     void updateId(long id, Product product);
 
     /** Remove element with this id**/
-    void RemoveById(long id);
+    void removeById(long id);
 
     /** Remove all element in collection **/
     void clear();
@@ -29,17 +29,17 @@ public interface CollectionManager {
     void save();
 
     /** Add element in collection if he is great then all*/
-    void AddIfMax(Product product);
+    void addIfMax(Product product);
 
     /** Remove all element lower then given*/
-    void RemoveLower(Product product);
+    void removeLower(Product product);
 
     /** Count all element then manufactureCost equals given*/
-    long CountByManufactureCost(Double manufactureCost);
+    long countByManufactureCost(Double manufactureCost);
 
     /** Count amount element then greater given*/
-    long CountGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
+    long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
 
     /** Print element of collection in ascending order*/
-    List<Product> PrintAscending();
+    List<Product> printAscending();
 }

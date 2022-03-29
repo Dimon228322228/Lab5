@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 public class DateSerializer extends XmlAdapter<String, Date> {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd-HH-mm");
     @Override
-    public Date unmarshal(String v) throws Exception {
+    public Date unmarshal(String v) {
         LocalDateTime date = LocalDateTime.parse(v, formatter);
         Calendar calendar = new GregorianCalendar(date.getYear(),
                                                   date.getMonthValue(),
@@ -21,7 +21,7 @@ public class DateSerializer extends XmlAdapter<String, Date> {
     }
 
     @Override
-    public String marshal(Date v) throws Exception {
+    public String marshal(Date v) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(v);
         return calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" +

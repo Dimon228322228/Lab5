@@ -1,18 +1,16 @@
 package Command.Reader;
 
 import Command.CommandFactory.CommandFactory;
-import Content.Coordinate.RealizedCoordinates;
-import Content.ObjectFactory.RealizedObjectFactory;
-import Content.Person.RealizedPerson;
-import Content.Product.RealizedProduct;
+import Content.Coordinate.CoordinatesImpl;
+import Content.Person.PersonImpl;
+import Content.Product.ProductImpl;
 import Manager.CollectionManager;
 
 import java.io.*;
 
 public class FileReader extends AbstractReader {
-    public FileReader(CommandFactory commandFactory, CollectionManager manager, File file, RealizedObjectFactory productFactory) throws FileNotFoundException {
+    public FileReader(CommandFactory commandFactory, CollectionManager manager, File file) throws FileNotFoundException {
         reader = new BufferedReader(new java.io.FileReader(file));
-        super.productFactory = productFactory;
         super.commandFactory = commandFactory;
         super.manager = manager;
     }
@@ -23,10 +21,10 @@ public class FileReader extends AbstractReader {
     }
 
     @Override
-    public RealizedProduct readProduct() throws IOException {
-        RealizedCoordinates coordinates =  productFactory.getCoordinates();
-        RealizedProduct product = productFactory.getProduct();
-        RealizedPerson person = productFactory.getPerson();
+    public ProductImpl readProduct() throws IOException {
+        CoordinatesImpl coordinates =  new CoordinatesImpl();
+        ProductImpl product = new ProductImpl();
+        PersonImpl person = new PersonImpl();
 
         product.setNameStr(reader.readLine());
 

@@ -23,14 +23,14 @@ public abstract class AbstractMessanger implements Messanger{
         message += getFieldMassage("y", product.getCoordinates().getY());
         message += getFieldMassage("date", product.getCreationDate());
         message += getFieldMassage("price", product.getPrice());
-        message += getFieldMassage("part_number", product.getPartNumber());
-        message += getFieldMassage("manufacture_cost", product.getManufactureCost());
-        message += getFieldMassage("unit_of_measure", product.getUnitOfMeasure());
-        message += getFieldMassage("name_person", product.getOwner().getName());
+        message += getFieldMassage("partNumber", product.getPartNumber());
+        message += getFieldMassage("manufactureCost", product.getManufactureCost());
+        message += getFieldMassage("unitOfMeasure", product.getUnitOfMeasure());
+        message += getFieldMassage("namePerson", product.getOwner().getName());
         message += getFieldMassage("birthday", product.getOwner().getBirthday().toString());
         message += getFieldMassage("height", product.getOwner().getHeight());
         message += getFieldMassage("weight", product.getOwner().getWeight());
-        message += getFieldMassage("passport_id", product.getOwner().getPassportID());
+        message += getFieldMassage("passportId", product.getOwner().getPassportID());
         return message;
     }
 

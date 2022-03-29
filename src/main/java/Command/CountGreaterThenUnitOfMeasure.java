@@ -19,7 +19,7 @@ public class CountGreaterThenUnitOfMeasure implements MessagingCommand{
             System.err.println(e.getMessage());
             return;
         }
-        long count = manager.CountGreaterThenUnitOfMeashure(unitOfMeasure);
+        long count = manager.countGreaterThenUnitOfMeashure(unitOfMeasure);
         System.out.println(messanger.getCountElementWithCondition(count));
     }
 }

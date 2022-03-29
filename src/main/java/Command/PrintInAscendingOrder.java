@@ -11,7 +11,7 @@ import java.util.List;
 public class PrintInAscendingOrder implements MessagingCommand{
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory) {
-        List<Product> products = manager.ShowElements();
+        List<Product> products = manager.showElements();
         for (Product product: products){
             System.out.println(messanger.getProductMessage(product));
         }

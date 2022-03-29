@@ -1,7 +1,6 @@
 package Command.Reader;
 
 import Command.CommandFactory.CommandFactory;
-import Content.ObjectFactory.ObjectFactory;
 import Manager.CollectionManager;
 import Messager.Messanger;
 
@@ -13,11 +12,10 @@ public abstract class AbstractReader implements Reader {
     private boolean isRunning;
     protected CommandFactory commandFactory;
     protected CollectionManager manager;
-    protected ObjectFactory productFactory;
     protected Messanger messanger;
 
     @Override
-    public void ReadCommand() {
+    public void readCommand() {
         isRunning = true;
         while (isRunning) {
             try {

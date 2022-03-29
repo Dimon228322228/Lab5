@@ -20,18 +20,18 @@ public class EnglishMessager extends AbstractMessanger{
         commands.put("info", "displays information about collection");
         commands.put("show", "print all elements of the collection in string representation");
         commands.put("add", "add a new {Product} to the collection");
-        commands.put("update_id", "update the value of the collection element whose id is equal to the given one");
-        commands.put("remove_by_id", "remove element from collection by its id");
+        commands.put("updateId", "update the value of the collection element whose id is equal to the given one");
+        commands.put("removeById", "remove element from collection by its id");
         commands.put("clear", "clear the collection");
         commands.put("save", "save collection to file");
-        commands.put("execute_script", "read and execute the script from the specified file");
+        commands.put("executeScript", "read and execute the script from the specified file");
         commands.put("exit", "terminate program (without saving to file)");
-        commands.put("add_if_max", "add a new element to the collection if its value is greater than the value of the largest element in this collection");
-        commands.put("remove_lower", "remove all elements from the collection that are smaller than the given one");
+        commands.put("addIfMax", "add a new element to the collection if its value is greater than the value of the largest element in this collection");
+        commands.put("removeLower", "remove all elements from the collection that are smaller than the given one");
         commands.put("history", "print the last 13 commands (without their arguments)");
-        commands.put("count_by_manufacture_cost", "display the number of elements whose value of the manufactureCost field is equal to the specified one");
-        commands.put("count_greater_than_unit_of_measure", "display the number of elements whose unitOfMeasure field value is greater than the given one");
-        commands.put("print_ascending", "display the elements of the collection in ascending order");
+        commands.put("countByManufactureCost", "display the number of elements whose value of the manufactureCost field is equal to the specified one");
+        commands.put("countGreaterThanUnitOfMeasure", "display the number of elements whose unitOfMeasure field value is greater than the given one");
+        commands.put("printAscending", "display the elements of the collection in ascending order");
     }
 
     @Override
@@ -42,14 +42,14 @@ public class EnglishMessager extends AbstractMessanger{
         explanations.put("y", "Y coordinate");
         explanations.put("date", "Creation date");
         explanations.put("price", "Price");
-        explanations.put("part_number", "Part number");
-        explanations.put("manufacture_cost", "Manufacture cost");
-        explanations.put("unit_of_measure", "Unit of measurement");
-        explanations.put("name_person", "Owners name");
-        explanations.put("birthday", "Owners birthday");
-        explanations.put("height", "Owners height");
-        explanations.put("weight", "Owners weight");
-        explanations.put("passport_id", "Owners passport id");
+        explanations.put("partNumber", "Part number");
+        explanations.put("manufactureCost", "Manufacture cost");
+        explanations.put("unitOfMeasure", "Unit of measurement");
+        explanations.put("namePerson", "Owner name");
+        explanations.put("birthday", "Owner birthday");
+        explanations.put("height", "Owner height");
+        explanations.put("weight", "Owner weight");
+        explanations.put("passportId", "Owner passport id");
     }
 
     @Override
@@ -57,34 +57,8 @@ public class EnglishMessager extends AbstractMessanger{
         return "Collection type: " + type + "\nCollection size: " + size + "\nInitialization time: " + creationDate;
     }
 
-    @Override
-    public String getNameInputInvitationMessage() {
-        return "Enter product name: ";
-    }
-
-    @Override
-    public String getXInputInvitationMessage() {
-        return "Enter X coordinate: ";
-    }
-
-    @Override
-    public String getYInputInvitationMessage() {
-        return "Enter Y coordinate: ";
-    }
-
-    @Override
-    public String getPriceInputInvitationMessage() {
-        return "Enter product price: ";
-    }
-
-    @Override
-    public String getPartNumberInputInvitationMessage() {
-        return "Enter product part number: ";
-    }
-
-    @Override
-    public String getManufactureCostInputInvitationMessage() {
-        return "Enter product manufacture cost: ";
+    public String getFieldInvitationMessage(String nameField){
+        return "Enter " + explanations.get(nameField).toLowerCase() + ": ";
     }
 
     @Override
@@ -93,27 +67,7 @@ public class EnglishMessager extends AbstractMessanger{
     }
 
     @Override
-    public String getPersonNameInputInvitationMessage() {
-        return "Enter owner name: ";
-    }
-
-    @Override
     public String getPersonBirthdayInputInvitationMessage() {
         return "Enter owner birthday with separated - \'-\' (Year-Month-Day): ";
-    }
-
-    @Override
-    public String getPersonHeightInputInvitationMessage() {
-        return "Enter owner height: ";
-    }
-
-    @Override
-    public String getPersonWeightInputInvitationMessage() {
-        return "Enter owner weight: ";
-    }
-
-    @Override
-    public String getPersonPassportIdInputInvitationMessage() {
-        return "Enter owner passport id: ";
     }
 }

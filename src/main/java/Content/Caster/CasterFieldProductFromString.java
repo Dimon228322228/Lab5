@@ -11,14 +11,14 @@ import Exception.InvalidUnitOfMeasureExseption;
 public class CasterFieldProductFromString {
      ValidatorProduct valProd = new ValidatorProduct();
      public String castName(String name){
-          if (valProd.NameProductValid(name.trim())) {
+          if (valProd.nameProductValid(name.trim())) {
                return name.trim();
           } else throw new InvalidNameProductException();
      }
 
      public Double castPrice(String str){
           Double price = Double.parseDouble(str.trim());
-          if(valProd.PriceValid(price)){
+          if(valProd.priceValid(price)){
                return price;
           } else {
                throw new InvalidPriceException();
@@ -43,7 +43,7 @@ public class CasterFieldProductFromString {
      }
 
      public UnitOfMeasure castUnitOfMeasure(String str){
-          if (valProd.UnitOfMeasureValid(str)){
+          if (valProd.unitOfMeasureValid(str)){
                return UnitOfMeasure.fromString(str.trim());
           } else {
                throw new InvalidUnitOfMeasureExseption();

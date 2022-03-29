@@ -8,24 +8,24 @@ import java.util.Date;
 
 public class ValidatorProduct {
 
-    ValidatorCoordinates validcoordinates = new ValidatorCoordinates();
-    ValidatorUnitOfMeasure validunitofmeasure = new ValidatorUnitOfMeasure();
-    ValidatorPerson validperson = new ValidatorPerson();
+    private final ValidatorCoordinates validcoordinates = new ValidatorCoordinates();
+    private final ValidatorUnitOfMeasure validunitofmeasure = new ValidatorUnitOfMeasure();
+    private final ValidatorPerson validperson = new ValidatorPerson();
 
-    public boolean NameProductValid(String name){
+    public boolean nameProductValid(String name){
         return(name != null && !name.trim().equals(""));
     }
 
-    public boolean CoordinateValid(Coordinates coordinates){
+    public boolean coordinateValid(Coordinates coordinates){
         return (coordinates != null &&  validcoordinates.xCoordinateValid(coordinates.getX()) &&
                                         validcoordinates.yCoordinateValid(coordinates.getY()));
     }
 
-    public boolean DateValid(Date date){
+    public boolean dateValid(Date date){
         return date != null;
     }
 
-    public boolean PriceValid(Double price){
+    public boolean priceValid(Double price){
         return (price != null && price > 0);
     }
 
@@ -37,20 +37,20 @@ public class ValidatorProduct {
         return true;
     }
 
-    public boolean UnitOfMeasureValid(UnitOfMeasure unitOfMeasure){
-        return validunitofmeasure.ValidUnitOfMeasure(unitOfMeasure);
+    public boolean unitOfMeasureValid(UnitOfMeasure unitOfMeasure){
+        return validunitofmeasure.validUnitOfMeasure(unitOfMeasure);
     }
 
-    public boolean UnitOfMeasureValid(String unitOfMeasure){
-        return validunitofmeasure.ValidUnitOfMeasure(unitOfMeasure);
+    public boolean unitOfMeasureValid(String unitOfMeasure){
+        return validunitofmeasure.validUnitOfMeasure(unitOfMeasure);
     }
 
-    public boolean PersonValid(Person person){
-        return (  person != null && validperson.BirthdayValid(person.getBirthday()) &&
-                                    validperson.HeightValid(person.getHeight()) &&
-                                    validperson.NamePersonValid(person.getName()) &&
-                                    validperson.PassportidValid(person.getPassportID()) &&
-                                    validperson.WeightValid(person.getWeight()));
+    public boolean personValid(Person person){
+        return (  person != null && validperson.birthdayValid(person.getBirthday()) &&
+                                    validperson.heightValid(person.getHeight()) &&
+                                    validperson.namePersonValid(person.getName()) &&
+                                    validperson.passportidValid(person.getPassportID()) &&
+                                    validperson.weightValid(person.getWeight()));
     }
 
 }

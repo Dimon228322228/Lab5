@@ -4,27 +4,27 @@ import java.time.LocalDateTime;
 
 public class ValidatorPerson {
 
-    public boolean NamePersonValid(String name){
+    public boolean namePersonValid(String name){
         return( name != null && !name.trim().equals(""));
     }
 
-    public boolean BirthdayValid(LocalDateTime time){
+    public boolean birthdayValid(LocalDateTime time){
         return (time != null);
     }
 
-    public boolean BirthdayValid(String time){
+    public boolean birthdayValid(String time){
         return (time != null);
     }
 
-    public boolean WeightValid(int weight){
+    public boolean weightValid(int weight){
         return weight > 0;
     }
 
-    public boolean HeightValid(long height){
+    public boolean heightValid(long height){
         return height > 0;
     }
 
-    public boolean PassportidValid(String passportid){
+    public boolean passportidValid(String passportid){
         return(passportid != null && passportid.length() >= 6 && passportid.length() <= 41);
     }
 

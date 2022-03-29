@@ -2,22 +2,24 @@ package Content.Product;
 
 import Content.Caster.CasterFieldProductFromString;
 import Content.Coordinate.Coordinates;
-import Content.Coordinate.RealizedCoordinates;
+import Content.Coordinate.CoordinatesImpl;
 import Content.Person.Person;
-import Content.Person.RealizedPerson;
+import Content.Person.PersonImpl;
+import Manager.QueueManager;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
+
 @XmlRootElement
-public abstract class RealizedProduct implements Product, Serializable {
+public class ProductImpl implements Product, Serializable {
 
     private long id; // >0 , unique and automatic generated
 
     private String name ; // not null and not empty
 
-    private RealizedCoordinates coordinates ; // not null
+    private CoordinatesImpl coordinates ; // not null
 
     private Date creationDate ; // not null and automatic generation
 
@@ -29,29 +31,13 @@ public abstract class RealizedProduct implements Product, Serializable {
 
     private UnitOfMeasure unitOfMeasure ; // not null
 
-    private RealizedPerson owner ; // not null
+    private PersonImpl owner ; // not null
 
-    CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
+    private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
 
-    public RealizedProduct(){}
-
-    @Override
-    public boolean equals(Object o){
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        if (this == o) return true;
-        return product.getId() == this.getId();
-    }
-
-    @Override
-    public int hashCode(){
-        return (int) this.getId();
-    }
-
-    @Override
-    public String toString(){
-        return String.format("ID = %d, Name = %s, %s, Creation Date = %s, Price = %f, PartNumber = %s, Manufacture cost = %f, Unit of Measurement = %s, %s",
-                id, name, coordinates, creationDate, price, partNumber, manufactureCost, unitOfMeasure, owner);
+    public ProductImpl(){
+        setCreationDate(new Date());
+        setId(QueueManager.getID());
     }
 
     @XmlElement(name = "Id")
@@ -65,7 +51,7 @@ public abstract class RealizedProduct implements Product, Serializable {
     }
 
     @XmlElement(name = "Coordinates")
-    public RealizedCoordinates getCoordinates() {
+    public CoordinatesImpl getCoordinates() {
         return coordinates;
     }
 
@@ -96,7 +82,7 @@ public abstract class RealizedProduct implements Product, Serializable {
     }
 
     @XmlElement(name = "Owner")
-    public RealizedPerson getOwner() {
+    public PersonImpl getOwner() {
         return owner;
     }
 
@@ -108,7 +94,7 @@ public abstract class RealizedProduct implements Product, Serializable {
     @Override
     public void setCoordinates(Coordinates coordinates) {
         try {
-            this.coordinates = (RealizedCoordinates) coordinates;
+            this.coordinates = (CoordinatesImpl) coordinates;
         } catch (ClassCastException e) {
             System.err.println(e.getMessage());
         }
@@ -137,7 +123,7 @@ public abstract class RealizedProduct implements Product, Serializable {
     @Override
     public void setOwner(Person person) {
         try {
-            this.owner = (RealizedPerson) person;
+            this.owner = (PersonImpl) person;
         } catch (ClassCastException e){
             System.err.println(e.getMessage());
         }
@@ -170,4 +156,24 @@ public abstract class RealizedProduct implements Product, Serializable {
     public void setCreationDate(Date creationDate){
         this.creationDate = creationDate;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        if (this == o) return true;
+        return product.getId() == this.getId();
+    }
+
+    @Override
+    public int hashCode(){
+        return (int) this.getId();
+    }
+
+    @Override
+    public String toString(){
+        return String.format("ID = %d, Name = %s, %s, Creation Date = %s, Price = %f, PartNumber = %s, Manufacture cost = %f, Unit of Measurement = %s, %s",
+                id, name, coordinates, creationDate, price, partNumber, manufactureCost, unitOfMeasure, owner);
+    }
+
 }

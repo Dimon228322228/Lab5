@@ -2,7 +2,6 @@ package Command.CommandFactory;
 
 import Command.Command;
 import Command.Reader.Reader;
-import Content.ObjectFactory.RealizedObjectFactory;
 import Manager.CollectionManager;
 import Command.ScriptCommand;
 import Command.MessagingCommand;
@@ -18,18 +17,16 @@ public class RealizedCommandFactory implements CommandFactory {
     private static RealizedCommandFactory instance = null;
     private List<String> historyCommand = new ArrayList<>();
     private final Map<String, Command> commands;
-    private final RealizedObjectFactory productFactory;
     private final Messanger messanger;
     private static Set<File> files = new HashSet<>();
 
-    private RealizedCommandFactory(Map<String, Command> commands, RealizedObjectFactory productFactory, Messanger messanger) {
+    private RealizedCommandFactory(Map<String, Command> commands, Messanger messanger) {
         this.commands = commands;
-        this.productFactory = productFactory;
         this.messanger = messanger;
     }
 
-    public static CommandFactory getInstance(Map<String, Command> commands, RealizedObjectFactory productFactory, Messanger messenger){
-        if (instance == null) instance = new RealizedCommandFactory(commands, productFactory,messenger);
+    public static CommandFactory getInstance(Map<String, Command> commands, Messanger messenger){
+        if (instance == null) instance = new RealizedCommandFactory(commands, messenger);
         return instance;
     }
 
@@ -70,7 +67,7 @@ public class RealizedCommandFactory implements CommandFactory {
             return;
         }
         files.add(file);
-        command.execute(collectionManager, reader, arg, this, productFactory);
+        command.execute(collectionManager, reader, arg, this);
         files.remove(file);
     }
 
@@ -84,8 +81,9 @@ public class RealizedCommandFactory implements CommandFactory {
     }
 
     public String getHistory(){
-        String res = "";
-        for (int i = 0; i < historyCommand.size() - 1; i++) res += historyCommand.get(i) + "\n";
+        StringBuilder resBuilder = new StringBuilder();
+        for (int i = 0; i < historyCommand.size() - 1; i++) resBuilder.append(historyCommand.get(i)).append("\n");
+        String res = resBuilder.toString();
         res += historyCommand.get(historyCommand.size() - 1);
         return res;
     }
