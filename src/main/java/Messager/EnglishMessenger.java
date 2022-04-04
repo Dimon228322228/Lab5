@@ -2,18 +2,27 @@ package Messager;
 
 import Content.Product.UnitOfMeasure;
 
-public class EnglishMessager extends AbstractMessanger{
+/**
+ * this class stores messages
+ */
+public class EnglishMessenger extends AbstractMessenger {
 
-    public EnglishMessager(){
+    public EnglishMessenger(){
         setCommandsExplanation();
         setProductFieldExplanation();
     }
 
+    /**
+     * @return instructions for entering commands
+     */
     @Override
     protected String getCommandMassageEnding() {
         return "NB! \"(argument)\" must be entered in in the same line as the command";
     }
 
+    /**
+     * set commands descriptions
+     */
     @Override
     protected void setCommandsExplanation() {
         commands.put("help", "displays reference about all commands");
@@ -34,6 +43,9 @@ public class EnglishMessager extends AbstractMessanger{
         commands.put("printAscending", "display the elements of the collection in ascending order");
     }
 
+    /**
+     * set product fields descriptions
+     */
     @Override
     protected void setProductFieldExplanation() {
         explanations.put("id", "ID");
@@ -52,22 +64,34 @@ public class EnglishMessager extends AbstractMessanger{
         explanations.put("passportId", "Owner passport id");
     }
 
+    /**
+     * @return collection information
+     */
     @Override
     public String getCollectionMessage(String type, String size, String creationDate) {
         return "Collection type: " + type + "\nCollection size: " + size + "\nInitialization time: " + creationDate;
     }
 
+    /**
+     * @return an invitation to enter simple fields
+     */
     public String getFieldInvitationMessage(String nameField){
         return "Enter " + explanations.get(nameField).toLowerCase() + ": ";
     }
 
+    /**
+     * @return prompt to enter a unit of measure
+     */
     @Override
     public String getUnitOfMeasureInputInvitationMessage() {
         return "Choose value from list: " + UnitOfMeasure.getTitleinColumn() +  "And enter product unit of measurement: ";
     }
 
+    /**
+     * @return prompt to enter an owner birthday
+     */
     @Override
     public String getPersonBirthdayInputInvitationMessage() {
-        return "Enter owner birthday with separated - \'-\' (Year-Month-Day): ";
+        return "Enter owner birthday with separated - '-' (Year-Month-Day): ";
     }
 }

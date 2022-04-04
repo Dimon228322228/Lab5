@@ -2,26 +2,25 @@ package Content.Coordinate;
 
 import Content.Caster.CasterCoordinatesFromString;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-@XmlRootElement
+
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class CoordinatesImpl implements Coordinates, Serializable {
 
     private Integer x; // field not null and <= 938
 
     private Integer y; // field not null
 
+    @XmlTransient
     private final CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
 
     public CoordinatesImpl(){}
 
-    @XmlElement(name = "X")
     public Integer getX(){
         return x;
     }
 
-    @XmlElement(name = "Y")
     public Integer getY(){
         return y;
     }

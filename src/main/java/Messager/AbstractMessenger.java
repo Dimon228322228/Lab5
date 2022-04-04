@@ -5,15 +5,30 @@ import Content.Product.Product;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-public abstract class AbstractMessanger implements Messanger{
+/**
+ * this class stores messages
+ */
+public abstract class AbstractMessenger implements Messenger {
+    /**
+     * HashMap with explanations of field
+     */
     protected Map<String, String> explanations = new HashMap<>();
+    /**
+     * HashMap with explanations of commands
+     */
     protected Map<String, String> commands = new HashMap<>();
 
+    /**
+     * @return product field information
+     */
     protected String getFieldMassage(String field, Object value){
         return explanations.get(field) + ": " + value + "\n";
     }
 
+    /**
+     * Used to get information about each field
+     * @return Full product description
+     */
     @Override
     public String getProductMessage(Product product){
         String message = "";
@@ -34,10 +49,16 @@ public abstract class AbstractMessanger implements Messanger{
         return message;
     }
 
+    /**
+     * @return description of one command
+     */
     protected String getCommandMessage(String command){
         return command + ": " + commands.get(command) + "\n";
     }
 
+    /**
+     * @return description of all commands
+     */
     @Override
     public String getCommandsMessage(){
         return commands.keySet()
@@ -46,10 +67,24 @@ public abstract class AbstractMessanger implements Messanger{
                 .collect(Collectors.joining(System.lineSeparator(), "", getCommandMassageEnding()));
     }
 
+    /**
+     * @return instructions for entering commands
+     */
     protected abstract String getCommandMassageEnding();
+
+    /**
+     * set commands descriptions
+     */
     protected abstract void setCommandsExplanation();
+
+    /**
+     * set product fields descriptions
+     */
     protected abstract void setProductFieldExplanation();
 
+    /**
+     * @return response to queries with condition
+     */
     public String getCountElementWithCondition(Long value){
         return "Found " + value + " elements of the collection." ;
     }

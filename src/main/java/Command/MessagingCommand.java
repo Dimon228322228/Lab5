@@ -3,8 +3,8 @@ package Command;
 import Command.CommandFactory.CommandFactory;
 import Command.Reader.Reader;
 import Manager.CollectionManager;
-import Messager.Messanger;
+import Messager.Messenger;
 
 public interface MessagingCommand extends Command{
-    void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory);
+    void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory);
 }

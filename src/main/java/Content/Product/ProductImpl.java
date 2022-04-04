@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductImpl implements Product, Serializable {
 
     private long id; // >0 , unique and automatic generated
@@ -21,6 +22,7 @@ public class ProductImpl implements Product, Serializable {
 
     private CoordinatesImpl coordinates ; // not null
 
+    @XmlJavaTypeAdapter(value = DateSerializer.class)
     private Date creationDate ; // not null and automatic generation
 
     private Double price ; // not null and >0
@@ -33,55 +35,41 @@ public class ProductImpl implements Product, Serializable {
 
     private PersonImpl owner ; // not null
 
+    @XmlTransient
     private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
 
-    public ProductImpl(){
-        setCreationDate(new Date());
-        setId(QueueManager.getID());
-    }
-
-    @XmlElement(name = "Id")
     public long getId() {
         return id;
     }
 
-    @XmlElement(name = "Name")
     public String getName() {
         return name;
     }
 
-    @XmlElement(name = "Coordinates")
     public CoordinatesImpl getCoordinates() {
         return coordinates;
     }
 
-    @XmlElement(name = "Creation_date")
-    @XmlJavaTypeAdapter(value = DateSerializer.class)
     public Date getCreationDate() {
         return creationDate;
     }
 
-    @XmlElement(name = "Price")
     public Double getPrice() {
         return price;
     }
 
-    @XmlElement(name = "Part_number")
     public String getPartNumber() {
         return partNumber;
     }
 
-    @XmlElement(name = "Manufacture_cost")
     public double getManufactureCost() {
         return manufactureCost;
     }
 
-    @XmlElement(name = "Unit_of_measurement")
     public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    @XmlElement(name = "Owner")
     public PersonImpl getOwner() {
         return owner;
     }
@@ -98,6 +86,11 @@ public class ProductImpl implements Product, Serializable {
         } catch (ClassCastException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public void setAutomaticGenerateField(){
+        setCreationDate(new Date());
+        setId(QueueManager.getID());
     }
 
     @Override

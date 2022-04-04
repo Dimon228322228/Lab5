@@ -24,6 +24,7 @@ public class FileReader extends AbstractReader {
     public ProductImpl readProduct() throws IOException {
         CoordinatesImpl coordinates =  new CoordinatesImpl();
         ProductImpl product = new ProductImpl();
+        product.setAutomaticGenerateField();
         PersonImpl person = new PersonImpl();
 
         product.setNameStr(reader.readLine());

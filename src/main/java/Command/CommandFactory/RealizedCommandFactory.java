@@ -11,21 +11,21 @@ import java.io.File;
 import java.util.*;
 
 import Exception.UnknownCommandException;
-import Messager.Messanger;
+import Messager.Messenger;
 
 public class RealizedCommandFactory implements CommandFactory {
     private static RealizedCommandFactory instance = null;
     private List<String> historyCommand = new ArrayList<>();
     private final Map<String, Command> commands;
-    private final Messanger messanger;
-    private static Set<File> files = new HashSet<>();
+    private final Messenger messanger;
+    private final static Set<File> files = new HashSet<>();
 
-    private RealizedCommandFactory(Map<String, Command> commands, Messanger messanger) {
+    private RealizedCommandFactory(Map<String, Command> commands, Messenger messanger) {
         this.commands = commands;
         this.messanger = messanger;
     }
 
-    public static CommandFactory getInstance(Map<String, Command> commands, Messanger messenger){
+    public static CommandFactory getInstance(Map<String, Command> commands, Messenger messenger){
         if (instance == null) instance = new RealizedCommandFactory(commands, messenger);
         return instance;
     }

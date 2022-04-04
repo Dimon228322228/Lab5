@@ -5,7 +5,7 @@ import Content.Coordinate.CoordinatesImpl;
 import Content.Person.PersonImpl;
 import Content.Product.ProductImpl;
 import Manager.CollectionManager;
-import Messager.Messanger;
+import Messager.Messenger;
 import Exception.InvalidProductFieldException;
 
 import java.io.BufferedReader;
@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
 public class ConsoleReader extends AbstractReader {
-    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, Messanger messanger){
+    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, Messenger messanger){
         reader = new BufferedReader(new InputStreamReader(System.in));
         super.commandFactory = commandFactory;
         super.messanger = messanger;
@@ -29,6 +29,7 @@ public class ConsoleReader extends AbstractReader {
     @Override
     public ProductImpl readProduct() throws IOException {
         ProductImpl product = new ProductImpl();
+        product.setAutomaticGenerateField();
         CoordinatesImpl coordinates = new CoordinatesImpl();
         PersonImpl owner = new PersonImpl();
 

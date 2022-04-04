@@ -2,16 +2,19 @@ package Content.Person;
 
 import Content.Caster.CasterPersonFromString;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-@XmlRootElement
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PersonImpl implements Person, Serializable {
 
     private String name; // not null and not empty
 
+    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
     private LocalDateTime birthday; // not null
 
     private long height; // > 0
@@ -20,6 +23,7 @@ public class PersonImpl implements Person, Serializable {
 
     private String passportID; // not null, len(line) >= 6 and len(line) <= 41
 
+    @XmlTransient
     private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
 
     public PersonImpl(){}
@@ -49,28 +53,22 @@ public class PersonImpl implements Person, Serializable {
         this.passportID = passportID;
     }
 
-    @XmlElement(name = "Name")
     public String getName(){
         return name;
     }
 
-    @XmlElement(name = "Birthday")
-    @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
     public LocalDateTime getBirthday(){
         return birthday;
     }
 
-    @XmlElement(name = "Height")
     public long getHeight(){
         return height;
     }
 
-    @XmlElement(name = "Weight")
     public int getWeight(){
         return weight;
     }
 
-    @XmlElement(name = "Passport_id")
     public String getPassportID(){
         return passportID;
     }

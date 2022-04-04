@@ -16,13 +16,29 @@ import Exception.ProductNotFoundException;
  * This class stores the collection and works with it
  * */
 public class QueueManager implements CollectionManager{
-
-
+    /**
+     * creation date
+     */
     private final ZonedDateTime date;
+    /**
+     * class that works with files
+     */
     private final FileManager fileManager;
+    /**
+     * checks the correctness of the fields
+     */
     private final RealizedValidatorProduct validatorProduct = new RealizedValidatorProduct();
+    /**
+     * path to the file where the collection is stored
+     */
     private String filepath = "Test.xml";
+    /**
+     * the collection
+     */
     private PriorityQueue<ProductImpl> collection;
+    /**
+     * inner static class that generates the id
+     */
     private static final GeneratedID generatedID = new GeneratedID();
 
     public QueueManager(FileManager fileManager){
@@ -216,7 +232,7 @@ public class QueueManager implements CollectionManager{
     }
 
     /**
-     * Adds a element in the collection if it is larger than all the elements in the collection
+     * Adds an element in the collection if it is larger than all the elements in the collection
      * @param product is hair of class {@link Product}
      */
     @Override
@@ -228,7 +244,7 @@ public class QueueManager implements CollectionManager{
     }
 
     /**
-     * Deletes the smallest element in the collection
+     * Deletes the smallest then given element from the collection
      * @param product is hair of class {@link Product}
      */
     @Override
@@ -273,16 +289,12 @@ public class QueueManager implements CollectionManager{
     }
 
     /**
-     * @return all elements of the collection as a list in ascending order
+     * The class that generates an id
      */
-    @Override
-    public List<Product> printAscending() {
-        List<Product> productList = getListProduct();
-        Collections.sort(productList);
-        return productList;
-    }
-
     static class GeneratedID {
+        /**
+         * set existing id
+         */
         private Set<Long> idSet = new HashSet<>();
 
         /**
@@ -300,7 +312,7 @@ public class QueueManager implements CollectionManager{
 
         /**
          * does an id exist in a set
-         * @return boolean
+         * @return true if exist
          */
         public boolean idExists(Long id){
             return idSet.contains(id);

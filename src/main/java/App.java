@@ -5,8 +5,8 @@ import Command.Reader.ConsoleReader;
 import Command.Reader.Reader;
 import Manager.FileManager;
 import Manager.QueueManager;
-import Messager.EnglishMessager;
-import Messager.Messanger;
+import Messager.EnglishMessenger;
+import Messager.Messenger;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class App {
             return;
         }
         QueueManager manager = new QueueManager(fileManager);
-        Messanger messanger = new EnglishMessager();
+        Messenger messanger = new EnglishMessenger();
         CommandFactory commandFactory = RealizedCommandFactory.getInstance(getCommands(), messanger);
         Reader reader = new ConsoleReader(commandFactory, manager, messanger);
         manager.parseDateFromFile();

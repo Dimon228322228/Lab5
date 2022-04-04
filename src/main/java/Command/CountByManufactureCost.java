@@ -3,11 +3,11 @@ package Command;
 import Command.CommandFactory.CommandFactory;
 import Command.Reader.Reader;
 import Manager.CollectionManager;
-import Messager.Messanger;
+import Messager.Messenger;
 
 public class CountByManufactureCost implements MessagingCommand{
     @Override
-    public void execute(CollectionManager manager, Reader reader, String arg, Messanger messanger, CommandFactory commandFactory) {
+    public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
         Double manufactureCost = null;
         try{
             manufactureCost = Double.parseDouble(arg);

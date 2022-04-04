@@ -2,7 +2,7 @@ package Command.Reader;
 
 import Command.CommandFactory.CommandFactory;
 import Manager.CollectionManager;
-import Messager.Messanger;
+import Messager.Messenger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public abstract class AbstractReader implements Reader {
     private boolean isRunning;
     protected CommandFactory commandFactory;
     protected CollectionManager manager;
-    protected Messanger messanger;
+    protected Messenger messanger;
 
     @Override
     public void readCommand() {

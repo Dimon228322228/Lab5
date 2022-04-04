@@ -22,6 +22,9 @@ public class FileManager {
     private final JAXBContext xmlContext;
     private final Marshaller jaxbMarshaller;
     private final Unmarshaller jaxbUnmarshaller;
+    /**
+     * the file we're working with
+     */
     private File xmlProduct;
 
     public FileManager() throws JAXBException {
@@ -32,13 +35,13 @@ public class FileManager {
         xmlProduct = null;
     }
 
-    public FileManager(String dataFilePath) throws FileNotFoundException, JAXBException {
-        this();
-        if (dataFilePath == null || !(new File(dataFilePath).exists()))
-            throw new FileNotFoundException("There is not such file!");
-        else
-            xmlProduct = new File(dataFilePath);
-    }
+//    public FileManager(String dataFilePath) throws FileNotFoundException, JAXBException {
+//        this();
+//        if (dataFilePath == null || !(new File(dataFilePath).exists()))
+//            throw new FileNotFoundException("There is not such file!");
+//        else
+//            xmlProduct = new File(dataFilePath);
+//    }
 
     /**
      * @return new {@link File} with which work
@@ -47,16 +50,16 @@ public class FileManager {
         return xmlProduct;
     }
 
-    /**
-     * check exist file and created new object {@link File}
-     * @param filepath string of path
-     */
-    public void setXmlProduct(String filepath) throws FileNotFoundException {
-        if (filepath == null || !(new File(filepath).exists()))
-            throw new FileNotFoundException("There is not such file!");
-        else
-            xmlProduct = new File(filepath);
-    }
+//    /**
+//     * check exist file and created new object {@link File}
+//     * @param filepath string of path
+//     */
+//    public void setXmlProduct(String filepath) throws FileNotFoundException {
+//        if (filepath == null || !(new File(filepath).exists()))
+//            throw new FileNotFoundException("There is not such file!");
+//        else
+//            xmlProduct = new File(filepath);
+//    }
 
     public File assertFileIsUsable(String dataFilePath) throws InvalidPathException, IOException, EmptyFileException {
         String filePath = Paths.get(dataFilePath).toAbsolutePath().toString();
@@ -70,14 +73,14 @@ public class FileManager {
         return fileToRetrieve;
     }
 
-    public void saveCollectionInXML(PriorityQueue<ProductImpl> collection) throws IOException, JAXBException {
-        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
-            CollectionQueuer queueproduct = new CollectionQueuer();
-            queueproduct.setCollection(collection);
-            jaxbMarshaller.marshal(queueproduct, os);
-        }
-        System.out.println("Collection has been save successful");
-    }
+//    public void saveCollectionInXML(PriorityQueue<ProductImpl> collection) throws IOException, JAXBException {
+//        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
+//            CollectionQueuer queueproduct = new CollectionQueuer();
+//            queueproduct.setCollection(collection);
+//            jaxbMarshaller.marshal(queueproduct, os);
+//        }
+//        System.out.println("Collection has been save successful");
+//    }
 
     public void saveCollectionInXML(PriorityQueue<ProductImpl> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
@@ -118,11 +121,11 @@ public class FileManager {
     }
 
     @XmlRootElement(name = "Products")
+    @XmlAccessorType(XmlAccessType.FIELD)
     private static class CollectionQueuer implements Serializable {
 
         private PriorityQueue<ProductImpl> products = new PriorityQueue<>();
 
-        @XmlElement(name = "Product")
         public PriorityQueue<ProductImpl> getCollection() {
             return products;
         }

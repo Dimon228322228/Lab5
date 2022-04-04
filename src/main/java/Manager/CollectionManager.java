@@ -7,39 +7,58 @@ import Content.Product.UnitOfMeasure;
 import java.util.List;
 
 public interface CollectionManager {
-    /** display info about collection **/
+    /**
+     * display info about collection
+     */
     List<String> displayInfo();
 
-    /** Show all element of collection in string **/
+    /**
+     *  Show all element of collection in string
+     */
     List<Product> showElements();
 
-    /** Add new element in collection **/
+    /**
+     * Add new element in collection
+     */
     void add(ProductImpl product);
 
-    /** Replace element on id **/
+    /**
+     * Replace element on id
+     */
     void updateId(long id, Product product);
 
-    /** Remove element with this id**/
+    /**
+     * Remove element with this id
+     */
     void removeById(long id);
 
-    /** Remove all element in collection **/
+    /**
+     * Remove all element in collection
+     */
     void clear();
 
-    /** Upload collection in file */
+    /**
+     * Upload collection in file
+     */
     void save();
 
-    /** Add element in collection if he is great then all*/
+    /**
+     * Add element in collection if he is great then all
+     */
     void addIfMax(Product product);
 
-    /** Remove all element lower then given*/
+    /**
+     * Remove all element lower then given
+     */
     void removeLower(Product product);
 
-    /** Count all element then manufactureCost equals given*/
+    /**
+     * Count all element then manufactureCost equals given
+     */
     long countByManufactureCost(Double manufactureCost);
 
-    /** Count amount element then greater given*/
+    /**
+     * Count amount element then greater given
+     */
     long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
-
-    /** Print element of collection in ascending order*/
-    List<Product> printAscending();
 }

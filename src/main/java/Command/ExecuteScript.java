@@ -24,6 +24,5 @@ public class  ExecuteScript implements ScriptCommand{
         } catch (FileNotFoundException e){
             System.err.println("File with name " + fileName + " is not found");
         }
-        reader.readCommand();
     }
 }
