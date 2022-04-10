@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * a class implements interface Person, added setters from string format compared to the interface
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PersonImpl implements Person, Serializable {
 
@@ -23,10 +26,11 @@ public class PersonImpl implements Person, Serializable {
 
     private String passportID; // not null, len(line) >= 6 and len(line) <= 41
 
+    /**
+     * creates fields person of different classes and checks their correctness
+     */
     @XmlTransient
     private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
-
-    public PersonImpl(){}
 
     @Override
     public void setName(String name) {
@@ -73,22 +77,37 @@ public class PersonImpl implements Person, Serializable {
         return passportID;
     }
 
+    /**
+     * set name owner from string, used in ConsoleReader
+     */
     public void setNameStr(String inputStr){
         setName(casterPersonFromString.castName(inputStr));
     }
 
+    /**
+     * set birthday owner from string, used in ConsoleReader
+     */
     public void setBirthdayStr(String inputStr){
         setBirthday(casterPersonFromString.castBirthday(inputStr));
     }
 
+    /**
+     * set height owner from string, used in ConsoleReader
+     */
     public void setHeightStr(String inputStr){
         setHeight(casterPersonFromString.castHeight(inputStr));
     }
 
+    /**
+     * set weight owner from string, used in ConsoleReader
+     */
     public void setWeightStr(String inputStr){
         setWeight(casterPersonFromString.castWeight(inputStr));
     }
 
+    /**
+     * set passport id from string, used in ConsoleReader
+     */
     public void setPassportIDStr(String inputStr){
         setPassportID(casterPersonFromString.castPassportID(inputStr));
     }

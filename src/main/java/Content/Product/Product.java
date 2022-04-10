@@ -5,6 +5,9 @@ import Content.Person.Person;
 
 import java.util.Date;
 
+/**
+ * an interface which implements compare to and has basic getters and setters of product class
+ */
 public interface Product extends Comparable<Product>{
     long getId();
 

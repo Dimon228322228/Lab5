@@ -8,7 +8,16 @@ import Exception.ProductNotFoundException;
 
 import java.io.IOException;
 
+/**
+ * update element of the collection by id
+ */
 public class UpdateById implements SimpleCommand{
+    /**
+     * checked exist given id
+     * read product from console
+     * set new product by given id
+     * old product has deleted
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
         long id = -2;

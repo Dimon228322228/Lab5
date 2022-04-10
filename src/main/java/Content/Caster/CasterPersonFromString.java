@@ -8,10 +8,18 @@ import Exception.InvalidWeightPersonException;
 import Exception.InvalidPassportIDPersonException;
 
 import java.time.LocalDateTime;
-
+/**
+ * A class which creates field of person from different classes
+ */
 public class CasterPersonFromString {
+    /**
+     * checker correctness of field
+     */
     ValidatorPerson valPer = new ValidatorPerson();
 
+    /**
+     * @return checked name from the string
+     */
     public String castName(String inputStr){
         if (valPer.namePersonValid(inputStr)){
             return inputStr.trim();
@@ -20,6 +28,9 @@ public class CasterPersonFromString {
         }
     }
 
+    /**
+     * @return checked birthday from the string
+     */
     public LocalDateTime castBirthday(String inputStr){
         if (valPer.birthdayValid(inputStr)){
             String [] data = inputStr.split("-");
@@ -39,6 +50,9 @@ public class CasterPersonFromString {
         }
     }
 
+    /**
+     * @return checked height from the string
+     */
     public long castHeight(String inputStr){
         long height = Long.parseLong(inputStr);
         if (valPer.heightValid(height)){
@@ -48,6 +62,9 @@ public class CasterPersonFromString {
         }
     }
 
+    /**
+     * @return checked weight from the string
+     */
     public int castWeight(String inputStr){
         int weight = Integer.parseInt(inputStr);
         if (valPer.weightValid(weight)){
@@ -57,6 +74,9 @@ public class CasterPersonFromString {
         }
     }
 
+    /**
+     * @return checked passport id from the string
+     */
     public String castPassportID(String inputStr){
         if (valPer.passportidValid(inputStr)){
             return inputStr;

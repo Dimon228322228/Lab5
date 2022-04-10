@@ -1,5 +1,6 @@
 package Command;
 
-public interface Command {
-    // method execute definition in heirs interfaces
-}
+/**
+ * method execute definition in heirs interfaces
+ */
+public interface Command {}

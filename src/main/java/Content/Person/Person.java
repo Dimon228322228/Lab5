@@ -2,6 +2,9 @@ package Content.Person;
 
 import java.time.LocalDateTime;
 
+/**
+ * an interface has a basic setters and getters
+ */
 public interface Person {
     String getName();
     LocalDateTime getBirthday();

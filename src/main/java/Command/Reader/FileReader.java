@@ -15,11 +15,25 @@ public class FileReader extends AbstractReader {
         super.manager = manager;
     }
 
+    /**
+     * @return true if file read stream ready
+     */
     @Override
-    protected boolean readyInput() throws IOException {
-        return reader.ready();
+    protected boolean readyInput() {
+        boolean flag = false;
+        try {
+            flag = reader.ready();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
+    /**
+     * don't demand repeat input field
+     * @return entire product with filled out field
+     * @throws IOException if IO exception occurred
+     */
     @Override
     public ProductImpl readProduct() throws IOException {
         CoordinatesImpl coordinates =  new CoordinatesImpl();

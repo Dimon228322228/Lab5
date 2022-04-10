@@ -8,7 +8,13 @@ import Manager.CollectionManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * runs the script from file
+ */
 public class  ExecuteScript implements ScriptCommand{
+    /**
+     * executes a script if file correctness
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String fileName, CommandFactory commandFactory){
         File file;

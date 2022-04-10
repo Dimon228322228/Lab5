@@ -5,17 +5,20 @@ import Content.Caster.CasterCoordinatesFromString;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
-//@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * a class implements interface Coordinates, added setters from string format compared to the interface
+ */
 public class CoordinatesImpl implements Coordinates, Serializable {
 
     private Integer x; // field not null and <= 938
 
     private Integer y; // field not null
 
+    /**
+     * creates fields coordinates and checks their correctness
+     */
     @XmlTransient
     private final CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
-
-    public CoordinatesImpl(){}
 
     public Integer getX(){
         return x;
@@ -25,20 +28,24 @@ public class CoordinatesImpl implements Coordinates, Serializable {
         return y;
     }
 
-    @Override
     public void setX(Integer x) {
         this.x = x;
     }
 
-    @Override
     public void setY(Integer y) {
         this.y = y;
     }
 
+    /**
+     * set x coordinate from string, used in ConsoleReader
+     */
     public void setXStr(String inputStr){
         setX(casterCoordinatesFromString.castX(inputStr));
     }
 
+    /**
+     * set y coordinate from string, used in ConsoleReader
+     */
     public void setYStr(String inputStr){
         setY(casterCoordinatesFromString.castY(inputStr));
     }

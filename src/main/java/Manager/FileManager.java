@@ -19,48 +19,23 @@ import java.util.PriorityQueue;
  * Class that handles files for parsing
  */
 public class FileManager {
-    private final JAXBContext xmlContext;
     private final Marshaller jaxbMarshaller;
     private final Unmarshaller jaxbUnmarshaller;
-    /**
-     * the file we're working with
-     */
-    private File xmlProduct;
 
     public FileManager() throws JAXBException {
-        xmlContext = JAXBContext.newInstance(ProductImpl.class, CoordinatesImpl.class, PersonImpl.class, CollectionQueuer.class);
+        JAXBContext xmlContext = JAXBContext.newInstance(ProductImpl.class, CoordinatesImpl.class, PersonImpl.class, CollectionQueuer.class);
         jaxbMarshaller = xmlContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         jaxbUnmarshaller = xmlContext.createUnmarshaller();
-        xmlProduct = null;
     }
-
-//    public FileManager(String dataFilePath) throws FileNotFoundException, JAXBException {
-//        this();
-//        if (dataFilePath == null || !(new File(dataFilePath).exists()))
-//            throw new FileNotFoundException("There is not such file!");
-//        else
-//            xmlProduct = new File(dataFilePath);
-//    }
 
     /**
-     * @return new {@link File} with which work
+     * Checks that the file exists, is not empty and can be read and written
+     * @return object {@link File} with given file path
+     * @throws InvalidPathException if file path invalid
+     * @throws IOException if I/O exception occurred
+     * @throws EmptyFileException if file is empty
      */
-    public File getXmlProduct(){
-        return xmlProduct;
-    }
-
-//    /**
-//     * check exist file and created new object {@link File}
-//     * @param filepath string of path
-//     */
-//    public void setXmlProduct(String filepath) throws FileNotFoundException {
-//        if (filepath == null || !(new File(filepath).exists()))
-//            throw new FileNotFoundException("There is not such file!");
-//        else
-//            xmlProduct = new File(filepath);
-//    }
-
     public File assertFileIsUsable(String dataFilePath) throws InvalidPathException, IOException, EmptyFileException {
         String filePath = Paths.get(dataFilePath).toAbsolutePath().toString();
         File fileToRetrieve = new File(filePath);
@@ -73,15 +48,13 @@ public class FileManager {
         return fileToRetrieve;
     }
 
-//    public void saveCollectionInXML(PriorityQueue<ProductImpl> collection) throws IOException, JAXBException {
-//        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(this.getXmlProduct()))) {
-//            CollectionQueuer queueproduct = new CollectionQueuer();
-//            queueproduct.setCollection(collection);
-//            jaxbMarshaller.marshal(queueproduct, os);
-//        }
-//        System.out.println("Collection has been save successful");
-//    }
-
+    /**
+     * Saves the collection in XML format in file with indicated file name
+     * @throws IOException if I/O exception occurred
+     * @throws InvalidPathException if file path invalid
+     * @throws JAXBException If there was an error in the parser
+     * @throws EmptyFileException if file is empty
+     */
     public void saveCollectionInXML(PriorityQueue<ProductImpl> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
             CollectionQueuer queueproduct = new CollectionQueuer();
@@ -91,20 +64,37 @@ public class FileManager {
         System.out.println("Collection has been save successful");
     }
 
-    public PriorityQueue<ProductImpl> getCollectionFromFile(String filepath) throws IOException, JAXBException, EmptyFileException {
+    /**
+     * Using {@link this.getStrFromFile}
+     * @return unchecked a collection with product from file
+     * @throws JAXBException If there was an error in the parser
+     * @throws EmptyFileException if file is empty
+     */
+    public PriorityQueue<ProductImpl> getCollectionFromFile(String filepath) throws JAXBException, EmptyFileException {
         PriorityQueue<ProductImpl> collection = new PriorityQueue<>();
-        String dataStr = this.getStrFromFile(filepath);
-        if (!dataStr.equals("")) {
-            StringReader reader = new StringReader(dataStr);
-            collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getCollection();
+        String dataStr = null;
+        try {
+            dataStr = this.getStrFromFile(filepath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (dataStr != null && !dataStr.equals("")) {
+            try(StringReader reader = new StringReader(dataStr)) {
+                collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getCollection();
+            }
         }
         return collection;
     }
 
+    /**
+     * use {@link this.assertFileIsUsable} to check correctness file
+     * @return string of all symbols from file
+     * @throws IOException if I/O exception occurred
+     * @throws InvalidPathException if file path invalid
+     * @throws EmptyFileException if file is empty
+     */
     public String getStrFromFile(String filePath) throws IOException, InvalidPathException, EmptyFileException {
         File fileToRetrieve = assertFileIsUsable(filePath);
-        if (filePath.equals(""))
-            fileToRetrieve = this.getXmlProduct();
         int len = 0;
         try {
             len = (int) fileToRetrieve.length();
@@ -114,12 +104,16 @@ public class FileManager {
         String dataStr;
         char[] cbuf = new char[len];
         try (FileReader fileReader = new FileReader(fileToRetrieve)) {
+            //noinspection ResultOfMethodCallIgnored
             fileReader.read(cbuf);
             dataStr = new String(cbuf);
         }
         return dataStr;
     }
 
+    /**
+     * a class for wrapping elements of the collection
+     */
     @XmlRootElement(name = "Products")
     @XmlAccessorType(XmlAccessType.FIELD)
     private static class CollectionQueuer implements Serializable {

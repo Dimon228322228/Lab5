@@ -4,7 +4,14 @@ import Command.Reader.Reader;
 import Manager.CollectionManager;
 import Exception.ProductNotFoundException;
 
+/**
+ * removing element by id
+ */
 public class RemoveById implements SimpleCommand{
+    /**
+     * read id from console
+     * remove element of the collection by id
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
         long id = -2;

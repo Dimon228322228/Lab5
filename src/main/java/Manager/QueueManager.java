@@ -84,7 +84,7 @@ public class QueueManager implements CollectionManager{
                 }
             }
             System.out.println("Download complete");
-        } catch (JAXBException | IOException e) {
+        } catch (JAXBException e) {
             e.printStackTrace();
         } catch (EmptyFileException e) {
             System.err.println((new EmptyFileException("File is empty!")).getMessage());
@@ -97,23 +97,19 @@ public class QueueManager implements CollectionManager{
     private void setFilepath(){
         System.out.println("Enter name environment variable that contains the path of the file: ");
         String nameVariable = "";
-        boolean isNull = true;
-        while(isNull) {
-            System.getenv().forEach((k, v) ->
-                    System.out.println(k + " : " + v)
-            );
-            try (Scanner scr = new Scanner(System.in)) {
-                nameVariable = scr.nextLine();
-            } catch (NoSuchElementException | IllegalStateException e) {
-                System.err.println(e.getMessage());
+        System.getenv().forEach((k, v) ->
+                System.out.println(k + " : " + v)
+        );
+        try {
+            Scanner scr = new Scanner(System.in);
+            nameVariable = scr.nextLine();
+            filepath = System.getenv(nameVariable);
+            if (filepath == null || filepath.equals("")) {
+                System.out.println("This environment variable not exist.");
+                setFilepath();
             }
-            try {
-                filepath = System.getenv(nameVariable);
-            } catch (SecurityException | NullPointerException e) {
-                System.err.println(e.getMessage());
-            }
-            if (filepath != null) isNull = false;
-            else System.out.println("This environment variable not exist. Try input one more times: ");
+        } catch (NoSuchElementException | IllegalStateException | SecurityException | NullPointerException e) {
+            e.printStackTrace();
         }
     }
 

@@ -5,7 +5,16 @@ import Command.Reader.Reader;
 import Manager.CollectionManager;
 import Messager.Messenger;
 
+/**
+ * count number of element equals by manufacture cost
+ */
 public class CountByManufactureCost implements MessagingCommand{
+    /**
+     * read manufacture cost
+     * checked it is corrected
+     * count number of element
+     * print result
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
         Double manufactureCost = null;

@@ -14,18 +14,26 @@ import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
 public class ConsoleReader extends AbstractReader {
-    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, Messenger messanger){
+    public ConsoleReader(CommandFactory commandFactory, CollectionManager manager, Messenger messenger){
         reader = new BufferedReader(new InputStreamReader(System.in));
         super.commandFactory = commandFactory;
-        super.messanger = messanger;
+        super.messenger = messenger;
         super.manager = manager;
     }
 
+    /**
+     * @return true always because program read command from console
+     */
     @Override
-    protected boolean readyInput(){
+    protected boolean readyInput() {
         return true;
     }
 
+    /**
+     * demand repeat input field if it isn't correctness
+     * @return entire product with filled out field
+     * @throws IOException if IO exception occurred
+     */
     @Override
     public ProductImpl readProduct() throws IOException {
         ProductImpl product = new ProductImpl();
@@ -33,48 +41,52 @@ public class ConsoleReader extends AbstractReader {
         CoordinatesImpl coordinates = new CoordinatesImpl();
         PersonImpl owner = new PersonImpl();
 
-        System.out.println(messanger.getFieldInvitationMessage("name"));
+        System.out.println(messenger.getFieldInvitationMessage("name"));
         setField(reader.readLine(), product::setNameStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("x"));
+        System.out.println(messenger.getFieldInvitationMessage("x"));
         setField(reader.readLine(), coordinates::setXStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("y"));
+        System.out.println(messenger.getFieldInvitationMessage("y"));
         setField(reader.readLine(), coordinates::setYStr);
 
         product.setCoordinates(coordinates);
 
-        System.out.println(messanger.getFieldInvitationMessage("price"));
+        System.out.println(messenger.getFieldInvitationMessage("price"));
         setField(reader.readLine(), product::setPriceStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("partNumber"));
+        System.out.println(messenger.getFieldInvitationMessage("partNumber"));
         setField(reader.readLine(), product::setPartNumberStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("manufactureCost"));
+        System.out.println(messenger.getFieldInvitationMessage("manufactureCost"));
         setField(reader.readLine(), product::setManufactureCostStr);
 
-        System.out.println(messanger.getUnitOfMeasureInputInvitationMessage());
+        System.out.println(messenger.getUnitOfMeasureInputInvitationMessage());
         setField(reader.readLine(), product::setUnitOfMeasureStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("namePerson"));
+        System.out.println(messenger.getFieldInvitationMessage("namePerson"));
         setField(reader.readLine(), owner::setNameStr);
 
-        System.out.println(messanger.getPersonBirthdayInputInvitationMessage());
+        System.out.println(messenger.getPersonBirthdayInputInvitationMessage());
         setField(reader.readLine(), owner::setBirthdayStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("height"));
+        System.out.println(messenger.getFieldInvitationMessage("height"));
         setField(reader.readLine(), owner::setHeightStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("weight"));
+        System.out.println(messenger.getFieldInvitationMessage("weight"));
         setField(reader.readLine(), owner::setWeightStr);
 
-        System.out.println(messanger.getFieldInvitationMessage("passportId"));
+        System.out.println(messenger.getFieldInvitationMessage("passportId"));
         setField(reader.readLine(), owner::setPassportIDStr);
 
         product.setOwner(owner);
         return product;
     }
 
+    /**
+     * try to fill out product field
+     * @throws IOException if IO exception occurred
+     */
     private void setField(String input, Consumer<String> setter) throws IOException{
         try{
             setter.accept(input);
@@ -84,6 +96,9 @@ public class ConsoleReader extends AbstractReader {
         }
     }
 
+    /**
+     * handles exception and forgive input one more time
+     */
     private void repeatInput(Exception e){
         if (e instanceof InvalidProductFieldException){
             System.err.println(e.getMessage());

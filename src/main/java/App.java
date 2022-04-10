@@ -9,10 +9,16 @@ import Messager.EnglishMessenger;
 import Messager.Messenger;
 
 import javax.xml.bind.JAXBException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+/**
+ * launching class
+ */
 public class App {
+    /**
+     * set match string command with its object realization
+     * call reader command
+     */
     public static void main(String[] args) {
         FileManager fileManager;
         try {
@@ -20,17 +26,19 @@ public class App {
         } catch (JAXBException e){
             e.printStackTrace();
             System.out.println(e.getMessage() + " Sorry, programme cannot be started " + e);
-            System.err.println(e.getMessage());
             return;
         }
         QueueManager manager = new QueueManager(fileManager);
-        Messenger messanger = new EnglishMessenger();
-        CommandFactory commandFactory = RealizedCommandFactory.getInstance(getCommands(), messanger);
-        Reader reader = new ConsoleReader(commandFactory, manager, messanger);
+        Messenger messenger = new EnglishMessenger();
+        CommandFactory commandFactory = RealizedCommandFactory.getInstance(getCommands(), messenger);
         manager.parseDateFromFile();
+        Reader reader = new ConsoleReader(commandFactory, manager, messenger);
         reader.readCommand();
     }
 
+    /**
+     * @return map which keys are string commands and values are object this commands
+     */
     public static Map<String, Command> getCommands(){
         HashMap<String, Command> commandHashMap = new HashMap<>();
         commandHashMap.put("help", new Help());

@@ -6,7 +6,13 @@ import Manager.CollectionManager;
 
 import java.io.IOException;
 
+/**
+ * add element in the collection
+ */
 public class Add implements SimpleCommand{
+    /**
+     * add product in the collection
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
         ProductImpl product = null;

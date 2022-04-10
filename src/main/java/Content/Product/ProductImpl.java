@@ -1,8 +1,7 @@
 package Content.Product;
 
 import Content.Caster.CasterFieldProductFromString;
-import Content.Coordinate.Coordinates;
-import Content.Coordinate.CoordinatesImpl;
+import Content.Coordinate.*;
 import Content.Person.Person;
 import Content.Person.PersonImpl;
 import Manager.QueueManager;
@@ -12,6 +11,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * a class of product, added setters from the string format compared to the interface
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProductImpl implements Product, Serializable {
@@ -35,6 +37,9 @@ public class ProductImpl implements Product, Serializable {
 
     private PersonImpl owner ; // not null
 
+    /**
+     * creates fields of different classes and checks their correctness
+     */
     @XmlTransient
     private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
 
@@ -88,6 +93,9 @@ public class ProductImpl implements Product, Serializable {
         }
     }
 
+    /**
+     * set creation date and set unique id
+     */
     public void setAutomaticGenerateField(){
         setCreationDate(new Date());
         setId(QueueManager.getID());
@@ -126,22 +134,37 @@ public class ProductImpl implements Product, Serializable {
         this.id = id;
     }
 
+    /**
+     * set name product from string, used in ConsoleReader
+     */
     public void setNameStr(String inputStr){
         setName(casterFieldProductFromString.castName(inputStr));
     }
 
+    /**
+     * set price product from string, used in ConsoleReader
+     */
     public void setPriceStr(String inputStr){
         setPrice(casterFieldProductFromString.castPrice(inputStr));
     }
 
+    /**
+     * set part number product from string, used in ConsoleReader
+     */
     public void setPartNumberStr(String inputStr){
         setPartNumber(casterFieldProductFromString.castPartNumber(inputStr));
     }
 
+    /**
+     * set manufacture cost product from string, used in ConsoleReader
+     */
     public void setManufactureCostStr(String inputStr){
         setManufactureCost(casterFieldProductFromString.castManufactureCost(inputStr));
     }
 
+    /**
+     * set unit product from string, used in ConsoleReader
+     */
     public void setUnitOfMeasureStr(String inputStr){
         setUnitOfMeasure(casterFieldProductFromString.castUnitOfMeasure(inputStr));
     }

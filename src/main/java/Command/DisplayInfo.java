@@ -7,7 +7,13 @@ import Messager.Messenger;
 
 import java.util.List;
 
+/**
+ * print info about collection
+ */
 public class DisplayInfo implements MessagingCommand {
+    /**
+     * output information about collection: Class, size and date
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
         List<String> info = manager.displayInfo();

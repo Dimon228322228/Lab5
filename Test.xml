@@ -31,7 +31,7 @@
         <price>80.0</price>
         <partNumber>00000000000000000000001</partNumber>
         <manufactureCost>60.0</manufactureCost>
-        <unitOfMeasure>MILLILITERS</unitOfMeasure>
+        <unitOfMeasure>PCS</unitOfMeasure>
         <owner>
             <name>Oleg</name>
             <birthday>2000-12-20T00:00</birthday>

@@ -84,7 +84,7 @@ public class EnglishMessenger extends AbstractMessenger {
      */
     @Override
     public String getUnitOfMeasureInputInvitationMessage() {
-        return "Choose value from list: " + UnitOfMeasure.getTitleinColumn() +  "And enter product unit of measurement: ";
+        return "Choose value from list: " + UnitOfMeasure.getTitleInColumn() +  "And enter product unit of measurement: ";
     }
 
     /**

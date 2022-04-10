@@ -6,17 +6,23 @@ import java.io.Serializable;
 public enum UnitOfMeasure  implements Serializable {
     KILOGRAMS("kilograms"),
     CENTIMETERS("centimeters"),
-    PCS("amount"),
+    PCS("pcs"),
     MILLILITERS("milliliters"),
     GRAMS("grams");
 
+    /**
+     * description field of enum
+     */
     private final String title;
 
     UnitOfMeasure(String title){
         this.title = title;
     }
 
-    public static String getTitleinString(){
+    /**
+     * @return description all field as string
+     */
+    public static String getTitleInString(){
         return System.lineSeparator() + KILOGRAMS.title + " " +
                 GRAMS.title + " " +
                 CENTIMETERS.title + " " +
@@ -24,7 +30,7 @@ public enum UnitOfMeasure  implements Serializable {
                 MILLILITERS.title + System.lineSeparator();
     }
 
-    public static String getTitleinColumn(){
+    public static String getTitleInColumn(){
         return System.lineSeparator() + KILOGRAMS.title + System.lineSeparator() +
                                         GRAMS.title + System.lineSeparator() +
                                         CENTIMETERS.title + System.lineSeparator() +
@@ -32,10 +38,16 @@ public enum UnitOfMeasure  implements Serializable {
                                         MILLILITERS.title + System.lineSeparator();
     }
 
+    /**
+     * @return description of called field
+     */
     public String getTitle(){
         return title;
     }
 
+    /**
+     * @return translates the string to enum
+     */
     public static UnitOfMeasure fromString(String text) {
         for (UnitOfMeasure b : UnitOfMeasure.values()) {
             if (b.title.equalsIgnoreCase(text)) {

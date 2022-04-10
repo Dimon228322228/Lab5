@@ -8,7 +8,13 @@ import Messager.Messenger;
 
 import java.util.List;
 
+/**
+ * showing all element of the collection
+ */
 public class ShowElements implements MessagingCommand{
+    /**
+     * a single method for showing all elements
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
         List<Product> productList = manager.showElements();

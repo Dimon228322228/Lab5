@@ -6,7 +6,15 @@ import Manager.CollectionManager;
 
 import java.io.IOException;
 
+/**
+ * add new element in the collection if it is large max element of the collection
+ */
 public class AddIfMax implements SimpleCommand{
+    /**
+     * read product from the console
+     * compare it with max product
+     * add given product in the collection if it is large max element
+     */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
         Product product = null;
