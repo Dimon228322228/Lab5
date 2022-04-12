@@ -1,8 +1,8 @@
 package Content.Validator;
 
-import Content.Coordinate.Coordinates;
-import Content.Person.Person;
-import Content.Product.UnitOfMeasure;
+import Content.Coordinates;
+import Content.Person;
+import Content.UnitOfMeasure;
 
 import java.util.Date;
 
@@ -48,7 +48,8 @@ public class ValidatorProduct {
      * @return true if part number not null and grater then 22
      */
     public boolean partNumberValid(String partnumber){
-        return (partnumber != null && partnumber.length() >= 22);
+        if (partnumber != null) return (partnumber.length() >= 22);
+        else return true;
     }
 
     /**
@@ -78,11 +79,13 @@ public class ValidatorProduct {
      * @return true if person not null and each field has been entered correctness
      */
     public boolean personValid(Person person){
-        return (  person != null && validperson.birthdayValid(person.getBirthday()) &&
-                                    validperson.heightValid(person.getHeight()) &&
-                                    validperson.namePersonValid(person.getName()) &&
-                                    validperson.passportidValid(person.getPassportID()) &&
-                                    validperson.weightValid(person.getWeight()));
+        if (person != null) {
+            return (validperson.birthdayValid(person.getBirthday()) &&
+                    validperson.heightValid(person.getHeight()) &&
+                    validperson.namePersonValid(person.getName()) &&
+                    validperson.passportidValid(person.getPassportID()) &&
+                    validperson.weightValid(person.getWeight()));
+        } else return true;
     }
 
 }

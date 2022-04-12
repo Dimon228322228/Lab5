@@ -17,11 +17,12 @@ public class CountByManufactureCost implements MessagingCommand{
      */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
-        Double manufactureCost = null;
+        double manufactureCost;
         try{
             manufactureCost = Double.parseDouble(arg);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException | NullPointerException e){
             System.err.println("Manufacture cost must be convert to double.");
+            return;
         }
         long count = manager.countByManufactureCost(manufactureCost);
         System.out.println(messanger.getCountElementWithCondition(count));

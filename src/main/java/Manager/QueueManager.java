@@ -1,8 +1,7 @@
 package Manager;
 
-import Content.Product.Product;
-import Content.Product.ProductImpl;
-import Content.Product.UnitOfMeasure;
+import Content.Product;
+import Content.UnitOfMeasure;
 import Content.Validator.RealizedValidatorProduct;
 import Exception.EmptyFileException;
 
@@ -11,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import Exception.ProductNotFoundException;
 /**
  * This class stores the collection and works with it
@@ -35,7 +36,7 @@ public class QueueManager implements CollectionManager{
     /**
      * the collection
      */
-    private PriorityQueue<ProductImpl> collection;
+    private PriorityQueue<Product> collection;
     /**
      * inner static class that generates the id
      */
@@ -73,9 +74,9 @@ public class QueueManager implements CollectionManager{
      */
     public void parseDateFromFile(){
         try{
-            //setFilepath();
-            Collection<ProductImpl> products = fileManager.getCollectionFromFile(filepath);
-            for (ProductImpl product : products){
+            setFilepath();
+            Collection<Product> products = fileManager.getCollectionFromFile(filepath);
+            for (Product product : products){
                 if(validatorProduct.validProduct(product)){
                     collection.add(product);
                     generatedID.setID(product.getId());
@@ -96,7 +97,7 @@ public class QueueManager implements CollectionManager{
      */
     private void setFilepath(){
         System.out.println("Enter name environment variable that contains the path of the file: ");
-        String nameVariable = "";
+        String nameVariable;
         System.getenv().forEach((k, v) ->
                 System.out.println(k + " : " + v)
         );
@@ -126,10 +127,10 @@ public class QueueManager implements CollectionManager{
      */
     private List<Product> getListProduct(){
         List<Product> productList = new ArrayList<>();
-        PriorityQueue<ProductImpl> instance = new PriorityQueue<>();
+        PriorityQueue<Product> instance = new PriorityQueue<>();
         int size = collection.size();
         for (int i = 0; i < size; i++ ){
-            ProductImpl product = collection.poll();
+            Product product = collection.poll();
             productList.add(product);
             instance.add(product);
         }
@@ -142,28 +143,9 @@ public class QueueManager implements CollectionManager{
      * @param product is haired of class {@link Product}
      */
     @Override
-    public void add(ProductImpl product) {
+    public void add(Product product) {
         collection.add(product);
         generatedID.setID(product.getId());
-    }
-
-    /**
-     * Updates the value of the collection item by id
-     * @param id elements id
-     * @param product is hair of class {@link Product}
-     */
-    @Override
-    public void updateId(long id, Product product) {
-        boolean flag = false;
-        for(Product product1: collection){
-            if (product1.getId() == id){
-                collection.remove(product1);
-                collection.add((ProductImpl) product);
-                flag = true;
-                break;
-            }
-        }
-        if (!flag) throw new ProductNotFoundException();
     }
 
     /**
@@ -172,18 +154,14 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void removeById(long id) {
-        boolean flag = false;
-        for(Product product: collection) {
-            if(product.getId() == id) {
-                collection.remove(product);
-                generatedID.removeID(product.getId());
-                flag = true;
-                break;
-            }
-        }
-        if(!flag)
+        int size = collection.size();
+        collection.stream()
+                .sorted()
+                .filter(x -> x.getId() == id)
+                .forEach(collection::remove);
+        if(size == collection.size())
             throw new ProductNotFoundException();
-
+        else generatedID.removeID(id);
     }
 
     /**
@@ -201,7 +179,7 @@ public class QueueManager implements CollectionManager{
     @Override
     public void save() {
         if (filepath == null || filepath.equals("")) {
-            //setFilepath();
+            setFilepath();
             try {
                 fileManager.saveCollectionInXML(collection, filepath);
             } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
@@ -219,12 +197,8 @@ public class QueueManager implements CollectionManager{
      * @return max product
      */
     private Product maxProduct() {
-        Product productMax = collection.peek();
-        for(Product product: collection) {
-            if(product.compareTo(productMax) > 0)
-                productMax = product;
-        }
-        return productMax;
+        Optional<Product> product = collection.stream().max(Product::compareTo);
+        return product.orElse(null);
     }
 
     /**
@@ -233,9 +207,17 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void addIfMax(Product product) {
-        if (!collection.isEmpty() && product.compareTo(maxProduct()) > 0) {
-            collection.add((ProductImpl) product);
-            generatedID.setID(product.getId());
+        if (maxProduct() != null) {
+            if (product.compareTo(maxProduct()) > 0) {
+                add(product);
+                System.out.println("Added success");
+            } else {
+                System.out.println("Added failed");
+                generatedID.removeID(product.getId());
+            }
+        } else {
+            add(product);
+            System.out.println("Added success");
         }
     }
 
@@ -245,15 +227,16 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void removeLower(Product product) {
-        List<Product> productList = getListProduct();
-        Collections.sort(productList);
-        if (productList.size() != 0) {
-            for (Product product1: collection){
-                if (product1.compareTo(product) < 0){
-                    generatedID.removeID(product1.getId());
-                    collection.remove(product1);
-                }
-            }
+        int size = collection.size();
+        if (size != 0) {
+            collection.stream()
+                    .sorted()
+                    .filter(x -> x.compareTo(product) < 0)
+                    .forEach(x -> {
+                        collection.remove(x);
+                        generatedID.removeID(x.getId());
+                    });
+            System.out.println("Removing " + (size - collection.size()) + " elements");
         } else System.err.println("Nothing to remove! Collection is empty!");
     }
 
@@ -263,11 +246,9 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public long countByManufactureCost(Double manufactureCost) {
-        long count = 0;
-        for (Product product: collection){
-            if (product.getManufactureCost() == manufactureCost) count += 1;
-        }
-        return count;
+        return collection.stream()
+                .filter(x -> x.getManufactureCost() == manufactureCost)
+                .count();
     }
 
     /**
@@ -277,13 +258,18 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
-        long count = 0;
-        for (Product product: collection){
-            if (product.getUnitOfMeasure().compareTo(unitOfMeasure) > 0) count += 1;
-        }
-        return count;
+        return collection.stream()
+                .filter(x -> x.getUnitOfMeasure() != null)
+                .filter(x -> x.getUnitOfMeasure().compareTo(unitOfMeasure) > 0)
+                .count();
     }
 
+    /**
+     * method which leaves id product and remove unnecessary
+     */
+    public void autoUpdateId(){
+        generatedID.autoUpdateId(collection);
+    }
     /**
      * The class that generates an id
      */
@@ -315,6 +301,16 @@ public class QueueManager implements CollectionManager{
         }
 
         /**
+         * method which leaves id product and remove unnecessary
+         */
+        public void autoUpdateId(PriorityQueue<Product> collection){
+            idSet = collection.stream()
+                    .map(Product::getId)
+                    .filter(idSet::contains)
+                    .collect(Collectors.toSet());
+        }
+
+        /**
          * Remove an id from the set
          */
         public void removeID(long id) {
@@ -325,5 +321,4 @@ public class QueueManager implements CollectionManager{
 
         public void clearIdSet(){idSet = new HashSet<>();}
     }
-
 }

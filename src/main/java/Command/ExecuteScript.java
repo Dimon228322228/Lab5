@@ -11,24 +11,17 @@ import java.io.FileNotFoundException;
 /**
  * runs the script from file
  */
-public class  ExecuteScript implements ScriptCommand{
+public class ExecuteScript implements ScriptCommand{
     /**
      * executes a script if file correctness
      */
     @Override
-    public void execute(CollectionManager manager, Reader reader, String fileName, CommandFactory commandFactory){
-        File file;
-        try{
-            file = new File(fileName);
-        } catch (NullPointerException e){
-            System.err.println("Name file must be not null.");
-            return;
-        }
+    public void execute(CollectionManager manager, Reader reader, File file, CommandFactory commandFactory){
         try{
             Reader fileReader = new FileReader(commandFactory, manager, file);
             fileReader.readCommand();
         } catch (FileNotFoundException e){
-            System.err.println("File with name " + fileName + " is not found");
+            System.err.println("File with name " + file.getName() + " is not found");
         }
     }
 }

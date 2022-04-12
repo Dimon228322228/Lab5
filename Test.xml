@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Products>
     <products>
-        <id>2</id>
-        <name>coconut</name>
+        <id>6</id>
+        <name>ad</name>
         <coordinates>
             <x>123</x>
-            <y>231</y>
+            <y>123</y>
         </coordinates>
-        <creationDate>03.04.2022</creationDate>
-        <price>100.0</price>
-        <partNumber>00000000000000000000002</partNumber>
-        <manufactureCost>90.0</manufactureCost>
-        <unitOfMeasure>PCS</unitOfMeasure>
-        <owner>
-            <name>mike</name>
-            <birthday>2001-04-10T00:00</birthday>
-            <height>190</height>
-            <weight>90</weight>
-            <passportID>98788984</passportID>
-        </owner>
+        <creationDate>12.04.2022</creationDate>
+        <price>123.0</price>
+        <manufactureCost>123.0</manufactureCost>
     </products>
     <products>
-        <id>4</id>
+        <id>2</id>
         <name>milk</name>
         <coordinates>
             <x>23</x>
             <y>32</y>
         </coordinates>
-        <creationDate>03.04.2022</creationDate>
+        <creationDate>11.04.2022</creationDate>
         <price>80.0</price>
         <partNumber>00000000000000000000001</partNumber>
         <manufactureCost>60.0</manufactureCost>
@@ -47,11 +38,51 @@
             <x>23</x>
             <y>32</y>
         </coordinates>
-        <creationDate>03.04.2022</creationDate>
+        <creationDate>11.04.2022</creationDate>
         <price>80.0</price>
         <partNumber>00000000000000000000001</partNumber>
         <manufactureCost>60.0</manufactureCost>
-        <unitOfMeasure>MILLILITERS</unitOfMeasure>
+        <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
+    </products>
+    <products>
+        <id>4</id>
+        <name>milk</name>
+        <coordinates>
+            <x>23</x>
+            <y>32</y>
+        </coordinates>
+        <creationDate>11.04.2022</creationDate>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
+        <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
+    </products>
+    <products>
+        <id>5</id>
+        <name>milk</name>
+        <coordinates>
+            <x>23</x>
+            <y>32</y>
+        </coordinates>
+        <creationDate>11.04.2022</creationDate>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
+        <unitOfMeasure>PCS</unitOfMeasure>
         <owner>
             <name>Oleg</name>
             <birthday>2000-12-20T00:00</birthday>
@@ -67,11 +98,11 @@
             <x>23</x>
             <y>32</y>
         </coordinates>
-        <creationDate>03.04.2022</creationDate>
+        <creationDate>11.04.2022</creationDate>
         <price>80.0</price>
         <partNumber>00000000000000000000001</partNumber>
         <manufactureCost>60.0</manufactureCost>
-        <unitOfMeasure>MILLILITERS</unitOfMeasure>
+        <unitOfMeasure>PCS</unitOfMeasure>
         <owner>
             <name>Oleg</name>
             <birthday>2000-12-20T00:00</birthday>

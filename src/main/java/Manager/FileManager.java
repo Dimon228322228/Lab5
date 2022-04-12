@@ -1,9 +1,11 @@
 package Manager;
 
-import Content.Coordinate.CoordinatesImpl;
-import Content.Person.PersonImpl;
-import Content.Product.ProductImpl;
+import Content.Coordinates;
+import Content.Person;
+import Content.Product;
 import Exception.EmptyFileException;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -23,7 +25,7 @@ public class FileManager {
     private final Unmarshaller jaxbUnmarshaller;
 
     public FileManager() throws JAXBException {
-        JAXBContext xmlContext = JAXBContext.newInstance(ProductImpl.class, CoordinatesImpl.class, PersonImpl.class, CollectionQueuer.class);
+        JAXBContext xmlContext = JAXBContext.newInstance(Product.class, Coordinates.class, Person.class, CollectionQueuer.class);
         jaxbMarshaller = xmlContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         jaxbUnmarshaller = xmlContext.createUnmarshaller();
@@ -55,23 +57,23 @@ public class FileManager {
      * @throws JAXBException If there was an error in the parser
      * @throws EmptyFileException if file is empty
      */
-    public void saveCollectionInXML(PriorityQueue<ProductImpl> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
+    public void saveCollectionInXML(PriorityQueue<Product> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
             CollectionQueuer queueproduct = new CollectionQueuer();
-            queueproduct.setCollection(collection);
+            queueproduct.setProducts(collection);
             jaxbMarshaller.marshal(queueproduct, os);
         }
         System.out.println("Collection has been save successful");
     }
 
     /**
-     * Using {@link this.getStrFromFile}
+     * Using getStrFromFile
      * @return unchecked a collection with product from file
      * @throws JAXBException If there was an error in the parser
      * @throws EmptyFileException if file is empty
      */
-    public PriorityQueue<ProductImpl> getCollectionFromFile(String filepath) throws JAXBException, EmptyFileException {
-        PriorityQueue<ProductImpl> collection = new PriorityQueue<>();
+    public PriorityQueue<Product> getCollectionFromFile(String filepath) throws JAXBException, EmptyFileException {
+        PriorityQueue<Product> collection = new PriorityQueue<>();
         String dataStr = null;
         try {
             dataStr = this.getStrFromFile(filepath);
@@ -80,14 +82,14 @@ public class FileManager {
         }
         if (dataStr != null && !dataStr.equals("")) {
             try(StringReader reader = new StringReader(dataStr)) {
-                collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getCollection();
+                collection = ((CollectionQueuer) jaxbUnmarshaller.unmarshal(reader)).getProducts();
             }
         }
         return collection;
     }
 
     /**
-     * use {@link this.assertFileIsUsable} to check correctness file
+     * use assertFileIsUsable to check correctness file
      * @return string of all symbols from file
      * @throws IOException if I/O exception occurred
      * @throws InvalidPathException if file path invalid
@@ -117,16 +119,7 @@ public class FileManager {
     @XmlRootElement(name = "Products")
     @XmlAccessorType(XmlAccessType.FIELD)
     private static class CollectionQueuer implements Serializable {
-
-        private PriorityQueue<ProductImpl> products = new PriorityQueue<>();
-
-        public PriorityQueue<ProductImpl> getCollection() {
-            return products;
-        }
-
-        public void setCollection(PriorityQueue<ProductImpl> collection) {
-            this.products = collection;
-        }
+        @Setter @Getter private PriorityQueue<Product> products = new PriorityQueue<>();
     }
 
 }

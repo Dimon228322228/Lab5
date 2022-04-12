@@ -1,4 +1,4 @@
-package Content.Product;
+package Content;
 
 import java.io.Serializable;
 
@@ -24,18 +24,18 @@ public enum UnitOfMeasure  implements Serializable {
      */
     public static String getTitleInString(){
         return System.lineSeparator() + KILOGRAMS.title + " " +
-                GRAMS.title + " " +
                 CENTIMETERS.title + " " +
                 PCS.title + " " +
-                MILLILITERS.title + System.lineSeparator();
+                MILLILITERS.title + " " +
+                GRAMS.title + System.lineSeparator();
     }
 
     public static String getTitleInColumn(){
         return System.lineSeparator() + KILOGRAMS.title + System.lineSeparator() +
-                                        GRAMS.title + System.lineSeparator() +
                                         CENTIMETERS.title + System.lineSeparator() +
                                         PCS.title + System.lineSeparator() +
-                                        MILLILITERS.title + System.lineSeparator();
+                                        MILLILITERS.title + System.lineSeparator() +
+                                        GRAMS.title + System.lineSeparator();
     }
 
     /**

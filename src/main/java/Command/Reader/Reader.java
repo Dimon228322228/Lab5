@@ -1,6 +1,6 @@
 package Command.Reader;
 
-import Content.Product.ProductImpl;
+import Content.Product;
 
 import java.io.IOException;
 
@@ -23,5 +23,5 @@ public interface Reader {
      * @return entire product with filled out field
      * @throws IOException if IO exception occurred
      */
-    ProductImpl readProduct() throws IOException;
+    Product readProduct() throws IOException;
 }

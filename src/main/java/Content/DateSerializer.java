@@ -1,4 +1,4 @@
-package Content.Product;
+package Content;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;

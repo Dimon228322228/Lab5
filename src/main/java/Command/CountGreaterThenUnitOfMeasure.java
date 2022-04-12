@@ -2,9 +2,11 @@ package Command;
 
 import Command.CommandFactory.CommandFactory;
 import Command.Reader.Reader;
-import Content.Product.UnitOfMeasure;
+import Content.UnitOfMeasure;
 import Manager.CollectionManager;
 import Messager.Messenger;
+import Exception.InvalidUnitOfMeasureException;
+
 
 /**
  * counts the number of elements large in units
@@ -16,14 +18,9 @@ public class CountGreaterThenUnitOfMeasure implements MessagingCommand{
      */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
-        UnitOfMeasure unitOfMeasure;
-        try{
-            unitOfMeasure = UnitOfMeasure.fromString(arg);
-        } catch (IllegalArgumentException e){
-            System.err.println("No such this field in enum.");
-            return;
-        } catch (NullPointerException e){
-            System.err.println(e.getMessage());
+        UnitOfMeasure unitOfMeasure = UnitOfMeasure.fromString(arg);
+        if (unitOfMeasure == null) {
+            System.err.println(new InvalidUnitOfMeasureException("No such this enum. Unit of measure must be one of: " + UnitOfMeasure.getTitleInString().toLowerCase()).getMessage());
             return;
         }
         long count = manager.countGreaterThenUnitOfMeashure(unitOfMeasure);

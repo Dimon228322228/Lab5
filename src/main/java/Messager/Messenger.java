@@ -1,6 +1,6 @@
 package Messager;
 
-import Content.Product.Product;
+import Content.Product;
 
 /**
  * this class stores messages

@@ -1,6 +1,8 @@
-package Content.Person;
+package Content;
 
 import Content.Caster.CasterPersonFromString;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,72 +12,27 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * a class implements interface Person, added setters from string format compared to the interface
+ * a class whose reply to owner product
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PersonImpl implements Person, Serializable {
+public class Person implements Serializable {
 
-    private String name; // not null and not empty
+    @Setter @Getter private String name; // not null and not empty
 
     @XmlJavaTypeAdapter(value = LocalDateTimeSerializer.class)
-    private LocalDateTime birthday; // not null
+    @Setter @Getter private LocalDateTime birthday; // not null
 
-    private long height; // > 0
+    @Setter @Getter private long height; // > 0
 
-    private int weight; // > 0
+    @Setter @Getter private int weight; // > 0
 
-    private String passportID; // not null, len(line) >= 6 and len(line) <= 41
+    @Setter @Getter private String passportID; // not null, len(line) >= 6 and len(line) <= 41
 
     /**
      * creates fields person of different classes and checks their correctness
      */
     @XmlTransient
     private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void setBirthday(LocalDateTime dateTime) {
-        this.birthday = dateTime;
-    }
-
-    @Override
-    public void setHeight(long height) {
-        this.height = height;
-    }
-
-    @Override
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    @Override
-    public void setPassportID(String passportID) {
-        this.passportID = passportID;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public LocalDateTime getBirthday(){
-        return birthday;
-    }
-
-    public long getHeight(){
-        return height;
-    }
-
-    public int getWeight(){
-        return weight;
-    }
-
-    public String getPassportID(){
-        return passportID;
-    }
 
     /**
      * set name owner from string, used in ConsoleReader

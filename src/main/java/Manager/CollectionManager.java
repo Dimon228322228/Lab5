@@ -1,8 +1,7 @@
 package Manager;
 
-import Content.Product.Product;
-import Content.Product.ProductImpl;
-import Content.Product.UnitOfMeasure;
+import Content.Product;
+import Content.UnitOfMeasure;
 
 import java.util.List;
 
@@ -20,12 +19,7 @@ public interface CollectionManager {
     /**
      * Add new element in collection
      */
-    void add(ProductImpl product);
-
-    /**
-     * Replace element on id
-     */
-    void updateId(long id, Product product);
+    void add(Product product);
 
     /**
      * Remove element with this id
@@ -61,4 +55,9 @@ public interface CollectionManager {
      * Count amount element then greater given
      */
     long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
+
+    /**
+     * method which leaves id product and remove unnecessary
+     */
+    void autoUpdateId();
 }

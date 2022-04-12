@@ -1,6 +1,6 @@
 package Content.Validator;
 
-import Content.Product.UnitOfMeasure;
+import Content.UnitOfMeasure;
 
 /**
  * a class for check correctness product unit
@@ -11,7 +11,7 @@ public class ValidatorUnitOfMeasure {
      * @return true if unit product not null
      */
     public boolean validUnitOfMeasure(UnitOfMeasure unitOfMeasure){
-        return unitOfMeasure != null;
+        return true;
     }
 
     /**

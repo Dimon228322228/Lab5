@@ -1,13 +1,5 @@
-add
-coconut
-123
-231
-100
-00000000000000000000002
-90
-amount
-mike
-2001-4-10
-190
-90
-98788984
+executeScript Script1.txt
+executeScript Script1.txt
+executeScript Script1.txt
+executeScript Script1.txt
+executeScript Script1.txt

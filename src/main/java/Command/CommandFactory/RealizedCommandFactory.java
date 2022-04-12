@@ -9,6 +9,8 @@ import Command.SimpleCommand;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.stream.Collectors;
 
 import Exception.UnknownCommandException;
 import Messager.Messenger;
@@ -18,7 +20,7 @@ import Messager.Messenger;
  */
 public class RealizedCommandFactory implements CommandFactory {
     private static RealizedCommandFactory instance = null;
-    private List<String> historyCommand = new ArrayList<>();
+    private final ArrayBlockingQueue<String> historyCommand = new ArrayBlockingQueue<>(13);
     private final Map<String, Command> commands;
     private final Messenger messenger;
     private final static Set<File> files = new HashSet<>();
@@ -50,20 +52,17 @@ public class RealizedCommandFactory implements CommandFactory {
      */
     @Override
     public void executeCommand(String commandName, Reader reader, String arg, CollectionManager collectionManager) {
-        Command command;
-        if (commandName.equals("") || commands.get(commandName) == null){
+        Command command = getCommand(commandName);
+        if (commandName.equals("") || command == null){
             System.err.println((new UnknownCommandException()).getMessage());
             return;
         }
         addCommandInHistory(commandName);
-        command = getCommand(commandName);
         if (command instanceof SimpleCommand){
             executeSimpleCommand((SimpleCommand) command, reader, arg, collectionManager);
         } else if (command instanceof MessagingCommand){
             executeMessagingCommand((MessagingCommand) command, reader, arg, collectionManager);
-        } else if (command instanceof ScriptCommand){
-            executeScriptCommand((ScriptCommand) command, reader, arg, collectionManager);
-        } else System.err.println("Error got while executing command!");
+        } else executeScriptCommand((ScriptCommand) command, reader, arg, collectionManager);
     }
 
     /**
@@ -85,18 +84,19 @@ public class RealizedCommandFactory implements CommandFactory {
      * if file starts execution and not finished, but it again starts execution -> gives recursion
      */
     private void executeScriptCommand(ScriptCommand command, Reader reader, String arg, CollectionManager collectionManager) {
-        File file = null;
+        File file;
         try {
             file = new File(arg);
         } catch (NullPointerException ignored) {
            System.err.println("No such this file.");
+           return;
         }
         if(files.contains(file)) {
             System.err.println("Error. Script recursion has been detected.");
             return;
         }
         files.add(file);
-        command.execute(collectionManager, reader, arg, this);
+        command.execute(collectionManager, reader, file, this);
         files.remove(file);
     }
 
@@ -105,11 +105,9 @@ public class RealizedCommandFactory implements CommandFactory {
      * if history is larger than 13, the first one added will be deleted
      */
     private void addCommandInHistory(String command){
-        historyCommand.add(command);
-        if (historyCommand.size() > 13){
-            List<String> newListCommand = new ArrayList<>();
-            for (int i = 1; i < historyCommand.size(); i++) newListCommand.add(historyCommand.get(i));
-            historyCommand = new ArrayList<>(newListCommand);
+        if (!historyCommand.offer(command)){
+            historyCommand.remove();
+            historyCommand.add(command);
         }
     }
 
@@ -117,10 +115,8 @@ public class RealizedCommandFactory implements CommandFactory {
      * @return history command as column in console
      */
     public String getHistory(){
-        StringBuilder resBuilder = new StringBuilder();
-        for (int i = 0; i < historyCommand.size() - 1; i++) resBuilder.append(historyCommand.get(i)).append("\n");
-        String res = resBuilder.toString();
-        res += historyCommand.get(historyCommand.size() - 1);
-        return res;
+        return historyCommand.stream().collect(Collectors.joining(System.lineSeparator(),
+                                                                  System.lineSeparator(),
+                                                                  System.lineSeparator()));
     }
 }

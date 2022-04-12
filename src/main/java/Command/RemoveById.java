@@ -8,22 +8,29 @@ import Exception.ProductNotFoundException;
  * removing element by id
  */
 public class RemoveById implements SimpleCommand{
+    boolean flag;
     /**
      * read id from console
      * remove element of the collection by id
      */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
-        long id = -2;
+        flag = true;
+        long id;
         try{
             id = Long.parseLong(arg);
         } catch (NumberFormatException e){
-            System.err.println(e.getMessage() + "Id must be long.");
+            System.err.println("Id must be long.");
+            flag = false;
+            return;
         }
         try {
             manager.removeById(id);
         } catch (ProductNotFoundException e){
             System.err.println(e.getMessage());
+            flag = false;
+            return;
         }
+        System.out.println("Removing success");
     }
 }

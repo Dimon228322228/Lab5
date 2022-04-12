@@ -45,10 +45,11 @@ public class ValidatorPerson {
     }
 
     /**
-     * @return true if passport id grater than 6, lower than 41 and not null
+     * @return true if passport id grater than 6, lower than 41 and may be null
      */
     public boolean passportidValid(String passportid){
-        return(passportid != null && passportid.length() >= 6 && passportid.length() <= 41);
+        if (passportid != null) return (passportid.length() >= 6 && passportid.length() <= 41);
+        else return true;
     }
 
 }

@@ -1,10 +1,8 @@
 package Command;
 
 import Command.Reader.Reader;
-import Content.Product.Product;
+import Content.Product;
 import Manager.CollectionManager;
-import Exception.InvalidProductFieldException;
-import Exception.ProductNotFoundException;
 
 import java.io.IOException;
 
@@ -20,30 +18,20 @@ public class UpdateById implements SimpleCommand{
      */
     @Override
     public void execute(CollectionManager manager, Reader reader, String arg) {
-        long id = -2;
+        RemoveById remove = new RemoveById();
+        remove.execute(manager, reader, arg);
+        if (!remove.flag) return;
+        Product Product;
         try{
-            id = Long.parseLong(arg);
-        } catch (NumberFormatException e){
-            System.err.println("Id must be long.");
-        }
-        Product product;
-        try{
-            product = reader.readProduct();
+            Product = reader.readProduct();
         } catch (IOException e) {
             System.err.println(e.getMessage());
             return;
-        } catch (Exception e){
-            System.err.println(new InvalidProductFieldException().getMessage());
-            return;
         }
-        if (product == null){
-            return;
-        }
-        try{
-            manager.updateId(id, product);
-        } catch (ProductNotFoundException e){
-            System.err.println(e.getMessage());
-        }
-
+        if (Product == null) return;
+        manager.autoUpdateId();
+        Product.setId(Long.parseLong(arg));
+        manager.add(Product);
+        System.out.println("Added success");
     }
 }

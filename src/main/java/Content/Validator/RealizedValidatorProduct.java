@@ -1,6 +1,6 @@
 package Content.Validator;
 
-import Content.Product.Product;
+import Content.Product;
 
 /**
  * a class check each field product and get entire product

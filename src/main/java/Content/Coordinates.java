@@ -1,40 +1,25 @@
-package Content.Coordinate;
+package Content;
 
 import Content.Caster.CasterCoordinatesFromString;
-
+import lombok.Getter;
+import lombok.Setter;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 /**
- * a class implements interface Coordinates, added setters from string format compared to the interface
+ * a class whose store x and y coordinate product
  */
-public class CoordinatesImpl implements Coordinates, Serializable {
+public class Coordinates implements Serializable {
 
-    private Integer x; // field not null and <= 938
+    @Getter @Setter private Integer x; // field not null and <= 938
 
-    private Integer y; // field not null
+    @Getter @Setter private Integer y; // field not null
 
     /**
      * creates fields coordinates and checks their correctness
      */
     @XmlTransient
     private final CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
-
-    public Integer getX(){
-        return x;
-    }
-
-    public Integer getY(){
-        return y;
-    }
-
-    public void setX(Integer x) {
-        this.x = x;
-    }
-
-    public void setY(Integer y) {
-        this.y = y;
-    }
 
     /**
      * set x coordinate from string, used in ConsoleReader

@@ -1,13 +1,12 @@
 package Command.Reader;
 
 import Command.CommandFactory.CommandFactory;
-import Content.Coordinate.CoordinatesImpl;
-import Content.Person.PersonImpl;
-import Content.Product.ProductImpl;
+import Content.Coordinates;
+import Content.Person;
+import Content.Product;
 import Manager.CollectionManager;
 import Messager.Messenger;
 import Exception.InvalidProductFieldException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,11 +34,11 @@ public class ConsoleReader extends AbstractReader {
      * @throws IOException if IO exception occurred
      */
     @Override
-    public ProductImpl readProduct() throws IOException {
-        ProductImpl product = new ProductImpl();
+    public Product readProduct() throws IOException {
+        Product product = new Product();
         product.setAutomaticGenerateField();
-        CoordinatesImpl coordinates = new CoordinatesImpl();
-        PersonImpl owner = new PersonImpl();
+        Coordinates coordinates = new Coordinates();
+        Person owner = new Person();
 
         System.out.println(messenger.getFieldInvitationMessage("name"));
         setField(reader.readLine(), product::setNameStr);
@@ -64,21 +63,26 @@ public class ConsoleReader extends AbstractReader {
         System.out.println(messenger.getUnitOfMeasureInputInvitationMessage());
         setField(reader.readLine(), product::setUnitOfMeasureStr);
 
-        System.out.println(messenger.getFieldInvitationMessage("namePerson"));
-        setField(reader.readLine(), owner::setNameStr);
+        System.out.println("Is there an owner?(Y/n)");
+        String str = reader.readLine();
+        if (str.equals("Y") || str.equals("y") || str.equals("Yes") || str.equals("yes")) {
+            System.out.println(messenger.getFieldInvitationMessage("namePerson"));
+            setField(reader.readLine(), owner::setNameStr);
 
-        System.out.println(messenger.getPersonBirthdayInputInvitationMessage());
-        setField(reader.readLine(), owner::setBirthdayStr);
+            System.out.println(messenger.getPersonBirthdayInputInvitationMessage());
+            setField(reader.readLine(), owner::setBirthdayStr);
 
-        System.out.println(messenger.getFieldInvitationMessage("height"));
-        setField(reader.readLine(), owner::setHeightStr);
+            System.out.println(messenger.getFieldInvitationMessage("height"));
+            setField(reader.readLine(), owner::setHeightStr);
 
-        System.out.println(messenger.getFieldInvitationMessage("weight"));
-        setField(reader.readLine(), owner::setWeightStr);
+            System.out.println(messenger.getFieldInvitationMessage("weight"));
+            setField(reader.readLine(), owner::setWeightStr);
 
-        System.out.println(messenger.getFieldInvitationMessage("passportId"));
-        setField(reader.readLine(), owner::setPassportIDStr);
-
+            System.out.println(messenger.getFieldInvitationMessage("passportId"));
+            setField(reader.readLine(), owner::setPassportIDStr);
+        } else {
+            owner = null;
+        }
         product.setOwner(owner);
         return product;
     }
@@ -107,6 +111,6 @@ public class ConsoleReader extends AbstractReader {
         } else {
             System.err.println("Error.");
         }
-        System.out.println("Has got error. Please, entered the field again: ");
+        System.out.println("Please, entered the field again: ");
     }
 }

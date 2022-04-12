@@ -1,6 +1,6 @@
 package Messager;
 
-import Content.Product.Product;
+import Content.Product;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,11 +41,15 @@ public abstract class AbstractMessenger implements Messenger {
         message += getFieldMassage("partNumber", product.getPartNumber());
         message += getFieldMassage("manufactureCost", product.getManufactureCost());
         message += getFieldMassage("unitOfMeasure", product.getUnitOfMeasure());
-        message += getFieldMassage("namePerson", product.getOwner().getName());
-        message += getFieldMassage("birthday", product.getOwner().getBirthday().toString());
-        message += getFieldMassage("height", product.getOwner().getHeight());
-        message += getFieldMassage("weight", product.getOwner().getWeight());
-        message += getFieldMassage("passportId", product.getOwner().getPassportID());
+        if (product.getOwner() != null) {
+            message += getFieldMassage("namePerson", product.getOwner().getName());
+            message += getFieldMassage("birthday", product.getOwner().getBirthday().toString());
+            message += getFieldMassage("height", product.getOwner().getHeight());
+            message += getFieldMassage("weight", product.getOwner().getWeight());
+            message += getFieldMassage("passportId", product.getOwner().getPassportID());
+        }else{
+            message += "Owner: " + product.getOwner() + "\n";
+        }
         return message;
     }
 

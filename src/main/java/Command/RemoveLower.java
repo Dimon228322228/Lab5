@@ -1,7 +1,7 @@
 package Command;
 
 import Command.Reader.Reader;
-import Content.Product.Product;
+import Content.Product;
 import Manager.CollectionManager;
 
 import java.io.IOException;

@@ -1,12 +1,12 @@
 package Content.Caster;
 
-import Content.Product.UnitOfMeasure;
+import Content.UnitOfMeasure;
 import Content.Validator.ValidatorProduct;
 import Exception.InvalidNameProductException;
 import Exception.InvalidPriceException;
 import Exception.InvalidPartNumberException;
 import Exception.InvalidManufactureCostException;
-import Exception.InvalidUnitOfMeasureExseption;
+import Exception.InvalidUnitOfMeasureException;
 /**
  * A class which creates field of product from different classes
  */
@@ -41,6 +41,7 @@ public class CasterFieldProductFromString {
       * @return checked part number from the string
       */
      public String castPartNumber(String str){
+          if (str.trim().equals("")) return null;
           if (valProd.partNumberValid(str.trim())){
                return str.trim();
           } else {
@@ -64,10 +65,11 @@ public class CasterFieldProductFromString {
       * @return checked unit product from the string
       */
      public UnitOfMeasure castUnitOfMeasure(String str){
+          if (str.trim().equals("")) return null;
           if (valProd.unitOfMeasureValid(str)){
                return UnitOfMeasure.fromString(str.trim());
           } else {
-               throw new InvalidUnitOfMeasureExseption();
+               throw new InvalidUnitOfMeasureException();
           }
      }
 }

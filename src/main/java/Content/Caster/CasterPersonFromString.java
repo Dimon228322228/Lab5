@@ -78,6 +78,7 @@ public class CasterPersonFromString {
      * @return checked passport id from the string
      */
     public String castPassportID(String inputStr){
+        if (inputStr.trim().equals("")) return null;
         if (valPer.passportidValid(inputStr)){
             return inputStr;
         } else {
