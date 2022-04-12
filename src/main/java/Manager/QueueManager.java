@@ -76,6 +76,10 @@ public class QueueManager implements CollectionManager{
         try{
             setFilepath();
             Collection<Product> products = fileManager.getCollectionFromFile(filepath);
+            if (collection.size() == 0) {
+                System.out.println("Download failed");
+                return;
+            }
             for (Product product : products){
                 if(validatorProduct.validProduct(product)){
                     collection.add(product);
